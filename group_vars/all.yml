@@ -1,0 +1,7 @@
+---
+ec2_region: us-east-1
+ec2_zone: us-east-1d
+ec2_image: ami-ef795786 # Ubuntu 13.04 raring
+ec2_instance_type: m1.large
+ec2_keypair: swb-keypair
+

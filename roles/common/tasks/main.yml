@@ -1,0 +1,50 @@
+---
+# Common image setup
+- name: bring OS up to date
+  apt: upgrade=dist update_cache=yes cache_valid_time=3600
+
+- name: install common packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - ntp
+    - emacs24-nox
+    - git
+    - make
+    - unzip
+    - python-pip
+    - python-yaml
+    - python-paramiko
+    - python-jinja2
+    - python-software-properties
+  tags: [ python, ntp ]
+
+- name: install python keyczar for accelerated mode
+  easy_install: name=python-keyczar
+  
+# Setup cluster NTP on AWS
+- name: launch NTPD and keep running
+  service: name=ntp state=running enabled=yes
+  tags: ntp
+
+- name: make sure we have the right NTP time now
+  shell: ntpdate -u 0.pool.ntp.org
+  tags: ntp
+
+- name: apply NTP configuration for AWS
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  notify:
+    - restart ntpd
+  tags: ntp
+   
+
+# Enable the deploy user
+- name: ensure the deploy user is present
+  user: name=deploy comment="Deployer Account" group=admin home=/home/deploy state=present
+  tags: deploy
+    
+- name: add the deploy public key
+  authorized_key: user=deploy key="{{ item }}"
+  with_file:
+    - deploy-key.pub
+  tags: deploy
+

@@ -1,0 +1,77 @@
+# ansible-playbook create-eval.yml 
+---
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: False
+  name: Create Evaluation Security Group
+  tasks:
+    - local_action:
+        module: ec2_group
+        name: evaluation
+        description: Single-server Evaluation exposes ports
+        region: us-east-1
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 443
+            to_port: 443
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 5099
+            to_port: 5099
+            cidr_ip: 0.0.0.0/0
+
+- name: Create Evaluation Instance
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: False
+  roles:
+    - role: ec2
+      id: "eval"        # ensure uniqueness
+      type: "singleton" # unused
+      group: "evaluation" # use for each dist type
+      register_group: "tag_group_evaluation" # fake-out use of tags
+      ncount: 1
+
+- name: Wire Evaluation DNS Connections
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: False
+  tasks: 
+  - route53: >
+      command=create
+      zone=swb.io
+      record=eval.swb.io
+      type=A
+      ttl=7200
+      value="{{ item.public_ip }}"
+    with_items: ec2.instances
+    register: swb_dns
+  - route53: >
+      command=create
+      zone=orchestra.md
+      record=eval.orchestra.md
+      type=A
+      ttl=7200
+      value="{{ item.public_ip }}"
+    with_items: ec2.instances
+    register: orchestra_dns
+
+- name: Update host info
+  hosts: localhost
+  gather_facts: False
+  connection: local
+  tasks:
+    - action: ec2_facts
+      with_items: ec2.instances
+
+# Configure the node
+#-------------------------------------
+- include: eval.yml

@@ -1,0 +1,7 @@
+---
+cassandra_cluster: "evaluation"
+cassandra_listen_address: localhost
+
+datomic_protocol: "dev"
+datomic_version: "0.9.4384"
+datomic_filename: "datomic-pro-0.9.4384"

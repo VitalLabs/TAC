@@ -1,0 +1,44 @@
+# ansible-playbook -i plugins/ec2.py eval.yml 
+---
+- name: Setup Common Facilities
+  hosts: tag_group_evaluation
+  remote_user: ubuntu
+  sudo: True
+  accelerate: false
+  roles:
+    - common
+  tags: init
+
+- name: Setup Common Software
+  hosts: tag_group_evaluation
+  remote_user: ubuntu
+  sudo: True
+  accelerate: true
+  vars: # for passing deploy creds for S3 access, etc
+    - aws_access: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+    - aws_secret: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+  vars_files:
+    - vars/eval.yaml
+    - vars/credentials.yaml
+  roles:
+    - dse
+    - role: datomic
+      tags: datomic
+#    - immutant
+#    - apache/nginx
+  tags: software
+
+#- name: Configure Application
+#  remote_user: deploy
+#  tags: application
+#  roles:
+#    - swb
+#    - orchestra
+
+#- name: Virtual server proxies
+#  remote_user: deploy
+#  tags: proxy
+#  roles:
+#    - eval_proxy
+
+
