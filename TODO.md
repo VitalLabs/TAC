@@ -33,15 +33,20 @@ Immutant:
 
 - Separate leiningen role
 - Ensure explicit java dependency from role meta
-- HornetQ clustered or SQS/SNS?
-- S3_PING or AWS_PING for clustering
-- mod_cluster configuration
+- Custom configuration
+  - S3_PING or AWS_PING for clustering
+  - HornetQ clustered or SQS/SNS?
+  - mod_cluster jboss configuration
 
 Switchboard:
 
+- Github hooks for redeploy?
+
 Orchestra:
 
-Load Balancer:
+- Github hooks for redeploy?
+
+Proxy front-end:
 
 - Apache/mod_cluster (auto-scaling keepalive group)
 - How to register vars for client setup?

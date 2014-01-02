@@ -23,14 +23,11 @@
   file: path={{ lein_dir }}/lein mode=0755
   when: lein_exists|failed
 
-# IMMUTANT - TODO
-# - Immutant user?
-# - Immutant module?
-
-- name: Create datomic directory
+- name: Create lein config directory
   file: state=directory path="{{ ansible_env.HOME }}/.lein" owner={{ remote_user }} group={{ remote_user }}
   when: lein_exists|failed
 
+# IMMUTANT - TODO
 - name: add the immutant plugin
   template: src=profiles.clj.j2 dest="{{ ansible_env.HOME }}/.lein/profiles.clj"
 
@@ -43,4 +40,16 @@
   command: chdir="{{ ansible_env.HOME }}" "lein immutant install {{ immutant_version }}"
   when: immutant_exists|failed
 
+#- name: configure immutant
+#  template: 
+#  notify:
+#   - restart immutant
+
+- name: immutant upstart script
+  sudo: true
+  template: src=immutant-upstart.conf.j2 dest="/etc/init/immutant.conf" mode=0755
+  
+- name: start immutant
+  sudo: true
+  service: name=immutant state=running
   

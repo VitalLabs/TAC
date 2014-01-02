@@ -41,8 +41,7 @@
     - role: immutant
       tags: immutant
     - role: immutant-app
-      branch: {{ switchboard_branch }}
-      commit: {{ switchboard_commit }}
+      commit: "{{ switchboard_commit }}"
       tags: switchboard
 #    - role: clojure-app
 #      branch: {{ orchestra_branch }}

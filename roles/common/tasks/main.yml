@@ -48,3 +48,6 @@
     - deploy-key.pub
   tags: deploy
 
+- name: deploy can sudo
+  lineinfile: "dest=/etc/sudoers state=present regexp='^deploy' line='deploy ALL=(ALL) NOPASSWD: ALL'"
+  tags: deploy

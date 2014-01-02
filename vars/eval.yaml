@@ -9,8 +9,6 @@ datomic_filename: "datomic-pro-0.9.4384"
 
 immutant_version: "1.0.2"
 
-switchboard_branch: "master"
-switchboard_commit: "HEAD"
+switchboard_commit: "master"
 
-orchestra_branch: "master"
-orchestra_commit: "HEAD"
+orchestra_commit: "master"
