@@ -3,17 +3,18 @@
 - name: Setup Common Facilities
   hosts: tag_group_evaluation
   remote_user: ubuntu
-  sudo: True
+  sudo: true
   accelerate: false
   roles:
     - common
-  tags: init
+  tags: common
 
 - name: Setup Common Software
   hosts: tag_group_evaluation
   remote_user: ubuntu
-  sudo: True
+  sudo: true
   accelerate: true
+  accelerate_port: 5098
   vars: # for passing deploy creds for S3 access, etc
     - aws_access: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
     - aws_secret: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
@@ -21,24 +22,38 @@
     - vars/eval.yaml
     - vars/credentials.yaml
   roles:
-    - dse
+    - role: dse
+      tags: [ cassandra, dse ]
     - role: datomic
       tags: datomic
-#    - immutant
-#    - apache/nginx
-  tags: software
+  tags: services
 
-#- name: Configure Application
-#  remote_user: deploy
-#  tags: application
-#  roles:
-#    - swb
-#    - orchestra
+- name: Configure Application Server and Applications
+  hosts: tag_group_evaluation
+  remote_user: deploy
+  sudo: false
+  accelerate: true
+  accelerate_port: 5098
+  vars_files:
+    - vars/eval.yaml
+    - vars/credentials.yaml
+  roles:
+    - role: immutant
+      tags: immutant
+    - role: immutant-app
+      branch: {{ switchboard_branch }}
+      commit: {{ switchboard_commit }}
+      tags: switchboard
+#    - role: clojure-app
+#      branch: {{ orchestra_branch }}
+#      commit: {{ orchestra_commit }}
+  tags: application
 
 #- name: Virtual server proxies
 #  remote_user: deploy
 #  tags: proxy
 #  roles:
+#    - apache/nginx
 #    - eval_proxy
 
 

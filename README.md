@@ -8,7 +8,7 @@ Switchboard cluster and deployment of the Orchestra application to the
 AWS CDN.
 
 To configure credentials:
-- Ensure vars_files/*-private.yaml values are filled in properly
+- Ensure vars/credentials.yaml values are filled in properly (copy from vars/credentials-example.yml)
 - Add AWS credential to bin/aws_access and bin/aws_secret
 
 To run Ansible, you will also need a properly configured shell:

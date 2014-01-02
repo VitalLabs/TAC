@@ -1,0 +1,4 @@
+---
+lein_dir: /usr/local/bin
+lein_immutant_version: "1.1.1"
+immutant_version: "LATEST"

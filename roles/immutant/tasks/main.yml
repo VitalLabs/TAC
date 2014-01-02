@@ -1,0 +1,46 @@
+---
+# LEININGEN
+
+- name: Check leiningen installation
+  command: "ls {{ lein_dir }}/lein"
+  register: lein_exists
+  ignore_errors: true
+
+- name: leiningen dependencies
+  sudo: true
+  apt: name={{ item }} state=latest
+  with_items:
+    - maven
+  when: lein_exists|failed
+    
+- name: get leiningen file
+  sudo: true
+  get_url: url=https://raw.github.com/technomancy/leiningen/stable/bin/lein dest={{ lein_dir }}
+  when: lein_exists|failed
+
+- name: leiningen needs execute permissions
+  sudo: true
+  file: path={{ lein_dir }}/lein mode=0755
+  when: lein_exists|failed
+
+# IMMUTANT - TODO
+# - Immutant user?
+# - Immutant module?
+
+- name: Create datomic directory
+  file: state=directory path="{{ ansible_env.HOME }}/.lein" owner={{ remote_user }} group={{ remote_user }}
+  when: lein_exists|failed
+
+- name: add the immutant plugin
+  template: src=profiles.clj.j2 dest="{{ ansible_env.HOME }}/.lein/profiles.clj"
+
+- name: check immutant installation
+  command: "ls {{ ansible_env.HOME }}/.immutant/releases/immutant-{{ immutant_version }}-slim"
+  register: immutant_exists
+  ignore_errors: true
+
+- name: install immutant
+  command: chdir="{{ ansible_env.HOME }}" "lein immutant install {{ immutant_version }}"
+  when: immutant_exists|failed
+
+  

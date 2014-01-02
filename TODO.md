@@ -31,6 +31,8 @@ Datomic:
 
 Immutant:
 
+- Separate leiningen role
+- Ensure explicit java dependency from role meta
 - HornetQ clustered or SQS/SNS?
 - S3_PING or AWS_PING for clustering
 - mod_cluster configuration

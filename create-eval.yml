@@ -24,6 +24,10 @@
             to_port: 22
             cidr_ip: 0.0.0.0/0
           - proto: tcp
+            from_port: 5098
+            to_port: 5099
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
             from_port: 5099
             to_port: 5099
             cidr_ip: 0.0.0.0/0
