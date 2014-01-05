@@ -1,13 +1,11 @@
 ---
 # Common image setup
-- name: bring OS up to date
-  apt: upgrade=dist update_cache=yes cache_valid_time=3600
-
 - name: install common packages
   apt: name={{ item }} state=latest
   with_items:
     - ntp
-    - emacs24-nox
+    - emacs23-nox
+    - lynx
     - git
     - make
     - unzip
@@ -39,9 +37,15 @@
 
 # Enable the deploy user
 - name: ensure the deploy user is present
-  user: name=deploy comment="Deployer Account" group=admin home=/home/deploy state=present
+  user: name=deploy home=/home/deploy
+        state=present groups=admin
+        comment="Deployer Account" 
   tags: deploy
     
+- name: set umask for group write perms
+  lineinfile: "dest=/home/deploy/.profile regexp='^umask' line='umask 002'"
+  sudo: true
+              
 - name: add the deploy public key
   authorized_key: user=deploy key="{{ item }}"
   with_file:
@@ -51,3 +55,6 @@
 - name: deploy can sudo
   lineinfile: "dest=/etc/sudoers state=present regexp='^deploy' line='deploy ALL=(ALL) NOPASSWD: ALL'"
   tags: deploy
+
+
+  

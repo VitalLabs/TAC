@@ -1,1 +1,5 @@
-{:user {:plugins [ [lein-immutant "{{ lein_immutant_version }}" ] ] } }
+{
+	:user {:plugins	 [[lein-immutant "{{ lein_immutant_version }}"]]
+		   :lein-immutant  {:base-dir "/var/lib/immutant"}
+		  }
+}

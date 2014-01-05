@@ -1,3 +1,4 @@
+# Assumes done by root or via sudo
 ---
 - name: use the datastax enterprise repository
   apt_repository: repo="deb http://{{ dse_username }}:{{ dse_password }}@debian.datastax.com/enterprise stable main" state=present
@@ -6,7 +7,7 @@
   apt_key: url=https://debian.datastax.com/debian/repo_key state=present
 
 - name: install DSE packages
-  apt: pkg=dse-full state=installed
+  apt: pkg=dse-full state=installed force=yes
   notify:
     - restart dse
 
@@ -16,5 +17,7 @@
   notify:
     - restart dse
 
+- name: restart dse
+  service: name=dse state=started enabled=yes
 
  

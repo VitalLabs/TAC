@@ -1,5 +1,10 @@
 # Ansible DevOps TODO list
 
+Immediate:
+- Use IAM roles if can create from scripts (?)
+- Use git-encrypt for sensitive data
+- Change cassandra config back to default
+
 Releases:
 x Single-node evaluation
 - Staging and production clustered solutions
@@ -8,11 +13,29 @@ x Single-node evaluation
 
 Organization:
 
-- Move cluster .yml to subdir
-- Helpful bash scripts
+- Helpful bash scripts?
   - Setup agent/shell environment with creds
-  - Create, destroy, update
+  - Create, destroy, update, etc.
+- Better cluster lifecycle:
+  - xxx-build: Build/configure cluster AMIs (how to save AMI refs?)
+  	- Netflix AMINATOR
+	- Docker
+  - xxx-launch: Launch nodes, configure service links, enable services
+  - xxx-shutdown: Shutdown cluster
+  - xxx-update: online lifecycle upgrades
+	- OS security patches (new AMI in AWS)
+	- Services updates (new AMI in AWS?)
+    - Application updates (new WAR)
+  - xxx-upgrade: Rolling upgrade using new AMI
+  	- Migrations?
 
+Baseline:
+- Auto-install security patches?
+
+AWS Integration:
+- Every cluster has a single user authority
+- Use IAM roles to configure instances?
+  
 DSE/Cassandra:
 
 - Ephemeral disks and RAID0
@@ -48,27 +71,31 @@ Orchestra:
 
 Proxy front-end:
 
-- Apache/mod_cluster (auto-scaling keepalive group)
+- Test out mod_cluster on eval
+- Auto-scaling keepalive group for LB?
 - How to register vars for client setup?
 
 
 ## Jump Box
+- AutoScaling group
 
 JB Applications:
 
-- Jumpbox SSH relay
+- Jumpbox SSH relay / SOCKS Proxy
 - Ansible host w/ git scripts downloaded and credentials
+- AnsibleWorks AWX w/ Github hooks for deploy, etc?
 - Apache
-- Basic admin apache website
-- SSL HTTP proxy for seeing interior resources
-- 
+  - Basic admin apache website
 - OpsCenter / DevCenter
 - Nagios / monitoring?
 - Datomic Console?
 - Reimann / monit, etc.
 - Other operational visualizations
 
-## Future
 
-- Immutant module for app mgmt?
+# Future Efforts
+
+- Immutant module for app mgmt? (use jboss)
+- Docker containers for databases, jumpbox apps, etc
+- SE Linux support?
 

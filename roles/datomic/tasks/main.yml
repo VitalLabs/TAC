@@ -46,5 +46,5 @@
     - restart datomic
   when: datomic_exists|failed
 
-- name: ensure datomic is running
-  service: name=datomic state=started
+- name: ensure datomic is run
+  service: name=datomic state=started enabled=yes

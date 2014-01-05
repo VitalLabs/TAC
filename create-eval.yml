@@ -1,14 +1,13 @@
 # ansible-playbook create-eval.yml 
 ---
-- hosts: 127.0.0.1
+- name: Create Evaluation Security Group
+  hosts: 127.0.0.1
   connection: local
-  gather_facts: False
-  name: Create Evaluation Security Group
   tasks:
     - local_action:
         module: ec2_group
         name: evaluation
-        description: Single-server Evaluation exposes ports
+        description: "Single-server evaluation exposes ports"
         region: us-east-1
         rules:
           - proto: tcp
@@ -27,55 +26,67 @@
             from_port: 5098
             to_port: 5099
             cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 5099
-            to_port: 5099
-            cidr_ip: 0.0.0.0/0
 
 - name: Create Evaluation Instance
   hosts: 127.0.0.1
   connection: local
-  gather_facts: False
   roles:
     - role: ec2
-      id: "eval"        # ensure uniqueness
+      id: "eval2"        # ensure uniqueness
       type: "singleton" # unused
       group: "evaluation" # use for each dist type
       register_group: "tag_group_evaluation" # fake-out use of tags
       ncount: 1
 
+- name: wait for the server to wake up
+  local_action: wait_for host={{ item.public_ip }} port=22 delay=30
+  with_items: ec2.instances
+  
+
 - name: Wire Evaluation DNS Connections
   hosts: 127.0.0.1
   connection: local
-  gather_facts: False
+  gather_facts: false
+  vars_files:
+    - vars/eval.yml
   tasks: 
   - route53: >
       command=create
       zone=swb.io
-      record=eval.swb.io
+      record="{{ switchboard_vhost }}"
       type=A
       ttl=7200
+      overwrite=true
       value="{{ item.public_ip }}"
     with_items: ec2.instances
     register: swb_dns
   - route53: >
       command=create
       zone=orchestra.md
-      record=eval.orchestra.md
+      record="{{ orchestra_vhost }}"
       type=A
       ttl=7200
+      overwrite=true
       value="{{ item.public_ip }}"
     with_items: ec2.instances
     register: orchestra_dns
 
-- name: Update host info
-  hosts: localhost
-  gather_facts: False
-  connection: local
+- name: bring OS up to date
   tasks:
-    - action: ec2_facts
-      with_items: ec2.instances
+    - name: dist upgrade
+      apt: upgrade=dist update_cache=yes cache_valid_time=3600
+    - name: reboot to make sure everything is fresh
+      shell: /sbin/reboot &
 
-# Configure the node
+# Don't wait for it to come up until it has gone down
+- name: wait for the server to go down (reboot)
+  local_action: wait_for host={{ item.public_ip }} port=22 state=stopped
+  with_items: ec2.instances
+
+- name: Wait for the server to wake back up
+  local_action: wait_for host={{ item.public_ip }} port=22 delay=30
+  with_items: ec2.instances
+      
+# Now, configure the node
 #-------------------------------------
 - include: eval.yml

@@ -7,49 +7,89 @@
   ignore_errors: true
 
 - name: leiningen dependencies
-  sudo: true
   apt: name={{ item }} state=latest
+  sudo: true
   with_items:
     - maven
   when: lein_exists|failed
     
 - name: get leiningen file
-  sudo: true
   get_url: url=https://raw.github.com/technomancy/leiningen/stable/bin/lein dest={{ lein_dir }}
+  sudo: true
   when: lein_exists|failed
 
 - name: leiningen needs execute permissions
-  sudo: true
   file: path={{ lein_dir }}/lein mode=0755
+  sudo: true
   when: lein_exists|failed
 
+# Create immutant user to run immutant and deploy apps: Ubuntu/Debian only
+- name: create immutant user.
+  user: name=immutant home=/home/immutant state=present 
+        groups=admin append=yes
+        comment="Runs immutant AS and apps"
+  sudo: true
+
+- name: set umask for group write perms
+  lineinfile: "dest=/home/immutant/.profile regexp='^umask' line='umask 002' insertbefore=BOF"
+  sudo: true
+  
 - name: Create lein config directory
-  file: state=directory path="{{ ansible_env.HOME }}/.lein" owner={{ remote_user }} group={{ remote_user }}
-  when: lein_exists|failed
+  file: state=directory path="/home/immutant/.lein" owner=immutant group=immutant
+  sudo: true
 
-# IMMUTANT - TODO
 - name: add the immutant plugin
-  template: src=profiles.clj.j2 dest="{{ ansible_env.HOME }}/.lein/profiles.clj"
+  template: src=profiles.clj.j2
+            dest="/home/immutant/.lein/profiles.clj"
+            owner=immutant group=immutant
+  sudo: true
 
-- name: check immutant installation
-  command: "ls {{ ansible_env.HOME }}/.immutant/releases/immutant-{{ immutant_version }}-slim"
+# Run leiningen as Immutant user to install and run Immutant
+- name: make immutant log directory
+  file: state=directory path=/var/log/immutant
+        owner=immutant group=admin
+  sudo: true
+
+- name: make immutant distribution directory
+  file: state=directory path=/var/lib/immutant
+        owner=immutant group=admin
+        mode=775
+  sudo: true
+
+- name: make source-based application directory
+  file: state=directory path=/var/lib/immutant/applications
+        owner=immutant group=admin
+        mode=775
+  sudo: true
+        
+- name: is the target version of immutant installed?
+  command: "ls /var/lib/immutant/releases/immutant-{{ immutant_version }}-slim"
   register: immutant_exists
   ignore_errors: true
 
 - name: install immutant
-  command: chdir="{{ ansible_env.HOME }}" "lein immutant install {{ immutant_version }}"
+  command: "su immutant -c 'lein immutant install {{ immutant_version }}'"
+  sudo: true
   when: immutant_exists|failed
 
-#- name: configure immutant
-#  template: 
-#  notify:
-#   - restart immutant
+- name: configure immutant
+  template: src=standalone-ha.xml.j2
+            dest="/var/lib/immutant/current/jboss/standalone/configuration/standalone-ha.xml"
+            owner=immutant group=admin
+            mode=664
+  sudo: true
+  notify:
+   - restart immutant
 
 - name: immutant upstart script
   sudo: true
-  template: src=immutant-upstart.conf.j2 dest="/etc/init/immutant.conf" mode=0755
+  template: src=immutant-upstart.conf.j2
+            dest="/etc/init/immutant.conf"
+            mode=0755
   
 - name: start immutant
   sudo: true
-  service: name=immutant state=running
+  service: name=immutant state=running enabled=yes
+
+
   

@@ -1,0 +1,37 @@
+# Deploy github-based apps to immutant via source
+---
+
+# Connect to github
+- name: test for hostkey file
+  shell: cat ~/.ssh/known_hosts
+  register: known_hosts
+  ignore_errors: true
+
+- name: remove the old host key, if any
+  command: "ssh-keygen -R github.com"
+  when: known_hosts|success
+
+- name: make sure we have the current hostkey
+  shell: "ssh-keyscan github.com >> ~/.ssh/known_hosts"
+
+- name: ensure up to date application source
+  git: repo=ssh://git@github.com/vitalreactor/switchboard
+       dest=/var/lib/immutant/applications/{{ app_name }}
+       version={{ app_git_version }}
+       depth=1
+       update=yes
+  register: git_pull
+
+- name: make immutant the owner of the tree
+  file: path=/var/lib/immutant/applications/{{ app_name }}
+        recurse=yes
+        owner=immutant
+  sudo: true
+       
+# Deploy to immutant
+- name: Deploy the application to the local immutant
+  command: su immutant -c 'lein with-profile {{ app_profiles }} immutant deploy --archive --context-path {{ app_context }} --virtual-host {{ app_vhost }}' chdir=/var/lib/immutant/applications/{{ app_name }}{{ app_root }}
+  sudo: true
+  when: git_pull|changed
+  tags: switchboard-deploy
+  

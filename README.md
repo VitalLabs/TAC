@@ -16,9 +16,9 @@ To run Ansible, you will also need a properly configured shell:
 - ssh-agent running and loaded with the deploy user private key and swb-keypair.pem
 
 We can shortcut this by:
-- running bin/ansible-env
+- running 'source bin/ansible-env'
 
-This configures the current shell with AWS credentials and keys loaded into SSH agent
+This configures the current shell with AWS credentials and appropriate keys loaded into SSH agent
 
 ## Unified Deployment
 

@@ -1,0 +1,16 @@
+---
+# Install deployer private key into deploying account
+- name: install our deployer key
+  s3: aws_access_key={{ aws_access }}
+      aws_secret_key={{ aws_secret }}
+      mode=get
+      bucket=vr-chef
+      object=/vr_deploy
+      dest=/home/deploy/.ssh/id_rsa
+
+- name: set secure permissions on private key
+  file: path=/home/deploy/.ssh/id_rsa
+        owner=deploy group=deploy
+        mode=0600
+      
+        
