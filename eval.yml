@@ -43,6 +43,7 @@
       app_profiles: "{{ switchboard_profiles }}"
       app_vhost: "{{ switchboard_vhost }}"
       app_context: "{{ switchboard_context }}"
+      app_config: "{{ switchboard_config }}"
 #    - { role: clojure-app, commit: "{{ orchestra_commit }}", tags: orchestra }
   tags: switchboard
   

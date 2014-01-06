@@ -24,6 +24,6 @@ respawn
  
 # Run the service
 script
-exec su - datomic -c 'cd {{ datomic_dir }}/runtime; {{ datomic_dir }}/runtime/bin/transactor -Xms400m -Xmx400m {{ datomic_dir}}/transactor.properties 2>&1 >> /var/log/datomic/datomic.log'
+exec su - datomic -c '{{ datomic_dir }}/current/bin/transactor -Xms400m -Xmx400m {{ datomic_dir}}/transactor.properties 2>&1 >> /var/log/datomic/datomic.log'
 end script
  

@@ -8,6 +8,7 @@
 - name: Make datomic log directory
   file: state=directory path=/var/log/datomic owner=datomic group=datomic
     
+# Download and make current if necessary
 - name: Check datomic installation
   command: "ls {{ datomic_dir }}/{{ datomic_filename }}"
   register: datomic_exists
@@ -28,23 +29,25 @@
 - name: datomic dir permissions
   shell: chown -R datomic:datomic {{ datomic_dir }}/{{ datomic_filename }}
 
-- name: Upload datomic properties file
-  template: src=transactor.properties.{{  datomic_protocol  }}.j2 dest={{ datomic_dir }}/transactor.properties owner=datomic group=datomic mode=0600
-  notify:
-    - restart datomic
-
-- name: Upload datomic upstart config file
-  template: src=datomic-upstart.conf.j2 dest=/etc/init/datomic.conf
-    
 - name: Link datomic
   file: src={{ datomic_dir }}/{{ datomic_filename }}
-        dest={{ datomic_dir }}/runtime
+        dest={{ datomic_dir }}/current
         owner=datomic
         group=datomic
         state=link
   notify:
     - restart datomic
-  when: datomic_exists|failed
 
+# Configure distribution
+- name: Upload datomic properties file
+  template: src=transactor.properties.{{  datomic_protocol  }}.j2 dest={{ datomic_dir }}/transactor.properties owner=datomic group=datomic mode=0664
+  notify:
+    - restart datomic
+
+# Deploy upstart    
+- name: Upload datomic upstart config file
+  template: src=datomic-upstart.conf.j2 dest=/etc/init/datomic.conf
+    
 - name: ensure datomic is run
   service: name=datomic state=started enabled=yes
+

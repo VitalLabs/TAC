@@ -27,11 +27,17 @@
         recurse=yes
         owner=immutant
   sudo: true
-       
+
+- name: deploy the application configuration file
+  copy: src="{{ app_config }}"
+        dest=/var/lib/immutant/applications/{{ app_name }}{{ app_root }}/config/config.edn
+        owner=immutant
+  sudo: true
+  tags: switchboard-deploy
+  
 # Deploy to immutant
 - name: Deploy the application to the local immutant
-  command: su immutant -c 'lein with-profile {{ app_profiles }} immutant deploy --archive --context-path {{ app_context }} --virtual-host {{ app_vhost }}' chdir=/var/lib/immutant/applications/{{ app_name }}{{ app_root }}
+  command: su immutant -c 'lein with-profile {{ app_profiles }} immutant deploy --context-path {{ app_context }} --virtual-host {{ app_vhost }}' chdir=/var/lib/immutant/applications/{{ app_name }}{{ app_root }}
   sudo: true
-  when: git_pull|changed
   tags: switchboard-deploy
   

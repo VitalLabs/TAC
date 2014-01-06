@@ -1,8 +1,10 @@
 ---
 cassandra_cluster: evaluation
 cassandra_listen_address: 127.0.0.1
+cassandra_native_port: 19042
 
 # Datomic archive must be cached at s3://vr-dist/archive/*.zip
+datomic_listen_address: localhost
 datomic_protocol: dev
 datomic_version: 0.8.4254
 datomic_filename: datomic-pro-0.8.4254
@@ -13,6 +15,7 @@ switchboard_version: master
 switchboard_profiles: user,dev
 switchboard_vhost: eval.swb.io
 switchboard_context: swb
+switchboard_config: ../../../files/switchboard_eval.edn
 
 orchestra_commit: master
 orchestra_mode: dev
