@@ -1,9 +1,12 @@
 # Ansible DevOps TODO list
 
 Immediate:
+- Configure orchestra to use external CORS address
+- Test production mode on eval server (fixes above)
+
 - Use IAM roles if can create from scripts (?)
 - Use git-encrypt for sensitive data
-- Change cassandra config back to default
+- Change cassandra config back to default (from 19xxx)
 
 Releases:
 x Single-node evaluation

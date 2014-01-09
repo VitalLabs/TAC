@@ -15,7 +15,7 @@
   shell: "ssh-keyscan github.com >> ~/.ssh/known_hosts"
 
 - name: ensure up to date application source
-  git: repo=ssh://git@github.com/vitalreactor/switchboard
+  git: repo={{ app_git_repo }}
        dest=/var/lib/immutant/applications/{{ app_name }}
        version={{ app_git_version }}
        depth=1
@@ -29,7 +29,7 @@
   sudo: true
 
 - name: deploy the application configuration file
-  copy: src="{{ app_config }}"
+  copy: src={{ app_config }}
         dest=/var/lib/immutant/applications/{{ app_name }}{{ app_root }}/config/config.edn
         owner=immutant
   sudo: true
@@ -37,7 +37,10 @@
   
 # Deploy to immutant
 - name: Deploy the application to the local immutant
-  command: su immutant -c 'lein with-profile {{ app_profiles }} immutant deploy --context-path {{ app_context }} --virtual-host {{ app_vhost }}' chdir=/var/lib/immutant/applications/{{ app_name }}{{ app_root }}
+  environment:
+    IMMUTANT_HOME: /var/lib/immutant/current
+  command: "su immutant -c 'lein with-profile {{ app_profiles }} immutant deploy --context-path {{ app_context }}' chdir=/var/lib/immutant/applications/{{ app_name }}{{ app_root }}" # --virtual-host {{ app_bind }}
   sudo: true
   tags: switchboard-deploy
-  
+  notify:
+    - restart immutant # Until Clojure 1.6 is available

@@ -1,0 +1,4 @@
+---
+- name: rebuild clojure assets
+  command: su - "{{ app_user }}" -c 'cd {{ app_dir }}{{ app_root }}; script/build-styles'
+  sudo: true

@@ -1,0 +1,20 @@
+# Upstart script for clojure apps run via leiningen
+
+description "Start and stop clojure application using lein"
+version "1.0"
+author "Ian Eslick"
+
+# Configuration
+# expect fork
+
+start on startup
+start on runlevel [2345]
+start on (local-filesystems and net-device-up IFACE!=lo)
+stop on runlevel [!2345]
+
+chdir {{ app_dir }}{{ app_root }}
+setuid {{ app_user }}
+setgid admin
+env DEBUG=true
+env LEIN_HOME=/home/{{ app_user }}
+exec lein trampoline with-profile {{ app_profile }} run {{ app_args }} > {{ app_log_dir }}/{{ app_name }}.log 2>&1

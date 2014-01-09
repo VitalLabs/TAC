@@ -26,7 +26,7 @@
   tags: databases
 
 # SWITCHBOARD: Deploy/Upgrade Switchboard and Orchestra
-- name: Configure Switchboard (pulls in Immutant role)
+- name: Configure Switchboard/Orchestra 
   hosts: tag_group_evaluation
   remote_user: deploy
   accelerate: true
@@ -35,22 +35,42 @@
     - vars/eval.yml
     - vars/credentials.yml
   roles:
-    - { role: datomic-client, maven_user: immutant, tags: datomic-client }
+    - { role: immutant, immutant_port: "{{ switchboard_port }}", tags: immutant }
+    - { role: datomic-client, maven_user: immutant, tags: datomic-client,switchboard }
     - role: immutant-app
       app_name: "switchboard"
       app_root: "/switchboard"
+      app_git_repo: "ssh://git@github.com/vitalreactor/switchboard"
       app_git_version: "{{ switchboard_version }}"
       app_profiles: "{{ switchboard_profiles }}"
       app_vhost: "{{ switchboard_vhost }}"
+      app_bind: "{{ switchboard_address }}"
       app_context: "{{ switchboard_context }}"
       app_config: "{{ switchboard_config }}"
-#    - { role: clojure-app, commit: "{{ orchestra_commit }}", tags: orchestra }
-  tags: switchboard
-  
-# LOAD BALANCER / PROXY: Ensure we have a local proxy ready to route requests
-#- name: Virtual server proxies
-#  remote_user: deploy
-#  roles:
-#    - { role: proxy, tags: proxy }
+      tags: switchboard
+    - role: clojure-app
+      app_user: "deploy"
+      app_name: "orchestra"
+      app_dir: "/var/lib/swb-orchestra"
+      app_root: "/orchestra"
+      app_git_repo: "ssh://git@github.com/vitalreactor/switchboard"
+      app_git_version: "{{ orchestra_commit }}"
+      app_profile: "{{ orchestra_profiles }}"
+      app_args: ""
+      app_log_dir: "/var/log/clojure"
+      tags: orchestra
+  tags: application
+      
+# PROXY: Ensure we have a local proxy ready to route requests
+- name: Virtual server proxies
+  hosts: tag_group_evaluation
+  remote_user: deploy
+  accelerate: true
+  accelerate_port: 5098
+  vars_files:
+    - vars/eval.yml
+  roles:
+    - { role: eval-proxy, tags: eval-proxy }
+  tags: proxy
 
 

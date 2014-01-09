@@ -1,5 +1,7 @@
 ---
-cassandra_cluster: evaluation
+cluster_name: evaluation
+
+cassandra_cluster: "{{ cluster_name }}"
 cassandra_listen_address: 127.0.0.1
 cassandra_native_port: 19042
 
@@ -12,11 +14,15 @@ datomic_filename: datomic-pro-0.8.4254
 immutant_version: 1.0.2
 
 switchboard_version: master
-switchboard_profiles: user,dev
+switchboard_profiles: dev
 switchboard_vhost: eval.swb.io
-switchboard_context: swb
+switchboard_address: localhost
+switchboard_port: 8090
+switchboard_context: api
 switchboard_config: ../../../files/switchboard_eval.edn
 
 orchestra_commit: master
-orchestra_mode: dev
+orchestra_profiles: user,dev
 orchestra_vhost: eval.orchestra.md
+orchestra_address: localhost
+orchestra_port: 3000

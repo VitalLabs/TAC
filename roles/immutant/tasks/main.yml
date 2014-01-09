@@ -43,6 +43,9 @@
             dest="/home/immutant/.lein/profiles.clj"
             owner=immutant group=immutant
   sudo: true
+  notify:
+    - restart immutant
+  tags: configure-immutant
 
 # Run leiningen as Immutant user to install and run Immutant
 - name: make immutant log directory
@@ -73,23 +76,28 @@
   when: immutant_exists|failed
 
 - name: configure immutant
-  template: src=standalone-ha.xml.j2
-            dest="/var/lib/immutant/current/jboss/standalone/configuration/standalone-ha.xml"
-            owner=immutant group=admin
-            mode=664
+  template: >
+    src=standalone-ha.xml.j2
+    dest="/var/lib/immutant/current/jboss/standalone/configuration/standalone-ha.xml"
+    owner=immutant group=admin
+    mode=664
   sudo: true
   notify:
-   - restart immutant
+    - restart immutant
+  tags: configure-immutant
 
 - name: immutant upstart script
+  template: >    
+    src=immutant-upstart.conf.j2
+    dest=/etc/init/immutant.conf
+    mode=0755
   sudo: true
-  template: src=immutant-upstart.conf.j2
-            dest="/etc/init/immutant.conf"
-            mode=0755
+  notify:
+    - restart immutant
+  tags: configure-immutant
   
 - name: start immutant
-  sudo: true
   service: name=immutant state=running enabled=yes
+  sudo: true
 
 
-  
