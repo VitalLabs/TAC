@@ -3,8 +3,7 @@ LoadModule proxy_http_module /usr/lib/apache2/modules/mod_proxy_http.so
 LoadModule rewrite_module /usr/lib/apache2/modules/mod_rewrite.so
 
 # Put this with your other VirtualHosts, or at the bottom of the file
-NameVirtualHost {{ orchestra_vhost }}:80
-<VirtualHost {{ orchestra_vhost }}:80>
+<VirtualHost *:80>
     ServerName {{ orchestra_vhost }}
 
 	RewriteEngine On
@@ -25,24 +24,24 @@ NameVirtualHost {{ orchestra_vhost }}:80
     </Location>
 </VirtualHost>
 
-NameVirtualHost {{ switchboard_vhost }}:80
-<VirtualHost {{ switchboard_vhost }}:80>
-    ServerName {{ orchestra_vhost }}
+# NameVirtualHost *:80
+# <VirtualHost *:80>
+#     ServerName {{ orchestra_vhost }}
  
-    ProxyRequests Off
-    <Proxy *>
-        Order deny,allow
-        Allow from all
-    </Proxy>
+#     ProxyRequests Off
+#     <Proxy *>
+#         Order deny,allow
+#         Allow from all
+#     </Proxy>
 
-    ProxyPass / http://{{ ec2_private_ip_address }}:{{ switchboard_port }}/
- 	ProxyPassReverse / http://{{ ec2_private_ip_address }}:{{ switchboard_port }}/
+#     ProxyPass / http://{{ ec2_private_ip_address }}:{{ switchboard_port }}/
+#  	ProxyPassReverse / http://{{ ec2_private_ip_address }}:{{ switchboard_port }}/
 	
-    <Location />
-        Order allow,deny
-        Allow from all
-    </Location>
-</VirtualHost>
+#     <Location />
+#         Order allow,deny
+#         Allow from all
+#     </Location>
+# </VirtualHost>
 
 
 

@@ -8,16 +8,18 @@ description "This is an upstart job file for Immutant"
  
 start on (local-filesystems and net-device-up IFACE!=lo)
 stop on runlevel [016]
-respawn
+# respawn
  
 limit nofile 4096 4096
 
 kill signal SIGINT
 
+expect fork
+
 script
 bash << "EOF"
   su - immutant
   export IMMUTANT_HOME=/var/lib/immutant/current
-  lein immutant run --clustered -b {{ ec2_private_ip_address }} -Djboss.port={{ immutant_port }} >> /var/log/immutant/immutant.log 2>&1
+  exec lein immutant run --clustered -b {{ ec2_private_ip_address }} -Djboss.port={{ immutant_port }} >> /var/log/immutant/immutant.log 2>&1
 EOF
 end script
