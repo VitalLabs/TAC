@@ -8,16 +8,16 @@ cassandra_native_port: 19042
 # Datomic archive must be cached at s3://vr-dist/archive/*.zip
 datomic_listen_address: localhost
 datomic_protocol: dev
-datomic_version: 0.8.4254
-datomic_filename: datomic-pro-0.8.4254
+datomic_version: 0.9.4384
+datomic_filename: datomic-pro-0.9.4384
 
 immutant_version: 1.0.2
 
-switchboard_version: master
+switchboard_version: c1faa35ea7eca0136dacc5066cb66d95672fa1de # Jan 13
 switchboard_profiles: dev
 switchboard_vhost: eval.swb.io
 switchboard_address: localhost
-switchboard_port: 8090
+switchboard_port: 8080
 switchboard_context: api
 switchboard_config: ../../../files/switchboard_eval.edn
 
