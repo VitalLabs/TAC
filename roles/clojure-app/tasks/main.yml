@@ -43,11 +43,13 @@
        update=yes
   notify:
     - rebuild clojure assets
+  tags: git_update
 
 - name: make {{ app_user }} the owner of the tree
   file: path={{ app_dir }} owner={{ app_user }} group=admin
         recurse=yes
   sudo: true
+  tags: git_update
 
 - name: build the UI scripts
   command: "script/build-styles chdir={{ app_dir }}{{ app_root }}"

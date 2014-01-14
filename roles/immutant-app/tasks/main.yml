@@ -14,6 +14,16 @@
 - name: make sure we have the current hostkey
   shell: "ssh-keyscan github.com >> ~/.ssh/known_hosts"
 
+- name: make sure permissions are appropriate for deployer to update
+  file: path=/var/lib/immutant/applications/{{ app_name }}
+        recurse=yes
+        owner=immutant
+        group=deploy
+        mode=775
+  sudo: true
+  tags: git_update
+  ignore_errors: true
+  
 - name: ensure up to date application source
   git: repo={{ app_git_repo }}
        dest=/var/lib/immutant/applications/{{ app_name }}
@@ -21,12 +31,16 @@
        depth=1
        update=yes
   register: git_pull
+  tags: git_update
 
 - name: make immutant the owner of the tree
   file: path=/var/lib/immutant/applications/{{ app_name }}
         recurse=yes
         owner=immutant
+        group=deploy
+        mode=775
   sudo: true
+  tags: git_update
 
 - name: deploy the application configuration file
   copy: src={{ app_config }}
