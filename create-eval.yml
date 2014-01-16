@@ -41,7 +41,7 @@
   connection: local
   roles:
     - role: ec2
-      id: "eval4"        # ensure uniqueness
+      id: "eval5"        # ensure uniqueness
       type: "singleton" # unused
       group: "evaluation" # use for each dist type
       register_group: "tag_group_evaluation" # fake-out use of tags

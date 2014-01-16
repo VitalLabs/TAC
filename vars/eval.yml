@@ -13,7 +13,7 @@ datomic_filename: datomic-pro-0.9.4384
 
 immutant_version: 1.0.2
 
-switchboard_version: c1faa35ea7eca0136dacc5066cb66d95672fa1de # Jan 13
+switchboard_version: HEAD # Jan 13
 switchboard_profiles: dev
 switchboard_vhost: eval.swb.io
 switchboard_address: localhost
@@ -21,7 +21,7 @@ switchboard_port: 8080
 switchboard_context: api
 switchboard_config: ../../../files/switchboard_eval.edn
 
-orchestra_commit: master
+orchestra_commit: HEAD
 orchestra_profiles: user,dev
 orchestra_vhost: eval.orchestra.md
 orchestra_address: localhost
