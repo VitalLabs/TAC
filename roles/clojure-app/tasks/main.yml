@@ -51,11 +51,22 @@
   sudo: true
   tags: git_update
 
-- name: build the UI scripts
+- name: build the UI stylesheets
   command: "script/build-styles chdir={{ app_dir }}{{ app_root }}"
-  tags: orchestra-build
-  
-# Upstart script for lein-based app
+  tags: clojure-build
+
+- name: build the application javascript
+  command: "lein run -m script.build chdir={{app_dir}}{{ app_root }}"
+  tags: clojure-build
+
+- name: update the root html parameters
+  lineinfile: dest={{ app_dir }}{{ app_root }}/out/public/orchestra.html
+              regexp="window.orchestraConfig = "
+              line="      window.orchestraConfig = '{:appid {{ switchboard_app }} :host \"{{ switchboard_vhost }}\" :port \"{{ switchboard_port }}\" :dev false}'"
+              state=present
+  tags: clojure-build
+              
+# Upstart script for eval server at localhost:3000
 - name: application upstart script
   sudo: true
   template: src=upstart.conf.j2

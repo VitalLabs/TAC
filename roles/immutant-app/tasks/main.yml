@@ -56,5 +56,5 @@
   command: "su immutant -c 'lein with-profile {{ app_profiles }} immutant deploy --context-path {{ app_context }}' chdir=/var/lib/immutant/applications/{{ app_name }}{{ app_root }}" # --virtual-host {{ app_bind }}
   sudo: true
   tags: switchboard-deploy
-  notify:
-    - restart immutant # Until Clojure 1.6 is available
+#  notify:
+#    - restart immutant # Until Clojure 1.6 is available

@@ -19,12 +19,16 @@
             to_port: 443
             cidr_ip: 0.0.0.0/0
           - proto: tcp
+            from_port: 3000
+            to_port: 3000
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
             from_port: 8080
             to_port: 8080
             cidr_ip: 0.0.0.0/0
           - proto: tcp
-            from_port: 8090
-            to_port: 8090
+            from_port: 8888
+            to_port: 8888
             cidr_ip: 0.0.0.0/0
           - proto: tcp
             from_port: 22

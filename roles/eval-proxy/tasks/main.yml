@@ -4,24 +4,32 @@
   with_items:
     - apache2
   sudo: true
-    
+
+- name: enable caching
+  command: a2enmod cache
+  notify:
+    - restart apache
+  
 - name: configure apache
   template: src=switchboard.conf.j2
             dest=/etc/apache2/sites-available/switchboard
             mode=644
   sudo: true
+  tags: proxy-config
   notify:
     - reload apache
 
 - name: enable our site
   command: a2ensite switchboard
   sudo: true
+  tags: proxy-config
   notify:
     - reload apache
 
 - name: disable the default
   command: a2dissite default
   sudo: true
+  tags: proxy-config
   notify:
     - reload apache
   

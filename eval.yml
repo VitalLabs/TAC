@@ -35,7 +35,10 @@
     - vars/eval.yml
     - vars/credentials.yml
   roles:
-    - { role: immutant, immutant_port: "{{ switchboard_port }}", tags: immutant }
+    - role: immutant
+      immutant_address: "{{ switchboard_address }}"
+      immutant_port: "{{ switchboard_port }}"
+      tags: immutant
     - { role: datomic-client, maven_user: immutant, tags: datomic-client,switchboard }
     - role: immutant-app
       app_name: "switchboard"
@@ -58,6 +61,9 @@
       app_profile: "{{ orchestra_profiles }}"
       app_args: ""
       app_log_dir: "/var/log/clojure"
+      switchboard_vhost: "{{ switchboard_vhost }}"
+      switchboard_port: "80"
+      switchboard_app: "1"
       tags: orchestra
   tags: application
       
@@ -70,7 +76,12 @@
   vars_files:
     - vars/eval.yml
   roles:
-    - { role: eval-proxy, tags: eval-proxy }
+    - role: eval-proxy
+      app_dir: "/var/lib/swb-orchestra"
+      app_root: "/orchestra"
+      switchboard_vhost: "{{ switchboard_vhost }}"
+      switchboard_proxy_port: "8080"
+      tags: eval-proxy
   tags: proxy
 
 
