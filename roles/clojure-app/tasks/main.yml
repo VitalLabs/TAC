@@ -60,10 +60,10 @@
   tags: clojure-build
 
 - name: update the root html parameters
-  lineinfile: dest={{ app_dir }}{{ app_root }}/out/public/orchestra.html
-              regexp="window.orchestraConfig = "
-              line="      window.orchestraConfig = '{:appid {{ switchboard_app }} :host \"{{ switchboard_vhost }}\" :port \"{{ switchboard_port }}\" :dev false}'"
-              state=present
+  template: src=config.js.j2
+            dest="{{ app_dir }}{ app_root }}/out/public/config.js"
+            mode=644
+  sudo: true
   tags: clojure-build
               
 # Upstart script for eval server at localhost:3000
