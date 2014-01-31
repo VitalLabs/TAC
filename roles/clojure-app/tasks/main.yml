@@ -61,7 +61,7 @@
 
 - name: update the root html parameters
   template: src=config.js.j2
-            dest="{{ app_dir }}{ app_root }}/out/public/config.js"
+            dest="{{ app_dir }}{{ app_root }}/out/public/config.js"
             mode=644
   sudo: true
   tags: clojure-build
