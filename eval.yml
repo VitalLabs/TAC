@@ -61,7 +61,7 @@
       app_profile: "{{ orchestra_profiles }}"
       app_args: ""
       app_log_dir: "/var/log/clojure"
-      switchboard_vhost: "{{ switchboard_vhost }}"
+      switchboard_client_url: "{{ switchboard_client_url }}"
       switchboard_port: "80"
       switchboard_app: "1"
       tags: orchestra

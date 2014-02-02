@@ -11,18 +11,15 @@ LoadModule cache_module /usr/lib/apache2/modules/mod_cache.so
  	DocumentRoot {{ app_dir }}{{ app_root }}/out/public
 	DirectoryIndex orchestra.html
 
-    CacheEnable mem /
 #	MCacheSize 16394
 #	MCacheMaxObjectCount 100
 # 	MCacheMinObjectSize 1
 #	MCacheMaxObjectSize 4096000
 
-	<Location /api>
-	     ProxyPass /api http://localhost:{{ switchboard_proxy_port }}/
-		 ProxyPassReverse /api http://localhost:{{ switchboard_proxy_port }}/
-		 Order allow,deny
-		 Allow from all
-	</Location>
+    ProxyPass /api http://localhost:{{ switchboard_proxy_port }}/api
+    ProxyPassReverse /api http://localhost:{{ switchboard_proxy_port }}/api
+
+    CacheEnable mem /
 
     <Location />
 	     Order allow,deny

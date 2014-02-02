@@ -16,6 +16,7 @@ immutant_version: 1.0.2
 switchboard_version: HEAD # Jan 13
 switchboard_profiles: dev
 switchboard_vhost: eval.orchestra.md
+switchboard_client_url: http://eval.orchestra.md
 switchboard_address: localhost
 switchboard_port: 8080
 switchboard_context: api
