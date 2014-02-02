@@ -17,6 +17,13 @@ LoadModule cache_module /usr/lib/apache2/modules/mod_cache.so
 # 	MCacheMinObjectSize 1
 #	MCacheMaxObjectSize 4096000
 
+	<Location /api>
+	     ProxyPass /api http://localhost:{{ switchboard_proxy_port }}/
+		 ProxyPassReverse /api http://localhost:{{ switchboard_proxy_port }}/
+		 Order allow,deny
+		 Allow from all
+	</Location>
+
     <Location />
 	     Order allow,deny
 		 Allow from all
