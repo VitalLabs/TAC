@@ -44,7 +44,7 @@ LoadModule cache_module /usr/lib/apache2/modules/mod_cache.so
          Allow from all
      </Proxy>
  
-     ProxyPass / http://localhost:{{ switchboard_proxy_port }}/
+     ProxyPass / http://localhost:{{ switchboard_proxy_port }}/ connectiontimeout=30 timeout=900
      ProxyPassReverse / http://localhost:{{ switchboard_proxy_port }}/
 
      <Location />
