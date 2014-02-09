@@ -39,7 +39,6 @@
       immutant_address: "{{ switchboard_address }}"
       immutant_port: "{{ switchboard_port }}"
       tags: immutant
-    - { role: datomic-client, maven_user: immutant, tags: datomic-client,switchboard }
     - role: immutant-app
       app_name: "switchboard"
       app_root: "/switchboard"

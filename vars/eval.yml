@@ -9,7 +9,8 @@ cassandra_native_port: 19042
 datomic_listen_address: localhost
 datomic_protocol: dev
 datomic_version: 0.9.4384
-datomic_filename: datomic-pro-0.9.4384
+datomic_type: datomic-pro
+datomic_filename: {{ datomic_type }}-{{datomic_version }}
 
 immutant_version: 1.0.2
 

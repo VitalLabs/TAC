@@ -19,11 +19,11 @@
   when: datomic_exists|failed
 
 - name: Download datomic
-  s3: bucket=vr-dist object=/archives/{{ datomic_filename }}.zip dest={{ datomic_dir }}/{{ datomic_filename }}.zip mode=get aws_access_key={{ aws_access }} aws_secret_key={{ aws_secret }}
+  command: "chdir={{ datomic_dir }} wget --http-user=ian@vitalreactor.com --http-password={{ datomic_download_key }} https://my.datomic.com/repo/com/datomic/datomic-pro/{{ datomic_version }}/datomic-pro-{{ datomic_version }}.zip"
   when: datomic_exists|failed
 
 - name: Unpack datomic
-  command: chdir={{ datomic_dir }} unzip {{ datomic_filename }}.zip
+  command: chdir={{ datomic_dir }} unzip datomic-pro-{{ datomic_version }}.zip
   when: datomic_exists|failed
 
 - name: datomic dir permissions
