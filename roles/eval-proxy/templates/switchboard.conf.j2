@@ -1,9 +1,3 @@
-LoadModule proxy_module /usr/lib/apache2/modules/mod_proxy.so
-LoadModule proxy_http_module /usr/lib/apache2/modules/mod_proxy_http.so
-LoadModule rewrite_module /usr/lib/apache2/modules/mod_rewrite.so
-LoadModule deflate_module /usr/lib/apache2/modules/mod_deflate.so
-LoadModule cache_module /usr/lib/apache2/modules/mod_cache.so
-
 # Put this with your other VirtualHosts, or at the bottom of the file
 
  <VirtualHost *:80>
@@ -19,38 +13,48 @@ LoadModule cache_module /usr/lib/apache2/modules/mod_cache.so
     ProxyPass /api http://localhost:{{ switchboard_proxy_port }}/api
     ProxyPassReverse /api http://localhost:{{ switchboard_proxy_port }}/api
 
-    CacheEnable mem /
-
     <Location />
-	     Order allow,deny
+	     Order deny,allow
 		 Allow from all
+		 Options -Indexes
 		 
    		 AddOutputFilterByType DEFLATE text/html
 		 AddOutputFilterByType DEFLATE text/javascript
 		 AddOutputFilterByType DEFLATE application/javascript
 		 AddOutputFilterByType DEFLATE application/css
-
 	</Location>
 	
 </VirtualHost>
 
 
 <VirtualHost *:80>
-     ServerName {{ switchboard_vhost }}
+    ServerName {{ switchboard_vhost }}
 	 
-     ProxyRequests Off
-     <Proxy *>
-         Order deny,allow
-         Allow from all
-     </Proxy>
- 
-     ProxyPass / http://localhost:{{ switchboard_proxy_port }}/ connectiontimeout=30 timeout=900
-     ProxyPassReverse / http://localhost:{{ switchboard_proxy_port }}/
+    ProxyPass / http://localhost:{{ switchboard_proxy_port }}/ connectiontimeout=30 timeout=900
+    ProxyPassReverse / http://localhost:{{ switchboard_proxy_port }}/
+	ProxyVia On
+	
+	Header set Access-Control-Allow-Methods "GET"
+	Header append Access-Control-Allow-Methods "POST"
+	Header append Access-Control-Allow-Methods "OPTIONS"
+	Header append Access-Control-Expose-Headers "Set-Cookie"
+	Header append Access-Control-Expose-Headers "Accept"
+	
+    Header set Pragma "nocache"
+	Header set Cache-Control "no-cache"
+	Header set Expires "0"
 
      <Location />
-         Order allow,deny
+         Order deny,allow
          Allow from all
+		 Options -Indexes
+		 
+   		 AddOutputFilterByType DEFLATE text/html
+		 AddOutputFilterByType DEFLATE text/javascript
+		 AddOutputFilterByType DEFLATE application/javascript
+		 AddOutputFilterByType DEFLATE application/css
      </Location>
+	 
  </VirtualHost>
 
 # <VirtualHost *:80>

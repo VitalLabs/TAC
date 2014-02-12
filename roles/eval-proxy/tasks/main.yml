@@ -9,7 +9,27 @@
   command: a2enmod cache
   notify:
     - restart apache
-  
+
+- name: enable proxy
+  command: a2enmod proxy
+  notify:
+    - restart apache
+
+- name: enable http proxy
+  command: a2enmod proxy_http
+  notify:
+    - restart apache
+
+- name: enable compression
+  command: a2enmod deflate
+  notify:
+    - restart apache
+
+- name: enable header injection
+  command: a2enmod headers
+  notify:
+    - restart apache
+    
 - name: configure apache
   template: src=switchboard.conf.j2
             dest=/etc/apache2/sites-available/switchboard
