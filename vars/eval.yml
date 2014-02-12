@@ -8,9 +8,9 @@ cassandra_native_port: 19042
 # Datomic archive must be cached at s3://vr-dist/archive/*.zip
 datomic_listen_address: localhost
 datomic_protocol: dev
-datomic_version: 0.9.4532
+datomic_version: 0.9.4384
 datomic_type: datomic-pro
-datomic_filename: {{ datomic_type }}-{{datomic_version }}
+datomic_filename: "{{ datomic_type }}-{{datomic_version }}"
 
 immutant_version: 1.1.0
 

@@ -19,7 +19,7 @@
   when: datomic_exists|failed
 
 - name: Download datomic
-  command: "chdir={{ datomic_dir }} wget --http-user=ian@vitalreactor.com --http-password={{ datomic_download_key }} https://my.datomic.com/repo/com/datomic/datomic-pro/{{ datomic_version }}/datomic-pro-{{ datomic_version }}.zip"
+  command: "chdir={{ datomic_dir }} wget --http-user=ian@vitalreactor.com --http-password={{ datomic_download_key }} https://my.datomic.com/repo/com/datomic/datomic-pro/{{ datomic_version }}/datomic-pro-{{ datomic_version }}.zip --no-check-certificate -O datomic-pro-{{ datomic_version }}.zip"
   when: datomic_exists|failed
 
 - name: Unpack datomic
