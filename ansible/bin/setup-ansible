@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Usage: 'source bin/ansible-setup'
+
+if [ -a bin/aws_access ]; then
+   export AWS_ACCESS_KEY_ID="`cat bin/aws_access`"
+   export AWS_SECRET_ACCESS_KEY="`cat bin/aws_secret`"
+fi
+
+ssh-add -D
+
+# Talk to Switchboard nodes via Ubuntu user
+if [ -a ~/.ssh/swb-keypair.pem ]; then
+   ssh-add ~/.ssh/swb-keypair.pem
+fi
+
+# SSH access for our deploy user
+if [ -a ~/.ssh/deploy ]; then
+   ssh-add ~/.ssh/deploy
+fi
+
+# Legacy keys
+#if [ -a ~/.ssh/vr-pe-keypair.pem ]; then
+#   ssh-add ~/.ssh/vr-pe-keypair.pem
+#fi
+
+#if [ -a ~/.ssh/vr-c3n-keypair.pem ]; then
+#   ssh-add ~/.ssh/vr-c3n-keypair.pem
+#fi

@@ -1,0 +1,23 @@
+---
+# Install Java 7
+- name: ensuring add-apt-repository is installed
+  apt: pkg=python-software-properties state=latest
+  tags: java
+ 
+- name: adding webupd8 ppa for java7 installer
+  apt_repository: repo=ppa:webupd8team/java
+  tags: java
+ 
+- name: updating apt cache
+  apt: update_cache=yes cache_valid_time=3600
+  tags: java
+ 
+- name: installing java7
+  # Installer is interactive so force all answers to yes.
+  # http://askubuntu.com/a/190674/67778
+  shell: echo debconf shared/accepted-oracle-license-v1-1 select true |
+         debconf-set-selections && 
+         echo debconf shared/accepted-oracle-license-v1-1 seen true | 
+         debconf-set-selections &&
+         apt-get -y install oracle-java7-installer
+  tags: java
