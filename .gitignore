@@ -1,3 +1,4 @@
 vars/credentials.yml
 node_modules
 bin/aws_*
+.DS_Store
