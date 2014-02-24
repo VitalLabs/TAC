@@ -1,4 +1,7 @@
 ---
+
+# DEPLOYMENT
+
 - name: Create datomic user.
   user: name=datomic state=present
 
@@ -37,6 +40,9 @@
         state=link
   notify:
     - restart datomic
+
+
+# CONFIGURE
 
 # Configure distribution
 - name: Upload datomic properties file

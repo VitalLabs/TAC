@@ -1,5 +1,5 @@
 ---
-# LEININGEN
+# DEPLOY LEININGEN (SEPARATE ROLE?)
 
 - name: Check leiningen installation
   command: "ls {{ lein_dir }}/lein"
@@ -46,6 +46,9 @@
   notify:
     - restart immutant
   tags: configure-immutant
+
+
+# DEPLOY IMMUTANT
 
 # Run leiningen as Immutant user to install and run Immutant
 - name: make immutant log directory
@@ -101,3 +104,4 @@
   sudo: true
 
 
+# NO LAST MILE CONFIG FOR IMMUTANT
