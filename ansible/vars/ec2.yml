@@ -1,5 +1,5 @@
 ---
-ec2_bin_path: /opt/ec2/tools/bin/
+ec2_bin_path: /path/to/ec2/tools/bin/
 appcount:2
 dbcount:2
 proxcount:2
