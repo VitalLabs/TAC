@@ -1,7 +1,6 @@
 ---
 #Create and config the VPC
-- name: VPC create/config
-  hosts: localhost
+- hosts: localhost
   connection: local
   gather_facts: False
   vars_files:
