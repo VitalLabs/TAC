@@ -1,5 +1,5 @@
 ---
-#Provision some DB instances:
+#Provision some proxy instances:
 hosts: localhost
 gather_facts: False
 vars_files:
