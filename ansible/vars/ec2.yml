@@ -7,7 +7,7 @@ ec2_image: ami-9c78c0f5 # ami-ef795786 - Ubuntu 13.04 raring # ami-9c78c0f5 - Ub
 ec2_instance_type: m1.medium
 ec2_keypair: anstest
 ec2_security_group: default
-ec2_vpc_id: vpc-33936556
 ec2_app_instance_count: 2
 ec2_proxy_instance_count: 2
 ec2_db_instance_count: 2
+ec2_vpc_id: vpc-33936556
