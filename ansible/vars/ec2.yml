@@ -1,0 +1,10 @@
+---
+ec2_bin_path: /opt/ec2/tools/bin/
+appcount=2
+dbcount=2
+proxcount=2
+keypair=
+security_group=
+instance_type=
+image=
+region=
