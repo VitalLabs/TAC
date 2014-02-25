@@ -1,0 +1,4 @@
+---
+- include: launch-proxy.yml
+- include: launch-db.yml
+- include: launch-app.yml

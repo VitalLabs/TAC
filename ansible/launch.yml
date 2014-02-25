@@ -1,7 +1,0 @@
----
-- include: ec2deploy/launch-proxy.yml
-  vars_files:
-- include: ec2deploy/launch-db.yml
-  vars_files:
-- include: ec2deploy/launch-app.yml
-  vars_files: 
