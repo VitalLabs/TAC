@@ -14,7 +14,7 @@ tasks:
     instance_type={{ instance_type }} 
     image={{ image }} 
     region={{ region }} 
-    vpc_subnet_id={{ vpcnetid }} 
+    vpc_subnet_id={{ vpc.vpc_id }} 
     instance_tags='{"db":"all"}' 
     wait=true 
     count={{ dbcount }}
