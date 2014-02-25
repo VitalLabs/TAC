@@ -1,0 +1,4 @@
+---
+- include: ec2deploy/launch-proxy.yml
+- include: ec2deploy/launch-db.yml
+- include: ec2deploy/launch-app.yml
