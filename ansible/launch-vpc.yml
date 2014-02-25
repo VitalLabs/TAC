@@ -62,7 +62,3 @@ tasks:
     ec2_access_key: "{{ ec2_access_key }}"
     ec2_secret_key: "{{ ec2_secret_key }}"
     rules: "{{ vpc_group.rules }}"
-
-- include: launch-proxy.yml
-- include: launch-db.yml
-- include: launch-app.yml
