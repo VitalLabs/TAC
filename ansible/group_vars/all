@@ -15,7 +15,7 @@ ec2_db_instance_count: 2
 
 ### MUST BE SET TO THE VPC ID YOU CREATED WHEN YOU RAN ec2_vpc.yml  
 ## WARNING:  COMMENT THIS OUT WHEN RUNNING ec2_vpc.yml !!!!!!!!!!!
-ec2_vpc_id: vpc-33936556
+#ec2_vpc_id: vpc-33936556
 
 ### OPTIONAL FOR TESTING: generic AMIs:
 #ec2_raring_image: ami-ef795786 

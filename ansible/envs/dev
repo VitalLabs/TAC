@@ -18,7 +18,7 @@ vpc_public_subnet: 10.0.1.0/24
 vpc_nat_instance_id: ami-4f9fee26
 vpc_nat_instance_type: t1.micro
 vpc_group:
-   name: dev_vpc_sec_group
+   name: dev_vpc
    desc: the security group for the dev vpc
    rules:
       - proto: tcp
@@ -30,39 +30,27 @@ vpc_group:
         to_port: 22
         cidr_ip: 10.0.0.0/8
 
-# List of instances to be created in this environment.
+# Tricky magicks:
 
 vpc_instances:
   - instance_type: m1.medium
-    image: ami-bf5021d6
+    image: ami-9c78c0f5
     keypair: anstest
-    group: dev_vpc_sec_group
+    group: dev_vpc
     instance_tags: 
-        Name: dev_app_server
+        Name: dev_db
     exact_count: 2
     count_tag: 
-        Name: dev_app_server
-    subnet: 10.0.2.0/24
+        Name: dev_db
+    subnet: 10.0.1.0/24
 
   - instance_type: m1.medium
-    image: ami-bf5021d6
+    image: ami-9c78c0f5
     keypair: anstest
-    group: dev_vpc_sec_group
+    group: dev_vpc
     instance_tags: 
-        Name: dev_db_server
+        Name: dev_app
     exact_count: 2
     count_tag: 
-        Name: dev_db_server
+        Name: dev_app
     subnet: 10.0.2.0/24
-
-  - instance_type: m1.medium
-    image: ami-bf5021d6
-    keypair: anstest
-    group: dev_vpc_sec_group
-    instance_tags: 
-        Name: dev_proxy_server
-    exact_count: 2
-    count_tag: 
-        Name: dev_proxy_server
-    subnet: 10.0.2.0/24
-

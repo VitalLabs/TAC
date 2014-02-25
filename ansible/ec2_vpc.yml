@@ -46,6 +46,7 @@
     register: ec2
     with_items: vpc.subnets
     when: vpc_internet_gateway and item['cidr'] == vpc_public_subnet
+    
   - name: Get the routing table entry for the main table.
     shell: > 
       {{ ec2_bin_path }}/ec2-describe-route-tables -O {{ ec2_access_key }} -W {{ ec2_secret_key }} -F vpc-id={{ vpc.vpc_id }} -F "association.main=true"  | grep ROUTETABLE | awk '{ print $2 }'
