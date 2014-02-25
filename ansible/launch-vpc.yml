@@ -4,7 +4,7 @@ vars_files:
   - vars/ec2.yml
 tasks:
 - name: Include the variables specific to the vpc
-  include_vars: envs/{{ environ| default("dev") }}   
+  include_vars: envs/ec2.yml  
 - name: Create the VPC 
   local_action:
     module: ec2_vpc
