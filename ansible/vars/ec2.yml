@@ -1,10 +1,33 @@
 ---
 ec2_bin_path: /opt/ec2/tools/bin/
-appcount=2
-dbcount=2
-proxcount=2
-keypair=
-security_group=
-instance_type=
-image=
-region=
+appcount:2
+dbcount:2
+proxcount:2
+keypair:
+security_group:
+instance_type:
+image:
+region:
+vpc_cidr_block:
+vpc_subnets:
+vpc_internet_gateway: "yes"
+vpc_route_tables:
+  - subnets:
+    - x.x.x.x/24
+    routes:
+    - dest: 0.0.0.0/0
+      gw: igw
+vpc_public_subnet:
+vpc_nat_instance_id:
+vpc_nat_instance_type:
+vpc_group:
+  name: vpc_group_stack
+  rules:
+    - proto: tcp
+      from_port: 80
+      to_port: 80
+      cidr_ip: 0.0.0.0/0
+    - proto: tcp
+      from_port: 22
+      to_port: 22
+      cidr_ip: 10.0.0.0/8
