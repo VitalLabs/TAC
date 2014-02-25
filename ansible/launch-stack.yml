@@ -1,4 +1,14 @@
 ---
+vars:
+  appcount=2
+  dbcount=2
+  proxcount=2
+  keypair=
+  security_group=
+  instance_type=
+  image=
+  region=
+tasks:
 - include: launch-proxy.yml
 - include: launch-db.yml
 - include: launch-app.yml
