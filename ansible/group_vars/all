@@ -12,8 +12,11 @@ ec2_security_group: default
 ec2_app_instance_count: 2
 ec2_proxy_instance_count: 2
 ec2_db_instance_count: 2
-### PLACEHOLDER, REMOVE OR COMMENT OUT WHEN LAUNCHING VPC PLAYBOOK:
-ec2_vpc_id: vpc-33936556
+
+### MUST BE SET TO THE VPC ID YOU CREATED WHEN YOU RAN ec2_vpc.yml  
+## WARNING:  COMMENT THIS OUT WHEN RUNNING ec2_vpc.yml !!!!!!!!!!!
+#ec2_vpc_id: vpc-33936556
+
 ### OPTIONAL FOR TESTING: generic AMIs:
-ec2_raring_image: ami-ef795786 
-ec2_LTS_image: ami-9c78c0f5
+#ec2_raring_image: ami-ef795786 
+#ec2_LTS_image: ami-9c78c0f5
