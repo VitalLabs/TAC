@@ -1,4 +1,5 @@
 ---
+#Create and config the VPC
 - name: VPC create/config
   hosts: localhost
   connection: local
@@ -7,20 +8,24 @@
   - vars/ec2.yml
   tasks:
   - name: Create the VPC 
-  ec2_vpc: >
-    state=present
-    region="{{ ec2_region }}"
-    ec2_access_key="{{ ec2_access_key }}"
-    ec2_secret_key="{{ ec2_secret_key }}"
-    cidr_block="{{ vpc_cidr_block }}"
-    subnets="{{ vpc_subnets }}"
-    internet_gateway="{{ vpc_internet_gateway|string }}"
-    route_tables="{{ vpc_route_tables }}"
-    wait: true
-  register: vpc  
+    ec2_vpc: >
+     state=present
+     region="{{ ec2_region }}"
+     ec2_access_key="{{ ec2_access_key }}"
+     ec2_secret_key="{{ ec2_secret_key }}"
+     cidr_block="{{ vpc_cidr_block }}"
+     subnets="{{ vpc_subnets }}"
+     internet_gateway="{{ vpc_internet_gateway|string }}"
+     route_tables="{{ vpc_route_tables }}"
+     wait=true
+    register: vpc  
 
   - name: Write out a temporary file for mapping subnet to id
-  template: src=templates/subnet_id.j2 dest=/tmp/subnet_id
+    template: src=templates/subnet_id.j2 dest=/tmp/subnet_id
+
+  - name: Get the contents of subnet mapping file and set it as a fact
+    set_fact:
+      subnet_maps: "{{ lookup('file', '/tmp/subnet_id') }}"
   
 #Provision some APP instances:
 - name: stack internals
