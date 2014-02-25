@@ -12,17 +12,18 @@
     include_vars: envs/{{ environ| default("dev") }}
 
   - name: Create the VPC 
-    ec2_vpc: >
-     state=present
-     region="{{ ec2_region }}"
-     ec2_access_key="{{ ec2_access_key }}"
-     ec2_secret_key="{{ ec2_secret_key }}"
-     cidr_block="{{ vpc_cidr_block }}"
-     subnets="{{ vpc_subnets }}"
-     internet_gateway="{{ vpc_internet_gateway|string }}"
-     route_tables="{{ vpc_route_tables }}"
-     wait=true
-    register: vpc  
+    local_action:
+      module: ec2_vpc
+      state: present
+      region: "{{ ec2_region }}"
+      ec2_access_key: "{{ ec2_access_key }}"
+      ec2_secret_key: "{{ ec2_secret_key }}"
+      cidr_block: "{{ vpc_cidr_block }}"
+      subnets: "{{ vpc_subnets }}"
+      internet_gateway: "{{ vpc_internet_gateway|string }}"
+      route_tables: "{{ vpc_route_tables }}"
+      wait: true
+    register: vpc
 
   - name: Write out a temporary file for mapping subnet to id
     template: src=templates/subnet_id.j2 dest=/tmp/subnet_id

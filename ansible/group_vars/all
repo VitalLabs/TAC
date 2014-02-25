@@ -8,7 +8,7 @@ ec2_zone: us-east-1a
 ec2_image: ami-9c78c0f5
 ec2_instance_type: m1.medium
 ec2_keypair: anstest
-ec2_security_group: default
+ec2_group: default
 ec2_app_instance_count: 2
 ec2_proxy_instance_count: 2
 ec2_db_instance_count: 2
