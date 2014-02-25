@@ -4,7 +4,7 @@
   connection: local
   gather_facts: False
   vars_files:
-  - vars/ec2.yml
+  - group_vars/all
   tasks:
   - name: Launch instances
     ec2: >
