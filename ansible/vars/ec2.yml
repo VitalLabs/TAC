@@ -1,39 +1,13 @@
 ---
-ec2_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
-ec2_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+ec2_access_key: 
+ec2_secret_key: 
 ec2_region: us-east-1
 ec2_zone: us-east-1a
 ec2_image: ami-9c78c0f5 # ami-ef795786 - Ubuntu 13.04 raring # ami-9c78c0f5 - Ubuntu 12.04 precise
 ec2_instance_type: m1.medium
-ec2_keypair: swb-keypair
-appcount:2
-dbcount:2
-proxcount:2
-keypair:
-security_group:
-instance_type:
-image:
-region:
-vpc_cidr_block:
-vpc_subnets:
-vpc_internet_gateway: "yes"
-vpc_route_tables:
-  - subnets:
-    - x.x.x.x/24
-    routes:
-    - dest: 0.0.0.0/0
-      gw: igw
-vpc_public_subnet:
-vpc_nat_instance_id:
-vpc_nat_instance_type:
-vpc_group:
-  name: vpc_sec_group
-  rules:
-    - proto: tcp
-      from_port: 80
-      to_port: 80
-      cidr_ip: 0.0.0.0/0
-    - proto: tcp
-      from_port: 22
-      to_port: 22
-      cidr_ip: 10.0.0.0/8
+ec2_keypair: anstest
+ec2_security_group: default
+ec2_vpc_id: vpc-33936556
+ec2_app_instance_count: 2
+ec2_proxy_instance_count: 2
+ec2_db_instance_count: 2
