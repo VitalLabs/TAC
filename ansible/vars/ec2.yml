@@ -21,7 +21,7 @@ vpc_public_subnet:
 vpc_nat_instance_id:
 vpc_nat_instance_type:
 vpc_group:
-  name: vpc_group_stack
+  name: vpc_sec_group
   rules:
     - proto: tcp
       from_port: 80
