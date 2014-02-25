@@ -2,6 +2,8 @@
 #Provision some DB instances:
 hosts: localhost
 gather_facts: False
+vars_files:
+  - vars/ec2.yml
 tasks:
 - name: Launch instances
   local_action: ec2 

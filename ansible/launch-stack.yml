@@ -1,7 +1,7 @@
 ---
 hosts: localhost
 vars_files:
-    - vars/ec2.yml
+  - vars/ec2.yml
 tasks:
 - name: Include the variables specific to the vpc
   include_vars: envs/{{ environ| default("dev") }}   
