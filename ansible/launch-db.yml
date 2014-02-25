@@ -6,6 +6,10 @@
   vars_files:
   - group_vars/all
   tasks:
+
+  - name: Include the variables specific to the vpc
+    include_vars: envs/{{ environ| default("dev") }}
+
   - name: Launch instances
     ec2: >
      access_key="{{ ec2_access_key }}"

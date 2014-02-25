@@ -71,3 +71,25 @@
       ec2_access_key="{{ ec2_access_key }}"
       ec2_secret_key="{{ ec2_secret_key }}"
       rules="{{ vpc_group.rules }}"
+
+#Getting Trickey here.  This is hooks to launch VPC and app stack together:
+
+  - name: debug
+    debug: var=item.count_tag
+    with_items: vpc_instances
+
+  - name: Create the Instance's for this vpc 
+    ec2: >
+      region="{{ ec2_region }}"
+      ec2_access_key="{{ ec2_access_key }}"
+      ec2_secret_key="{{ ec2_secret_key }}"
+      keypair="{{ item.keypair }}"
+      instance_type="{{ item.instance_type }}"
+      image="{{ item.image }}"
+      vpc_subnet_id="{{ subnet_maps[item.subnet] }}"
+      wait=true
+      instance_tags="{{ item.instance_tags }}"
+      exact_count="{{ item.exact_count }}"
+      count_tag="{{ item.count_tag }}"
+    register: ec2
+    with_items: vpc_instances
