@@ -18,6 +18,9 @@
     route_tables="{{ vpc_route_tables }}"
     wait: true
   register: vpc  
+
+  - name: Write out a temporary file for mapping subnet to id
+  template: src=templates/subnet_id.j2 dest=/tmp/subnet_id
   
 #Provision some APP instances:
 - name: stack internals
