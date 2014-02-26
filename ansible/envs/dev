@@ -35,7 +35,7 @@ vpc_instances:
     group: dev_vpc
     instance_tags: 
         Name: dev_db
-        devstack: ""
+        dev_all: ""
    # exact_count: 2
    # count_tag: 
    #     Name: dev_db_count
@@ -47,7 +47,7 @@ vpc_instances:
     group: dev_vpc
     instance_tags: 
         Name: dev_app
-        devstack: ""
+        dev_all: ""
    # exact_count: 2
    # count_tag: 
    #     Name: dev_app_count
@@ -59,7 +59,7 @@ vpc_instances:
     group: dev_proxy
     instance_tags: 
         Name: dev_proxy
-        devstack: ""
+        dev_all: ""
    # exact_count: 2
    # count_tag: 
    #     Name: dev_proxy_count

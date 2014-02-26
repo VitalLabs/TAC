@@ -97,7 +97,7 @@
     with_items: vpc_instances
 
 - name: bring instances up to date
-  hosts: devstack
+  hosts: dev_all
   remote_user: ubuntu
   sudo: true
   tasks:
