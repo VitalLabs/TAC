@@ -17,20 +17,26 @@ vpc_route_tables:
        - dest: 0.0.0.0/0
          gw: igw
 vpc_public_subnet: 10.0.1.0/24
-vpc_nat_instance_id: ami-4f9fee26
+vpc_nat_instance_id: 
 vpc_nat_instance_type: t1.micro
 vpc_group:
     name: dev_vpc
     desc: the security group for the dev vpc
     rules:
       - proto: tcp
+<<<<<<< HEAD
         from_port: 22
         to_port: 22
+=======
+        from_port: 80
+        to_port: 80
+>>>>>>> FETCH_HEAD
         cidr_ip: 0.0.0.0/0
 
 # VPC Instances:
 
 vpc_instances:
+<<<<<<< HEAD
   - instance_type: m1.medium
     image: ami-9c78c0f5
     keypair: anstest
@@ -39,6 +45,21 @@ vpc_instances:
         Name: dev_db
     count: 2
     subnet: 10.0.3.0/24
+=======
+
+## These load balancers/proxies are in the public subnet.
+
+  - instance_type: m1.medium
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: dev_proxy
+    instance_tags: 
+        Name: dev_proxy
+    count: 2
+    subnet: 10.0.1.0/24
+
+## APP and DB are in the private subnet.
+>>>>>>> FETCH_HEAD
 
   - instance_type: m1.medium
     image: ami-9c78c0f5
@@ -52,8 +73,12 @@ vpc_instances:
   - instance_type: m1.medium
     image: ami-9c78c0f5
     keypair: anstest
-    group: dev_proxy
+    group: dev_vpc
     instance_tags: 
-        Name: dev_proxy
+        Name: dev_db
     count: 2
+<<<<<<< HEAD
     subnet: 10.0.1.0/24
+=======
+    subnet: 10.0.3.0/24
+>>>>>>> FETCH_HEAD
