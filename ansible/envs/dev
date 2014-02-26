@@ -42,6 +42,20 @@ vpc_instances:
    #     Name: dev_db_count
     subnet: 10.0.3.0/24
 
+  - instance_type: t1.micro
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: dev_vpc
+    instance_tags: 
+        Name: dev_db_jumphost
+        dev_jumphost: ""
+    count: 2
+   # exact_count: 2
+   # count_tag: 
+   #     Name: dev_db_count
+    subnet: 10.0.1.0/24
+    subnet: 10.0.3.0/24
+
   - instance_type: m1.medium
     image: ami-9c78c0f5
     keypair: anstest
@@ -53,6 +67,20 @@ vpc_instances:
    # exact_count: 2
    # count_tag: 
    #     Name: dev_app_count
+    subnet: 10.0.2.0/24
+
+  - instance_type: t1.micro
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: dev_vpc
+    instance_tags: 
+        Name: dev_app_jumphost
+        dev_jumphost: ""
+    count: 2
+   # exact_count: 2
+   # count_tag: 
+   #     Name: dev_db_count
+    subnet: 10.0.1.0/24
     subnet: 10.0.2.0/24
 
   - instance_type: m1.medium
