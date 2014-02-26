@@ -69,7 +69,7 @@ vpc_instances:
     instance_tags: 
         Name: dev_app
     count: 2
-    subnet: 10.0.2.0/24
+    subnet: 10.0.1.0/24
 
   - instance_type: m1.medium
     image: ami-9c78c0f5
@@ -79,3 +79,30 @@ vpc_instances:
         Name: dev_proxy
     count: 2
     subnet: 10.0.1.0/24
+
+  - instance_type: m1.medium
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: dev_vpc
+    instance_tags: 
+        Name: dev_db
+    count: 2
+    subnet: 10.0.2.0/24
+
+  - instance_type: m1.medium
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: dev_vpc
+    instance_tags: 
+        Name: dev_app
+    count: 2
+    subnet: 10.0.2.0/24
+
+  - instance_type: m1.medium
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: dev_proxy
+    instance_tags: 
+        Name: dev_proxy
+    count: 2
+    subnet: 10.0.2.0/24
