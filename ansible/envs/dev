@@ -35,7 +35,9 @@ vpc_instances:
     group: dev_vpc
     instance_tags: 
         Name: dev_db
-    count: 2
+    exact_count: 2
+    count_tag: 
+        Name: dev_db_count
     subnet: 10.0.3.0/24
 
   - instance_type: m1.medium
@@ -44,7 +46,9 @@ vpc_instances:
     group: dev_vpc
     instance_tags: 
         Name: dev_app
-    count: 2
+    exact_count: 2
+    count_tag: 
+        Name: dev_app_count
     subnet: 10.0.2.0/24
 
   - instance_type: m1.medium
@@ -53,5 +57,7 @@ vpc_instances:
     group: dev_proxy
     instance_tags: 
         Name: dev_proxy
-    count: 2
+    exact_count: 2
+    count_tag: 
+        Name: dev_proxy_count
     subnet: 10.0.1.0/24

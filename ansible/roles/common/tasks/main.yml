@@ -1,7 +1,8 @@
 ---
 # Common image setup
+
 - name: install common packages
-  apt: name={{ item }} state=latest
+  apt: name={{ item }} state=latest update_cache=yes cache_valid_time=3600
   with_items:
     - ntp
     - emacs23-nox
@@ -11,9 +12,9 @@
     - g++
     - unzip
     - python
+    - python-apt
     - python-pip
     - python-software-properties
-  tags: [ python, ntp ]
 
 - name: apply NTP configuration for AWS
   template: src=ntp.conf.j2 dest=/etc/ntp.conf
