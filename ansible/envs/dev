@@ -1,4 +1,4 @@
-###VPC Below
+###VPC Below - note: ami-4f9fee26 is an amazon marketplace AMI for VPC Nat infrastructure
 subnets_hash:
     name: dev
 vpc_cidr_block: 10.0.0.0/16
@@ -17,7 +17,7 @@ vpc_route_tables:
        - dest: 0.0.0.0/0
          gw: igw
 vpc_public_subnet: 10.0.1.0/24
-vpc_nat_instance_id: ami-4f9fee26
+vpc_nat_instance_id: ami-4f9fee26 
 vpc_nat_instance_type: t1.micro
 vpc_group:
     name: dev_vpc
@@ -27,8 +27,6 @@ vpc_group:
         from_port: 22
         to_port: 22
         cidr_ip: 0.0.0.0/0
-
-# VPC Instances:
 
 vpc_instances:
   - instance_type: m1.medium

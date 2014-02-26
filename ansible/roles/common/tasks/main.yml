@@ -8,32 +8,21 @@
     - lynx
     - git
     - make
+    - g++
     - unzip
+    - python
     - python-pip
-    - python-yaml
-    - python-paramiko
-    - python-jinja2
     - python-software-properties
   tags: [ python, ntp ]
-
-- name: install python keyczar for accelerated mode
-  easy_install: name=python-keyczar
-  
-# Setup cluster NTP on AWS
-- name: launch NTPD and keep running
-  service: name=ntp state=running enabled=yes
-  tags: ntp
-
-- name: make sure we have the right NTP time now
-  shell: ntpdate -u 0.pool.ntp.org
-  tags: ntp
 
 - name: apply NTP configuration for AWS
   template: src=ntp.conf.j2 dest=/etc/ntp.conf
   notify:
     - restart ntpd
   tags: ntp
-   
+
+- name: first time ntp start
+  service: name=ntp state=started enabled=yes
 
 # Enable the deploy user
 - name: ensure the deploy user is present
