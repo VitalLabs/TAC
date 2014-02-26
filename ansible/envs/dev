@@ -36,6 +36,7 @@ vpc_instances:
     instance_tags: 
         Name: dev_db
         dev_all: ""
+    count: 2
    # exact_count: 2
    # count_tag: 
    #     Name: dev_db_count
@@ -48,6 +49,7 @@ vpc_instances:
     instance_tags: 
         Name: dev_app
         dev_all: ""
+    count: 2
    # exact_count: 2
    # count_tag: 
    #     Name: dev_app_count
@@ -60,6 +62,7 @@ vpc_instances:
     instance_tags: 
         Name: dev_proxy
         dev_all: ""
+    count: 2   
    # exact_count: 2
    # count_tag: 
    #     Name: dev_proxy_count
