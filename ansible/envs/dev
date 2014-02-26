@@ -50,7 +50,7 @@ vpc_group:
         to_port: 5099
         cidr_ip: 0.0.0.0/0
 
-# Tricky magicks:
+# VPC Instances:
 
 vpc_instances:
   - instance_type: m1.medium

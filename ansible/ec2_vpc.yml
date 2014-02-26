@@ -32,7 +32,7 @@
       subnet_maps: "{{ lookup('file', '/tmp/subnet_id') }}"
   
   ### This is the NAT instance for routing traffic and jumphost, etc.
-  
+
   # - name: Create the NAT Instance
   #   ec2:
   #     region: "{{ ec2_region }}"
@@ -75,10 +75,6 @@
       ec2_access_key: "{{ ec2_access_key }}"
       ec2_secret_key: "{{ ec2_secret_key }}"
       rules: "{{ vpc_group.rules }}"
-
-  - name: debug
-    debug: var=item.count_tag
-    with_items: vpc_instances
 
   - name: Create the Instances for this vpc 
     ec2:
