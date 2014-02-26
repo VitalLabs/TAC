@@ -1,2 +1,5 @@
 ---
-# handlers file for immutant-app
+- name: redeploy app
+  command: su immutant -c 'touch /var/lib/immutant/current/jboss/standalone/deployments/{{ app_name }}.ima'
+  sudo: true
+  

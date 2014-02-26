@@ -1,2 +1,3 @@
 ---
-# handlers file for dse
+- name: restart dse
+  service: name=dse state=restarted
