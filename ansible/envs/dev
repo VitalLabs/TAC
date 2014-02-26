@@ -18,17 +18,37 @@ vpc_public_subnet: 10.0.1.0/24
 vpc_nat_instance_id: ami-4f9fee26
 vpc_nat_instance_type: t1.micro
 vpc_group:
-   name: dev_vpc
-   desc: the security group for the dev vpc
-   rules:
+    name: dev_vpc
+    desc: the security group for the dev vpc
+    rules:
       - proto: tcp
         from_port: 80
         to_port: 80
         cidr_ip: 0.0.0.0/0
       - proto: tcp
+        from_port: 443
+        to_port: 443
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 3000
+        to_port: 3000
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 8080
+        to_port: 8080
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 8888
+        to_port: 8888
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
         from_port: 22
         to_port: 22
-        cidr_ip: 10.0.0.0/8
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 5098
+        to_port: 5099
+        cidr_ip: 0.0.0.0/0
 
 # Tricky magicks:
 
