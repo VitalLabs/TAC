@@ -89,3 +89,6 @@
       instance_tags: "{{ item.instance_tags }}"
     register: ec2
     with_items: vpc_instances
+
+  - name: create a jump host to be able to ssh to private network in VPC
+    
