@@ -7,6 +7,8 @@ vpc_subnets:
       az: us-east-1a
     - cidr: 10.0.2.0/24
       az: us-east-1b
+    - cidr: 10.0.3.0/24
+      az: us-east-1c
 vpc_internet_gateway: "yes"
 vpc_route_tables:
     - subnets:
@@ -22,32 +24,8 @@ vpc_group:
     desc: the security group for the dev vpc
     rules:
       - proto: tcp
-        from_port: 80
-        to_port: 80
-        cidr_ip: 0.0.0.0/0
-      - proto: tcp
-        from_port: 443
-        to_port: 443
-        cidr_ip: 0.0.0.0/0
-      - proto: tcp
-        from_port: 3000
-        to_port: 3000
-        cidr_ip: 0.0.0.0/0
-      - proto: tcp
-        from_port: 8080
-        to_port: 8080
-        cidr_ip: 0.0.0.0/0
-      - proto: tcp
-        from_port: 8888
-        to_port: 8888
-        cidr_ip: 0.0.0.0/0
-      - proto: tcp
         from_port: 22
         to_port: 22
-        cidr_ip: 0.0.0.0/0
-      - proto: tcp
-        from_port: 5098
-        to_port: 5099
         cidr_ip: 0.0.0.0/0
 
 # VPC Instances:
@@ -60,34 +38,7 @@ vpc_instances:
     instance_tags: 
         Name: dev_db
     count: 2
-    subnet: 10.0.1.0/24
-
-  - instance_type: m1.medium
-    image: ami-9c78c0f5
-    keypair: anstest
-    group: dev_vpc
-    instance_tags: 
-        Name: dev_app
-    count: 2
-    subnet: 10.0.1.0/24
-
-  - instance_type: m1.medium
-    image: ami-9c78c0f5
-    keypair: anstest
-    group: dev_proxy
-    instance_tags: 
-        Name: dev_proxy
-    count: 2
-    subnet: 10.0.1.0/24
-
-  - instance_type: m1.medium
-    image: ami-9c78c0f5
-    keypair: anstest
-    group: dev_vpc
-    instance_tags: 
-        Name: dev_db
-    count: 2
-    subnet: 10.0.2.0/24
+    subnet: 10.0.3.0/24
 
   - instance_type: m1.medium
     image: ami-9c78c0f5
@@ -105,4 +56,4 @@ vpc_instances:
     instance_tags: 
         Name: dev_proxy
     count: 2
-    subnet: 10.0.2.0/24
+    subnet: 10.0.1.0/24
