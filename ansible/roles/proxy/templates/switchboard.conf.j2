@@ -10,8 +10,8 @@
 # 	MCacheMinObjectSize 1
 #	MCacheMaxObjectSize 4096000
 
-    ProxyPass /api http://localhost:{{ switchboard_proxy_port }}/api
-    ProxyPassReverse /api http://localhost:{{ switchboard_proxy_port }}/api
+    ProxyPass /api http://localhost:{{ switchboard_port }}/api
+    ProxyPassReverse /api http://localhost:{{ switchboard_port }}/api
 
     <Location />
 	     Order deny,allow
@@ -30,8 +30,8 @@
 <VirtualHost *:80>
     ServerName {{ switchboard_vhost }}
 	 
-    ProxyPass / http://localhost:{{ switchboard_proxy_port }}/ connectiontimeout=30 timeout=900
-    ProxyPassReverse / http://localhost:{{ switchboard_proxy_port }}/
+    ProxyPass / http://localhost:{{ switchboard_port }}/ connectiontimeout=30 timeout=900
+    ProxyPassReverse / http://localhost:{{ switchboard_port }}/
 	ProxyVia On
 	
 	Header set Access-Control-Allow-Methods "GET"
