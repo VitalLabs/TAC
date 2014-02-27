@@ -4,11 +4,8 @@ subnets_hash:
 vpc_cidr_block: 10.0.0.0/16
 vpc_subnets:
     - cidr: 10.0.1.0/24
-      az: us-east-1a
     - cidr: 10.0.2.0/24
-      az: us-east-1b
     - cidr: 10.0.3.0/24
-      az: us-east-1c
 vpc_internet_gateway: "yes"
 vpc_route_tables:
     - subnets:
