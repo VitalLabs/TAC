@@ -15,6 +15,7 @@
     local_action:
       module: ec2_vpc
       state: present
+      instance_tenancy: dedicated
       region: "{{ ec2_region }}"
       ec2_access_key: "{{ ec2_access_key }}"
       ec2_secret_key: "{{ ec2_secret_key }}"
