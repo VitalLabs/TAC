@@ -24,3 +24,5 @@
   roles:
   
   - proxy
+
+- name: Deploy Initial Configs: Switchboard/Orchestra 
