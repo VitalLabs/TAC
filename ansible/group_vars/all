@@ -12,6 +12,10 @@ ec2_security_group: default
 ec2_app_instance_count: 2
 ec2_proxy_instance_count: 2
 ec2_db_instance_count: 2
+aws_creds:
+  AWS_DEFAULT_REGION: "{{ ec2_region }}"
+  AWS_ACCESS_KEY: "{{ ec2_access_key }}"
+  AWS_SECRET_KEY: "{{ ec2_secret_key }}"
 
 ### OPTIONAL FOR TESTING: generic AMIs:
 #ec2_raring_image: ami-ef795786 
