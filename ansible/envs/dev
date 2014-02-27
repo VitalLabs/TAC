@@ -35,7 +35,7 @@ vpc_instances:
         dev_all: ""
     exact_count: 2
     count_tag: 
-        Name: dev_db_count
+        Name: dev_db
     subnet: 10.0.3.0/24
 
   - instance_type: m1.small
@@ -45,9 +45,9 @@ vpc_instances:
     instance_tags: 
         Name: dev_db_jumphost
         dev_jumphost: ""
-    exact_count: 2
+    exact_count: 1
     count_tag: 
-        Name: dev_db_jump_count
+        Name: dev_db_jumphost
     subnet: 10.0.1.0/24
     subnet: 10.0.3.0/24
 
@@ -58,9 +58,9 @@ vpc_instances:
     instance_tags: 
         Name: dev_app
         dev_all: ""
-    exact_count: 1
+    exact_count: 2
     count_tag: 
-        Name: dev_app_count
+        Name: dev_app
     subnet: 10.0.2.0/24
 
   - instance_type: m1.small
@@ -72,7 +72,7 @@ vpc_instances:
         dev_jumphost: ""
     exact_count: 1
     count_tag: 
-        Name: dev_app_jump_count
+        Name: dev_app_jumphost
     subnet: 10.0.1.0/24
     subnet: 10.0.2.0/24
 
@@ -85,5 +85,5 @@ vpc_instances:
         dev_all: ""
     exact_count: 2
     count_tag: 
-        Name: dev_proxy_count
+        Name: dev_proxy
     subnet: 10.0.1.0/24
