@@ -55,20 +55,22 @@
     when: vpc_internet_gateway and item['cidr'] == vpc_public_subnet
 
   - name: Get the routing table entry for the main table.
-    shell: > 
-      {{ ec2_bin_path }}/ec2-describe-route-tables -O {{ ec2_access_key }} -W {{ ec2_secret_key }} -F vpc-id={{ vpc.vpc_id }} -F "association.main=true"  | grep ROUTETABLE | awk '{ print $2 }' 
+    shell: >
+      aws ec2 describe-route-tables --filters "Name=vpc-id,Values={{ vpc.vpc_id }}" --filters "Name=association.main,Values=true" | grep -m1 RouteTableId  | cut -d: -f2 | tr '\"' ' '
     register: main_rtb
     when: vpc.changed and vpc_internet_gateway
-
+    environment: aws_creds
+ 
   - name: Set the fact for NAT Instance variable
     set_fact: nat_instance="{{ item.tagged_instances[0].id }}"
     with_items: ec2.results
     when: item.tagged_instances is defined
-
+ 
   - name: Set the gateway to nat interface.
     shell: >
-      {{ ec2_bin_path }}/ec2-create-route  -O {{ ec2_access_key }} -W {{ ec2_secret_key }} {{ main_rtb.stdout }} -r 0.0.0.0/0 -i {{ nat_instance }}
+      aws ec2 create-route --route-table-id {{ main_rtb.stdout }} --destination-cidr-block 0.0.0.0/0 --instance-id  {{ nat_instance }}
     when: vpc.changed and vpc_internet_gateway
+    environment: aws_creds
 
   - name: Create the security group for the VPC
     local_action:
