@@ -1,3 +1,9 @@
+Immediate:
+
+1 - App tier consolidations for deploy/config role.
+
+Less Pressing:
+
 1 - VPC network ACLs and Security Groups
 	- Port and route info (should be in docs now.)
 2 - Variable consolidation
