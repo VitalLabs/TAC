@@ -56,7 +56,7 @@
 
   - name: Get the routing table entry for the main table.
     shell: >
-      aws ec2 describe-route-tables --filters "Name=vpc-id,Values={{ vpc.vpc_id }}" --filters "Name=association.main,Values=true" | grep -m1 RouteTableId  | cut -d: -f2 | tr '\"' ' '
+      aws ec2 describe-route-tables --filters "Name=vpc-id,Values={{ vpc.vpc_id }}" --filters "Name=association.main,Values=true" | grep -m1 RouteTableId  | awk '{print $2}' | sed s/\"//g
     register: main_rtb
     when: vpc.changed and vpc_internet_gateway
     environment: aws_creds
