@@ -57,7 +57,7 @@ datomic_license:
 
 java_download: http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jdk-7u45-linux-x64.tar.gz
 java_name: jdk1.7.0_45
-download_folder: /usr/src
+java_download_folder: /usr/src
 java_archive: "{{download_folder}}/{{java_name}}.tar.gz"
 java_folder: /usr/lib/jvm
 java_alias: java-7-oracle

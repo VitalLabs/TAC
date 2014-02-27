@@ -7,16 +7,16 @@
   command: 'wget -q -O {{java_archive}} --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F" {{java_download}} creates={{java_archive}}' 
 
 - name: Extract Java archive
-  command: "tar -xzf {{java_archive}} -C {{download_folder}} creates={{download_folder}}/{{java_name}}"
+  command: "tar -xzf {{java_archive}} -C {{java_download_folder}} creates={{java_download_folder}}/{{java_name}}"
 
 - name: Fix ownership 
-  file: "state=directory path={{download_folder}}/{{java_name}} owner=root group=root recurse=yes"
+  file: "state=directory path={{java_download_folder}}/{{java_name}} owner=root group=root recurse=yes"
 
 - name: Create Java folder
   file: "state=directory path={{java_folder}}"
 
 - name: Move Java to final folder
-  command: "mv {{download_folder}}/{{java_name}} {{java_folder}} creates={{java_folder}}/{{java_name}}"
+  command: "mv {{java_download_folder}}/{{java_name}} {{java_folder}} creates={{java_folder}}/{{java_name}}"
 
 - name: Create symlink for easier update
   file: "state=link src={{java_folder}}/{{java_name}} dest={{java_folder}}/{{java_alias}}"
