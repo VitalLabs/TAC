@@ -18,7 +18,7 @@ vpc_route_tables:
          gw: igw
 vpc_public_subnet: 10.0.1.0/24
 vpc_nat_instance_id: ami-4f9fee26 
-vpc_nat_instance_type: t1.micro
+vpc_nat_instance_type: m1.small
 vpc_group:
     name: dev_vpc
     desc: the security group for the dev vpc
@@ -29,69 +29,64 @@ vpc_group:
         cidr_ip: 0.0.0.0/0
 
 vpc_instances:
-  - instance_type: m1.medium
+  - instance_type: m1.large
     image: ami-9c78c0f5
     keypair: anstest
     group: dev_vpc
     instance_tags: 
         Name: dev_db
         dev_all: ""
-    count: 2
-   # exact_count: 2
-   # count_tag: 
-   #     Name: dev_db_count
+    exact_count: 2
+    count_tag: 
+        Name: dev_db_count
     subnet: 10.0.3.0/24
 
-  - instance_type: t1.micro
+  - instance_type: m1.small
     image: ami-9c78c0f5
     keypair: anstest
     group: dev_vpc
     instance_tags: 
         Name: dev_db_jumphost
         dev_jumphost: ""
-    count: 2
-   # exact_count: 2
-   # count_tag: 
-   #     Name: dev_db_count
+    exact_count: 2
+    count_tag: 
+        Name: dev_db_jump_count
     subnet: 10.0.1.0/24
     subnet: 10.0.3.0/24
 
-  - instance_type: m1.medium
+  - instance_type: m1.large
     image: ami-9c78c0f5
     keypair: anstest
     group: dev_vpc
     instance_tags: 
         Name: dev_app
         dev_all: ""
-    count: 2
-   # exact_count: 2
-   # count_tag: 
-   #     Name: dev_app_count
+    exact_count: 2
+    count_tag: 
+        Name: dev_app_count
     subnet: 10.0.2.0/24
 
-  - instance_type: t1.micro
+  - instance_type: m1.small
     image: ami-9c78c0f5
     keypair: anstest
     group: dev_vpc
     instance_tags: 
         Name: dev_app_jumphost
         dev_jumphost: ""
-    count: 2
-   # exact_count: 2
-   # count_tag: 
-   #     Name: dev_db_count
+    exact_count: 2
+    count_tag: 
+        Name: dev_db_jump_count
     subnet: 10.0.1.0/24
     subnet: 10.0.2.0/24
 
-  - instance_type: m1.medium
+  - instance_type: m1.large
     image: ami-9c78c0f5
     keypair: anstest
     group: dev_proxy
     instance_tags: 
         Name: dev_proxy
         dev_all: ""
-    count: 2   
-   # exact_count: 2
-   # count_tag: 
-   #     Name: dev_proxy_count
+    exact_count: 2
+    count_tag: 
+        Name: dev_proxy_count
     subnet: 10.0.1.0/24

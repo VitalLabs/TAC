@@ -46,10 +46,10 @@
       vpc_subnet_id: "{{ item.id }}"
       wait: true
       instance_tags: 
-        Name: "{{ environ|default('dev') + '_nat_instance' }}"
-      #exact_count: 1
-      #count_tag: 
-        #Name: "{{ environ|default('dev') + '_nat_instance' }}"
+        Name: dev_nat_instance
+      exact_count: 1
+      count_tag: 
+        Name: dev_nat_instance
     register: ec2
     with_items: vpc.subnets
     when: vpc_internet_gateway and item['cidr'] == vpc_public_subnet
