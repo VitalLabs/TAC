@@ -58,7 +58,7 @@ vpc_instances:
     instance_tags: 
         Name: dev_app
         dev_all: ""
-    exact_count: 2
+    exact_count: 1
     count_tag: 
         Name: dev_app_count
     subnet: 10.0.2.0/24
@@ -70,9 +70,9 @@ vpc_instances:
     instance_tags: 
         Name: dev_app_jumphost
         dev_jumphost: ""
-    exact_count: 2
+    exact_count: 1
     count_tag: 
-        Name: dev_db_jump_count
+        Name: dev_app_jump_count
     subnet: 10.0.1.0/24
     subnet: 10.0.2.0/24
 
