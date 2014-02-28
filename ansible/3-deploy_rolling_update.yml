@@ -4,6 +4,8 @@
   hosts: dev_all
   remote_user: deploy
   sudo: true
+  vars_files:
+  - vars/main.yml
 
   tasks: []
 
@@ -12,7 +14,9 @@
   hosts: dev_app
   remote_user: deploy
   sudo: true
-  serial: 1
+  serial: 1  
+  vars_files:
+  - vars/main.yml
   
   # These are the tasks to run before applying updates:
   pre_tasks:
