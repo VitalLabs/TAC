@@ -4,7 +4,7 @@
   remote_user: ubuntu
   sudo: true
   vars_files:
-  - group_vars/all
+  - vars/main.yml
   pre_tasks:
 
   - name: set up jumphost for DB subnet
@@ -23,7 +23,7 @@
   hosts: dev_proxy
   remote_user: deploy
   vars_files:
-  - group_vars/all
+  - vars/main.yml
   
   roles:
   
@@ -33,7 +33,7 @@
   hosts: dev_app
   remote_user: deploy
   vars_files:
-  - group_vars/all
+  - vars/main.yml
 
   roles:
   

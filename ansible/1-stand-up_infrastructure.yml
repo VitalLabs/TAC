@@ -5,7 +5,7 @@
   connection: local
   gather_facts: False
   vars_files:
-  - group_vars/all
+  - vars/main.yml
   tasks:
 
   - name: Include the variables specific to the vpc
