@@ -27,6 +27,7 @@
   
   roles:
   
+  - common
   - proxy-config
 
 - name: Deploy Initial Configs: Switchboard/Orchestra 
@@ -37,6 +38,7 @@
 
   roles:
   
+  - common
   - app-github
   - app-cloture-config
   - app-immutant-config
