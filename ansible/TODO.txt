@@ -1,12 +1,4 @@
-Immediate:
-
-1 - App tier consolidations for deploy/config role.
-
-Less Pressing:
-
 1 - VPC network ACLs and Security Groups
 	- Port and route info (should be in docs now.)
-2 - Variable consolidation
-	- Repeats, extra setting of variables in eval doc, etc.  Will consolidate more cleanly.
-3 - Remote user on DB plays is ubuntu, deploy on others?
-4 - Break up vars for group_vars/all to be host group specific (dev_db, dev_app, etc.)
+2 - Remote user on DB plays is ubuntu, deploy on others?
+3 - Break up vars for group_vars/all to be host group specific (dev_db, dev_app, etc.) ??

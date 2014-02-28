@@ -27,7 +27,7 @@
   
   roles:
   
-  - proxy
+  - proxy-config
 
 - name: Deploy Initial Configs: Switchboard/Orchestra 
   hosts: dev_app
@@ -36,7 +36,8 @@
   - group_vars/all
 
   roles:
-
+  
+  - app-github
+  - app-cloture-config
   - app-immutant-config
   - app-immutant-deploy
-  - app-cloture-config
