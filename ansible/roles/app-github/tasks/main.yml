@@ -13,3 +13,14 @@
         owner=deploy group=deploy
         mode=0600
       
+- name: test for hostkey file
+  shell: cat ~/.ssh/known_hosts
+  register: known_hosts
+  ignore_errors: true
+
+- name: remove the old host key, if any
+  command: "ssh-keygen -R github.com"
+  when: known_hosts|success
+
+- name: make sure we have the current hostkey
+  shell: "ssh-keyscan github.com >> ~/.ssh/known_hosts"

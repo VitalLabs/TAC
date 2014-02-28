@@ -1,14 +1,5 @@
 ---
 # Install package dependencies
-- name: install node build precursors
-  apt: name={{ item }}
-  with_items:
-    - python-software-properties
-    - python
-    - g++
-    - make
-  sudo: true
-
 - name: use up to date nodejs repo
   apt_repository: repo=ppa:chris-lea/node.js state=present update_cache=yes
   sudo: true
