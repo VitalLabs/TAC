@@ -3,6 +3,8 @@
   hosts: dev_db
   remote_user: ubuntu
   sudo: true
+  vars_files:
+  - group_vars/all
   pre_tasks:
 
   - name: set up jumphost for DB subnet
@@ -20,9 +22,21 @@
 - name: Deploy Initial Configs: Proxy
   hosts: dev_proxy
   remote_user: deploy
+  vars_files:
+  - group_vars/all
   
   roles:
   
   - proxy
 
 - name: Deploy Initial Configs: Switchboard/Orchestra 
+  hosts: dev_app
+  remote_user: deploy
+  vars_files:
+  - group_vars/all
+
+  roles:
+
+  - app-immutant-config
+  - app-immutant-deploy
+  - app-cloture-config
