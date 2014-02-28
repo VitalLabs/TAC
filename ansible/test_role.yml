@@ -17,7 +17,5 @@
   vars_files:
   - vars/main.yml
 
-  tasks:
-
-
   roles:
+  - datomic
