@@ -1,5 +1,12 @@
 ---
 #NOTE:  PLaceholder until basics are hammered out:
+- name: Need Facts
+  hosts: dev_all
+  remote_user: deploy
+  sudo: true
+
+  tasks: []
+
 
 - name: Rolling Updates
   hosts: dev_app

@@ -39,6 +39,7 @@
   roles:
   
   - common
+  - java
   - app-github
   - app-cloture-config
   - app-immutant-config
