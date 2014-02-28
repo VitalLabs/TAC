@@ -30,13 +30,15 @@ datomic_version: 0.9.4384
 datomic_type: datomic-pro
 datomic_filename: "{{ datomic_type }}-{{datomic_version }}"
 
-clojure_app_name: clojure
-clojure_app_git_version: HEAD
-clojure_app_dir: /var/lib/clojure
-clojure_app_user: ubuntu
-clojure_app_profile: prod
+clojure_app_user: "deploy"
+clojure_app_name: "orchestra"
+clojure_app_dir: "/var/lib/swb-orchestra"
+clojure_app_root: "/orchestra"
+clojure_app_git_repo: "ssh://git@github.com/vitalreactor/switchboard"
+clojure_app_git_version: "{{ orchestra_commit }}"
+clojure_app_profile: "{{ orchestra_profiles }}"
 clojure_app_args: ""
-clojure_app_log_dir: /var/log/clojure/app.log
+clojure_app_log_dir: "/var/log/clojure"
 
 #For lein in app-immutant-deploy:
 lein_dir: /usr/local/bin
@@ -52,6 +54,7 @@ switchboard_address: localhost
 switchboard_port: 8080
 switchboard_context: api
 switchboard_profiles: dev
+switchboard_app: "1"
 
 orchestra_commit: HEAD
 orchestra_profiles: user,dev

@@ -45,7 +45,6 @@
   sudo: true
   notify:
     - restart immutant
-  tags: configure-immutant
 
 
 # DEPLOY IMMUTANT
@@ -87,7 +86,6 @@
   sudo: true
   notify:
     - restart immutant
-  tags: configure-immutant
 
 - name: immutant upstart script
   template: >    
@@ -97,7 +95,6 @@
   sudo: true
   notify:
     - restart immutant
-  tags: configure-immutant
   
 - name: start immutant
   service: name=immutant state=running enabled=yes
