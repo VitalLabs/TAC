@@ -1,0 +1,23 @@
+---
+##Testing playbook for individual roles
+##This assumes VPC was created and instances are running.
+- name: gather facts and inventory
+  hosts: dev_all
+  remote_user:
+  sudo: 
+  vars_files:
+  - vars/main.yml
+
+  tasks: []
+
+- name: test the role.
+  hosts:
+  remote_user:
+  sudo:
+  vars_files:
+  - vars/main.yml
+
+  tasks:
+
+
+  roles:
