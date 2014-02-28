@@ -1,4 +1,4 @@
 1 - VPC network ACLs and Security Groups
 	- Port and route info (should be in docs now.)
 2 - Remote user on DB plays is ubuntu, deploy on others?
-3 - Break up vars for vars/main.yml to be host group specific (dev_db, dev_app, etc.) ??
+3 - Break up vars for vars/main.yml to be group specific (dev_db, dev_app, etc.) ??
