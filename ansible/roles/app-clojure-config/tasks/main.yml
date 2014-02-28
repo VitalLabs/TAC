@@ -43,28 +43,23 @@
        update=yes
   notify:
     - rebuild clojure assets
-  tags: git_update
 
 - name: make {{ clojure_app_user }} the owner of the tree
   file: path={{ clojure_app_dir }} owner={{ clojure_app_user }} group=admin
         recurse=yes
   sudo: true
-  tags: git_update
 
 - name: build the UI stylesheets
   command: "script/build-styles chdir={{ clojure_app_dir }}{{ clojure_app_root }}"
-  tags: clojure-build
 
 - name: build the application javascript
   command: "lein run -m script.build chdir={{ clojure_app_dir }}{{ clojure_app_root }}"
-  tags: clojure-build
 
 - name: update the root html parameters
   template: src=config.js.j2
             dest="{{ clojure_app_dir }}{{ clojure_app_root }}/out/public/config.js"
             mode=644
   sudo: true
-  tags: clojure-build
               
 # Upstart script for eval server at localhost:3000
 - name: application upstart script
@@ -72,9 +67,7 @@
   template: src=upstart.conf.j2
             dest="/etc/init/{{ clojure_app_name }}.conf"
             mode=0755
-  tags: clojure-launch
             
 - name: start {{ clojure_app_name }} via leiningen
   sudo: true
   service: name={{ clojure_app_name }} state=running enabled=yes
-  tags: clojure-launch
