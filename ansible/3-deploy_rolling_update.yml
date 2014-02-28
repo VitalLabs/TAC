@@ -1,7 +1,8 @@
 ---
 #NOTE:  PLaceholder until basics are hammered out:
 
-- hosts: webservers
+- name: Rolling Updates
+  hosts: dev_app
   remote_user: deploy
   sudo: true
   serial: 1
