@@ -104,10 +104,10 @@
     with_items: vpc_instances
 
 - name: Update and reboot for freshness
-hosts: dev_all
-remote_user: ubuntu
-sudo: true
-tasks:
+  hosts: dev_all
+  remote_user: ubuntu
+  sudo: true
+  tasks:
 
 - name: dist upgrade
   apt: upgrade=dist

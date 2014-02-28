@@ -1,3 +1,40 @@
 # Deploy github-based apps to immutant via source
 ---
 ##NOTE:  This is probably not functional yet.
+- name: ensure up to date application source
+  git: repo={{ app_git_repo }}
+       dest=/var/lib/immutant/temp/{{ app_name }}
+       version={{ app_git_version }}
+       depth=1
+       update=yes
+  register: git_pull
+  tags: git_update
+# copy config file to the  config location so it will be included in the ima. Verified code still works
+#
+- name: deploy the application configuration file
+  copy: src={{ app_config }}
+        dest=/var/lib/immutant/temp/{{ app_name }}/config/config.edn
+        owner=immutant
+
+- name: Create the immutant Archive .ima file
+  environment:
+    IMMUTANT_HOME: /var/lib/immutant/current
+  command: "su immutant -c 'lein with-profile {{ app_profiles }} immutant archive /var/lib/immutant/temp/{{ app_name }}  --context-path {{ app_context }} --virtual-host {{ app_bind }}'"
+
+# Deploy to immutant - it takes a deployment descriptor that points to actual .ima file
+- name: Deploy the application to the local immutant
+  environment:
+    IMMUTANT_HOME: /var/lib/immutant/current
+  command: "su immutant -c 'lein with-profile {{ app_profiles }} immutant deploy   /var/lib/immutant/current/archives/switchboard.ima.clj  --context-path {{ app_context }} --virtual-host {{ app_bind }}'"
+  sudo: true
+
+###Redeploy:  we will also need a redploy of code only seprate workflow to include in rolling restart..not part of deployment
+
+- name: UnDeploy the application to the local immutant
+  environment:
+    IMMUTANT_HOME: /var/lib/immutant/current
+  command: "su immutant -c 'lein immutant undeploy   /var/lib/immutant/current/archives/switchboard.ima.clj'"
+  sudo: true
+
+
+  ### NOTE:  The above two can be conditionals to re-use this role as part of the rolling update.

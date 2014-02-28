@@ -1,0 +1,25 @@
+---
+#NOTE:  PLaceholder until basics are hammered out:
+
+- hosts: webservers
+  remote_user: deploy
+  sudo: true
+  serial: 1
+  
+  # These are the tasks to run before applying updates:
+  pre_tasks:
+
+  - name: disable the server in haproxy
+    shell: echo "disable server myapplb/{{ ansible_hostname }}" | socat stdio /var/lib/haproxy/stats
+    delegate_to: "{{ item }}"
+    with_items: groups.lbservers
+
+  roles:
+  - app-deploy
+
+  # These tasks run after the roles:
+  post_tasks:
+  - name: Enable the server in haproxy
+    shell: echo "enable server myapplb/{{ ansible_hostname }}" | socat stdio /var/lib/haproxy/stats
+    delegate_to: "{{ item }}"
+    with_items: groups.lbservers
