@@ -30,6 +30,14 @@ datomic_version: 0.9.4384
 datomic_type: datomic-pro
 datomic_filename: "{{ datomic_type }}-{{datomic_version }}"
 
+clojure_app_name: clojure
+clojure_app_git_version: HEAD
+clojure_app_dir: /var/lib/clojure
+clojure_app_user: ubuntu
+clojure_app_profile: prod
+clojure_app_args: ""
+clojure_app_log_dir: /var/log/clojure/app.log
+
 #For lein in app-immutant-deploy:
 lein_dir: /usr/local/bin
 
