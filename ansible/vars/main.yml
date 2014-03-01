@@ -34,6 +34,9 @@ datomic_protocol: dev
 datomic_version: 0.9.4384
 datomic_type: datomic-pro
 datomic_filename: "{{ datomic_type }}-{{datomic_version }}"
+datomic_protocol: "free"
+datomic_dir: /var/lib/datomic
+datomic_data_dir: /var/lib/datomic/data
 # Datomic license key (PE)
 datomic_license: DrI7ENRtMKhfS7L7LRdB2FvH9DxmGxN1PsuFK1albRaPMAs0YbkKCSs8Qsm1+K7lWmTGXDvypOmqt3T/PwZwf213lRQ3zVdTEgfDbLDBCPhsc453D210OvtLI1aI9U3PcQKMiv8WJ9/jEtPnIKrbbSx2O53t5F5CvwnpwjjYsWym+TQfqgQZw/LG8aVTL5ges3OOIC+7NjY1PFdHIKOx41aL5C3+tdvMtm4LRvEbDx+IRAs+xuL5Y3meuV4PmT84sGDmi+0oU1OU/fLS5ng6BeSNO5vNzWNVXLIeHD4V6tTYOA/oI69+3cxojmfZPY7+IpiCJxZQi4LTn3SH+CZVMQ==
 datomic_download_key: d7fe09a2-c1c9-4a12-a6ca-ca953784bb74
