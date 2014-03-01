@@ -7,7 +7,7 @@ ec2_region: us-east-1
 ec2_zone: us-east-1a
 ec2_image: ami-9c78c0f5
 ec2_instance_type: m1.large
-ec2_keypair: anstest
+ec2_keypair: swb-testcluster-keypair
 ec2_security_group: default
 ec2_app_instance_count: 2
 ec2_proxy_instance_count: 2
@@ -48,8 +48,8 @@ immutant_profiles: "prod"
 
 switchboard_version: HEAD
 switchboard_config: /var/admin/files/switchboard_eval.edn
-switchboard_client_url: http://eval.orchestra.md
-switchboard_vhost: eval.swb.io
+switchboard_client_url: http://staging.orchestra.md
+switchboard_vhost: staging.swb.io
 switchboard_address: localhost
 switchboard_port: 8080
 switchboard_context: api
@@ -58,7 +58,7 @@ switchboard_app: "1"
 
 orchestra_commit: HEAD
 orchestra_profiles: user,dev
-orchestra_vhost: eval.orchestra.md
+orchestra_vhost: staging.orchestra.md
 orchestra_address: localhost
 orchestra_port: 3000
 
@@ -72,6 +72,6 @@ datomic_license:
 java_download: http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jdk-7u45-linux-x64.tar.gz
 java_name: jdk1.7.0_45
 java_download_folder: /usr/src
-java_archive: "{{download_folder}}/{{java_name}}.tar.gz"
+java_archive: "{{java_download_folder}}/{{java_name}}.tar.gz"
 java_folder: /usr/lib/jvm
 java_alias: java-7-oracle
