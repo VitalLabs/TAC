@@ -1,5 +1,5 @@
 # DATABASE: Ensure our database tier is running correctly
-- name: Deploy Initial Configs: DB.
+- name: Deploy Initial Configs DB
   hosts: dev_db
   remote_user: ubuntu
   sudo: true
@@ -19,7 +19,7 @@
   - db-datomic
 
 # PROXY: Ensure we have a local proxy ready to route requests
-- name: Deploy Initial Configs: Proxy
+- name: Deploy Initial Configs Proxy
   hosts: dev_proxy
   remote_user: deploy
   vars_files:
@@ -30,7 +30,7 @@
   - common
   - proxy-config
 
-- name: Deploy Initial Configs: Switchboard/Orchestra 
+- name: Deploy Initial Configs Switchboard/Orchestra 
   hosts: dev_app
   remote_user: deploy
   vars_files:
@@ -41,6 +41,6 @@
   - common
   - java
   - app-github
-  - app-cloture-config
+  - app-clojure-config
   - app-immutant-config
   - app-deploy
