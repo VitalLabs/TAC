@@ -1,6 +1,6 @@
 # DATABASE: Ensure our database tier is running correctly
 - name: Deploy Initial Configs DB
-  hosts: dev_db
+  hosts: tag_Name_dev_db
   remote_user: ubuntu
   sudo: true
   vars_files:
@@ -20,7 +20,7 @@
 
 # PROXY: Ensure we have a local proxy ready to route requests
 - name: Deploy Initial Configs Proxy
-  hosts: dev_proxy
+  hosts: tag_Name_dev_proxy
   remote_user: deploy
   vars_files:
   - vars/main.yml
@@ -31,7 +31,7 @@
   - proxy-config
 
 - name: Deploy Initial Configs Switchboard/Orchestra 
-  hosts: dev_app
+  hosts: tag_Name_dev_app
   remote_user: deploy
   vars_files:
   - vars/main.yml
