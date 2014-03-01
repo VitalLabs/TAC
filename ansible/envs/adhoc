@@ -1,0 +1,46 @@
+---
+ec2_instances:
+
+  - instance_type: m1.small
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: default
+    instance_tags: 
+        Name: dev_jumphost
+        dev_jumphost: ""
+    exact_count: 1
+    count_tag: 
+        Name: dev_jumphost
+
+  - instance_type: m1.large
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: default
+    instance_tags: 
+        Name: dev_db
+        dev_all: ""
+    exact_count: 2
+    count_tag: 
+        Name: dev_db
+
+  - instance_type: m1.large
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: default
+    instance_tags: 
+        Name: dev_app
+        dev_all: ""
+    exact_count: 2
+    count_tag: 
+        Name: dev_app
+
+  - instance_type: m1.large
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: default
+    instance_tags: 
+        Name: dev_proxy
+        dev_all: ""
+    exact_count: 1
+    count_tag: 
+        Name: dev_proxy

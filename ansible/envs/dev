@@ -70,7 +70,7 @@ vpc_instances:
   - instance_type: m1.large
     image: ami-9c78c0f5
     keypair: anstest
-    group: dev_proxy
+    group: dev_vpc
     instance_tags: 
         Name: dev_proxy
         dev_all: ""
