@@ -7,9 +7,9 @@
   - vars/main.yml
   pre_tasks:
 
-  - name: set up jumphost for DB subnet
-    connection: local
-    shell: echo "I haven't figured out how to pull this off quite yet."
+  # - name: set up jumphost for DB subnet
+  #   connection: local
+  #   shell: echo "I haven't figured out how to pull this off quite yet."
 
   roles:
 
