@@ -29,7 +29,7 @@
   roles:
   - common
 
-  tags: proxytag
+
 
   # PROXY: Ensure we have a local proxy ready to route requests
 - name: Deploy Initial Configs Proxy
@@ -42,7 +42,7 @@
   - proxy-config
 
 
-  tags: proxytag
+
 
 - name: Deploy Initial Configs Switchboard/Orchestra Common
   hosts: tag_Name_dev_app
@@ -56,6 +56,7 @@
   - common
   - java
 
+  tags: appconfig
 
 
   - name: Deploy Initial Configs Switchboard/Orchestra 
@@ -70,3 +71,6 @@
   - app-clojure-config
   - app-immutant-config
   - app-deploy
+
+
+  tags: appconfig

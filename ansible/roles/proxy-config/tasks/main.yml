@@ -19,16 +19,19 @@
 
 - name: enable http proxy
   command: a2enmod proxy_http
+  sudo: true
   notify:
     - restart apache
 
 - name: enable compression
   command: a2enmod deflate
+  sudo: true
   notify:
     - restart apache
 
 - name: enable header injection
   command: a2enmod headers
+  sudo: true
   notify:
     - restart apache
     
