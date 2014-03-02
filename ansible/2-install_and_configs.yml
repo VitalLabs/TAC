@@ -44,7 +44,7 @@
 
 
 
-- name: Deploy Initial Configs Switchboard/Orchestra Common
+- name: Deploy Initial Configs Switchboard Orchestra Common
   hosts: tag_Name_dev_app
   remote_user: ubuntu
   sudo: true
@@ -56,10 +56,9 @@
   - common
   - java
 
-  tags: appconfig
 
 
-  - name: Deploy Initial Configs Switchboard/Orchestra 
+- name: Deploy Initial Configs Switchboard Orchestra 
   hosts: tag_Name_dev_app
   remote_user: deploy
   vars_files:
@@ -68,8 +67,9 @@
   roles:
   
   - app-github
-  - app-clojure-config
   - app-immutant-config
+  - app-clojure-config
+  
   - app-deploy
 
 
