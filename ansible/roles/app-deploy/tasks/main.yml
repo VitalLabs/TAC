@@ -3,11 +3,13 @@
 - name: make sure permissions are appropriate for deployer to update
   file: path=/var/lib/immutant/applications/{{ switchboard_app_name }}
         recurse=yes
-        owner=immutant
-        group=immutant
+        owner=ubuntu
+        group=ubuntu
         mode=775
   sudo: true
   ignore_errors: true
+
+
   
 - name: ensure up to date application source /var/lib/immutant/applications/{{ switchboard_app_name }}
   git: repo={{ clojure_app_git_repo }}
@@ -16,27 +18,27 @@
        depth=1
        update=yes
   register: git_pull
-  sudo: true
+
 
 - name: make immutant the owner of the tree
   file: path=/var/lib/immutant/applications/{{ switchboard_app_name }}
         recurse=yes
-        owner=immutant
-        group=immutant
+        owner=ubuntu
+        group=ubuntu
         mode=775
   sudo: true
 
-- name: deploy the application configuration file
-  copy: src={{ switchboard_config }}
+- name: deploy the application configuration file /var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config-template.edn
+  copy: src=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config-template.edn   
         dest=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config.edn
-        owner=immutant
+        owner=ubuntu
   sudo: true
   
 # Deploy to immutant
 - name: Deploy the application to the local immutant
   environment:
     IMMUTANT_HOME: /var/lib/immutant/current
-  command: "su immutant -c 'lein with-profile {{ switchboard_profiles }} immutant deploy --context-path {{ switchboard_context }}' chdir=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}" # --virtual-host {{ switchboard_address }}
+  command: "su ubuntu -c 'lein with-profile {{ switchboard_profiles }} immutant deploy --context-path {{ switchboard_context }}' chdir=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}" # --virtual-host {{ switchboard_address }}
   sudo: true
 
 
