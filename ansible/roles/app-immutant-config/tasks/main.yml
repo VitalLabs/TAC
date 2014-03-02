@@ -52,18 +52,18 @@
 # Run leiningen as Immutant user to install and run Immutant
 - name: make immutant log directory
   file: state=directory path=/var/log/immutant
-        owner=immutant group=admin
+        owner=ubuntu group=admin
   sudo: true
 
 - name: make immutant distribution directory
   file: state=directory path=/var/lib/immutant
-        owner=immutant group=admin
+        owner=ubuntu group=admin
         mode=775
   sudo: true
 
 - name: make source-based application directory
   file: state=directory path=/var/lib/immutant/applications
-        owner=immutant group=admin
+        owner=ubuntu group=admin
         mode=775
   sudo: true
         
@@ -81,7 +81,7 @@
   template: >
     src=standalone-ha.xml.j2
     dest="/var/lib/immutant/current/jboss/standalone/configuration/standalone-ha.xml"
-    owner=immutant group=admin
+    owner=ubuntu group=admin
     mode=664
   sudo: true
   notify:

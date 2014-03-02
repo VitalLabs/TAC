@@ -16,10 +16,8 @@
   - vars/main.yml
 
   roles:
-  - app-github
-  - app-clojure-config
-
-
+  - app-deploy
+  sudo: true
 
 # ##Testing playbook for individual roles
 # ##This assumes VPC was created and instances are running.
