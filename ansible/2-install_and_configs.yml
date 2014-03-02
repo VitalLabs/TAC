@@ -19,6 +19,19 @@
   - db-datomic
 
 # PROXY: Ensure we have a local proxy ready to route requests
+- name: Deploy Initial Configs Proxy Common
+  hosts: tag_Name_dev_proxy
+  remote_user: ubuntu
+  sudo: true
+  vars_files:
+  - vars/main.yml
+  
+  roles:
+  - common
+
+  tags: proxytag
+
+  # PROXY: Ensure we have a local proxy ready to route requests
 - name: Deploy Initial Configs Proxy
   hosts: tag_Name_dev_proxy
   remote_user: deploy
@@ -26,13 +39,15 @@
   - vars/main.yml
   
   roles:
-  
-  - common
   - proxy-config
 
-- name: Deploy Initial Configs Switchboard/Orchestra 
+
+  tags: proxytag
+
+- name: Deploy Initial Configs Switchboard/Orchestra Common
   hosts: tag_Name_dev_app
-  remote_user: deploy
+  remote_user: ubuntu
+  sudo: true
   vars_files:
   - vars/main.yml
 
@@ -40,6 +55,17 @@
   
   - common
   - java
+
+
+
+  - name: Deploy Initial Configs Switchboard/Orchestra 
+  hosts: tag_Name_dev_app
+  remote_user: deploy
+  vars_files:
+  - vars/main.yml
+
+  roles:
+  
   - app-github
   - app-clojure-config
   - app-immutant-config

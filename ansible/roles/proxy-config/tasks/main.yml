@@ -7,11 +7,13 @@
 
 - name: enable caching
   command: a2enmod cache
+  sudo: true
   notify:
     - restart apache
 
 - name: enable proxy
   command: a2enmod proxy
+  sudo: true
   notify:
     - restart apache
 
