@@ -34,10 +34,10 @@
   # PROXY: Ensure we have a local proxy ready to route requests
 - name: Deploy Initial Configs Proxy
   hosts: tag_Name_dev_proxy
-  remote_user: deploy
+  remote_user: ubuntu
   vars_files:
   - vars/main.yml
-  
+  sudo: true
   roles:
   - proxy-config
 
@@ -56,22 +56,8 @@
   - common
   - java
   - app-github
-
-
-
-- name: Deploy Initial Configs Switchboard Orchestra 
-  hosts: tag_Name_dev_app
-  remote_user: deploy
-  vars_files:
-  - vars/main.yml
-
-  roles:
-  
-  
   - app-immutant-config
   - app-clojure-config
-  
   - app-deploy
-
 
   tags: appconfig

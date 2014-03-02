@@ -44,7 +44,7 @@ datomic_download_key: d7fe09a2-c1c9-4a12-a6ca-ca953784bb74
 
 
 # the name clojure isnt really a good name since its all clojure anyway..  some are orchestra relate and some are switchboard related
-clojure_app_user: "deploy"
+clojure_app_user: "ubuntu"
 clojure_app_name: "orchestra"
 clojure_app_dir: "/var/lib/swb-orchestra"
 clojure_app_root: "/orchestra"
