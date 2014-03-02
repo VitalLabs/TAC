@@ -28,11 +28,11 @@
         mode=775
   sudo: true
 
-- name: deploy the application configuration file /var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config-template.edn
-  copy: src=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config-template.edn   
-        dest=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config.edn
-        owner=ubuntu
-  sudo: true
+# - name: deploy the application configuration file /var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config-template.edn
+#   copy: src=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config-template.edn   
+#         dest=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config.edn
+#         owner=ubuntu
+#   sudo: true
   
 # Deploy to immutant
 - name: Deploy the application to the local immutant
