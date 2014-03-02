@@ -69,6 +69,8 @@ switchboard_port: 8080
 switchboard_context: api
 switchboard_profiles: dev
 switchboard_app: "1"
+switchboard_app_name: "switchboard"
+switchboard_app_root: "/switchboard"
 
 orchestra_commit: HEAD
 orchestra_profiles: user,dev

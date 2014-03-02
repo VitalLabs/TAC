@@ -55,6 +55,7 @@
   
   - common
   - java
+  - app-github
 
 
 
@@ -66,7 +67,7 @@
 
   roles:
   
-  - app-github
+  
   - app-immutant-config
   - app-clojure-config
   

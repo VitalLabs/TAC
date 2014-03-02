@@ -21,9 +21,11 @@
   file: state=directory path="{{ clojure_app_log_dir }}" owner={{ clojure_app_user }} group=www-data
   sudo: true
   
+  
 - name: make sure our application repository exists
   file: state=directory path="{{ clojure_app_dir }}" owner={{ clojure_app_user }} group=www-data
   sudo: true
+  
   
 # Get application distribution
 - name: get application repository
@@ -32,8 +34,10 @@
        version={{ clojure_app_git_version }}
        depth=1
        update=yes
+       accept_hostkey=true
   notify:
     - rebuild clojure assets
+  sudo: true
 
 - name: make {{ clojure_app_user }} the owner of the tree
   file: path={{ clojure_app_dir }} owner={{ clojure_app_user }} group=admin
@@ -42,9 +46,11 @@
 
 - name: build the UI stylesheets
   command: "script/build-styles chdir={{ clojure_app_dir }}{{ clojure_app_root }}"
+  sudo: true
 
 - name: build the application javascript
   command: "lein run -m script.build chdir={{ clojure_app_dir }}{{ clojure_app_root }}"
+  sudo: true
 
 - name: update the root html parameters
   template: src=config.js.j2

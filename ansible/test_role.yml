@@ -2,8 +2,8 @@
 ##Testing playbook for individual roles
 ##This assumes VPC was created and instances are running.
 - name: Gather facts
-  hosts: tag_Name_dev_db
-  remote_user: ubuntu
+  hosts: tag_Name_dev_app
+  remote_user: deploy
   sudo: true
   vars_files:
   - vars/main.yml
@@ -11,11 +11,11 @@
   tasks: []
 
 - name: test the role.
-  hosts: tag_Name_dev_db
-  remote_user: ubuntu
+  hosts: tag_Name_dev_app
+  remote_user: deploy
   sudo: true
   vars_files:
   - vars/main.yml
 
   roles:
-  - db-dse
+  - app-clojure-config
