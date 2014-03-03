@@ -159,7 +159,7 @@
 
   - name: get instance IDs to tag the cassandra instances
     shell: >
-      aws ec2 describe-instances --filters "Name=tag-value,Values=dev_db" | grep InstanceId | awk '{print $2}' | sed s/\"//g | sed s/\,//g | grep -v "\[" | sort -u | head -1
+      aws ec2 describe-instances --filters "Name=tag-value,Values=cassandra" | grep InstanceId | awk '{print $2}' | sed s/\"//g | sed s/\,//g | grep -v "\[" | sort -u | head -1
     register: cassandra_seed
     environment: aws_creds
 

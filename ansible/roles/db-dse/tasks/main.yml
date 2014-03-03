@@ -14,6 +14,12 @@
   notify:
     - restart dse
 
+- name: register the seed first
+    shell: >
+      aws ec2 describe-instances --filters "Name=tag-key,Values=cassandra_seed" | grep PrivateIpAddress | awk '{print $2}' | sed s/\"//g | sed s/\,//g | grep -v "\[" | sort -u
+    register: cassandra_seed_ip
+    environment: aws_creds
+
 - name: configure cassandra
   template: src=cassandra.yml.j2 dest=/etc/dse/cassandra/cassandra.yaml 
   tags: datastax
