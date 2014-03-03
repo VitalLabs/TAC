@@ -13,17 +13,19 @@
 
   - name: Create the VPC 
     local_action:
-      module: ec2_vpc
-      state: present
-    #  instance_tenancy: dedicated
-      region: "{{ ec2_region }}"
-      ec2_access_key: "{{ ec2_access_key }}"
-      ec2_secret_key: "{{ ec2_secret_key }}"
-      cidr_block: "{{ vpc_cidr_block }}"
-      subnets: "{{ vpc_subnets }}"
-      internet_gateway: "{{ vpc_internet_gateway|string }}"
-      route_tables: "{{ vpc_route_tables }}"
-      wait: true
+        module: ec2_vpc
+        state: present
+      #  instance_tenancy: dedicates
+        region: "{{ ec2_region }}"
+        ec2_access_key: "{{ ec2_access_key }}"
+        ec2_secret_key: "{{ ec2_secret_key }}"
+        cidr_block: "{{ vpc_cidr_block }}"
+        subnets: "{{ vpc_subnets }}"
+        dns_support: true
+        dns_hostnames: true
+        internet_gateway: "{{ vpc_internet_gateway|string }}"
+        route_tables: "{{ vpc_route_tables }}"
+        wait: true
     register: vpc
 
   - debug: var=vpc
@@ -154,6 +156,22 @@
   - name: Wait for the instances to be fully up
     local_action: wait_for host={{ item.public_ip }} port=22 delay=30
     with_items: vpc_instances
+
+  - name: get instance IDs to tag the cassandra instances
+    shell: >
+      aws ec2 describe-instances --filters "Name=tag-value,Values=dev_db" | grep InstanceId | awk '{print $2}' | sed s/\"//g | sed s/\,//g | grep -v "\[" | sort -u | head -1
+    register: cassandra_seed
+    environment: aws_creds
+
+  - name: tag the cassandras clusters for later use
+    shell: >
+      aws ec2 create-tags --resource {{ cassandra_seed }} --tags Key=cassandra_seed,Value= 
+    environment: aws_creds
+
+  - name: the seed is also the datomic master
+    shell: >
+      aws ec2 create-tags --resource {{ cassandra_seed }} --tags Key=datmoic_master,Value=
+
 
 # - name: Update and reboot for freshness
 #   hosts: dev_all

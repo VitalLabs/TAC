@@ -4,8 +4,13 @@ subnets_hash:
 vpc_cidr_block: 10.0.0.0/16
 vpc_subnets:
     - cidr: 10.0.1.0/24
-    #- cidr: 10.0.2.0/24
-    #- cidr: 10.0.3.0/24
+      az: us-east-1a
+#    - cidr: 10.0.2.0/24
+#      az: us-east-1a
+#    - cidr: 10.0.3.0/24
+#      az: us-east-1b
+#    - cidr: 10.0.4.0/24
+#      az: us-east-1b
 vpc_internet_gateway: "yes"
 vpc_route_tables:
     - subnets:
@@ -16,6 +21,7 @@ vpc_route_tables:
 vpc_public_subnet: 10.0.1.0/24
 vpc_nat_instance_id: ami-4f9fee26 
 vpc_nat_instance_type: m1.small
+
 vpc_group:
     name: dev_vpc
     desc: the security group for the dev vpc
@@ -25,11 +31,36 @@ vpc_group:
         to_port: 22
         cidr_ip: 0.0.0.0/0
 
+
+vpc_public_group:
+    name: dev_vpc_pub_sec_group
+    desc: the public security group for the dev vpc
+    rules:
+       - proto: tcp
+         from_port: 80
+         to_port: 80
+         cidr_ip: 0.0.0.0/0
+       - proto: tcp
+         from_port: 443
+         to_port: 443
+         cidr_ip: 0.0.0.0/0
+       - proto: tcp
+         from_port: 22
+         to_port: 22
+         cidr_ip: 0.0.0.0/0
+
+vpc_private_group:
+    name: dev_vpc_priv_sec_group
+    desc: the private security group for the dev vpc
+    rules:
+       - proto: all
+         cidr_ip: 0.0.0.0/0
+
 vpc_instances:
 
   - instance_type: m1.small
     image: ami-9c78c0f5
-    keypair: anstest
+    keypair: testmonkey
     group: dev_vpc
     instance_tags: 
         Name: dev_jumphost
@@ -43,12 +74,12 @@ vpc_instances:
 
   - instance_type: m1.large
     image: ami-9c78c0f5
-    keypair: anstest
+    keypair: testmonkey
     group: dev_vpc
     instance_tags: 
         Name: dev_db
         dev_all: ""
-    exact_count: 2
+    exact_count: 3
     count_tag: 
         Name: dev_db
     subnet: 10.0.1.0/24
@@ -56,7 +87,7 @@ vpc_instances:
 
   - instance_type: m1.large
     image: ami-9c78c0f5
-    keypair: anstest
+    keypair: testmonkey
     group: dev_vpc
     instance_tags: 
         Name: dev_app
@@ -69,7 +100,7 @@ vpc_instances:
 
   - instance_type: m1.large
     image: ami-9c78c0f5
-    keypair: anstest
+    keypair: testmonkey
     group: dev_vpc
     instance_tags: 
         Name: dev_proxy
