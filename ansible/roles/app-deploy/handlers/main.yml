@@ -1,5 +1,5 @@
 ---
 - name: redeploy app
-  command: su immutant -c 'touch /var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.ima'
+  command: su ubuntu -c 'touch /var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.ima'
   sudo: true
   

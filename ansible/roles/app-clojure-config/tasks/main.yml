@@ -42,6 +42,7 @@
 - name: make {{ clojure_app_user }} the owner of the tree
   file: path={{ clojure_app_dir }} owner={{ clojure_app_user }} group=admin
         recurse=yes
+  sudo: true
 
 
 - name: build the UI stylesheets

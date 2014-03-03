@@ -23,25 +23,20 @@
   sudo: true
   when: lein_exists|failed
 
-# Create immutant user to run immutant and deploy apps: Ubuntu/Debian only
-- name: create immutant user.
-  user: name=immutant home=/home/immutant state=present 
-        groups=admin append=yes
-        comment="Runs immutant AS and apps"
-  sudo: true
+
 
 - name: set umask for group write perms
-  lineinfile: "dest=/home/immutant/.profile regexp='^umask' line='umask 002' insertbefore=BOF"
+  lineinfile: "dest=/home/ubuntu/.profile regexp='^umask' line='umask 002' insertbefore=BOF"
   sudo: true
   
 - name: Create lein config directory
-  file: state=directory path="/home/immutant/.lein" owner=immutant group=immutant
+  file: state=directory path="/home/ubuntu/.lein" owner=ubuntu group=ubuntu
   sudo: true
 
 - name: add the immutant plugin
   template: src=profiles.clj.j2
-            dest="/home/immutant/.lein/profiles.clj"
-            owner=immutant group=immutant
+            dest="/home/ubuntu/.lein/profiles.clj"
+            owner=ubuntu group=ubuntu
   sudo: true
   notify:
     - restart immutant
@@ -73,7 +68,7 @@
   ignore_errors: true
 
 - name: install immutant
-  command: "su immutant -c 'lein immutant install {{ immutant_version }}'"
+  command: "su ubuntu -c 'lein immutant install {{ immutant_version }}'"
   sudo: true
   when: immutant_exists|failed
 
