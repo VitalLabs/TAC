@@ -53,7 +53,7 @@ vpc_instances:
 
   - instance_type: m1.small
     image: ami-9c78c0f5
-    keypair: dfed-testing
+    keypair: testmonkey
     group: dev_vpc
     instance_tags: 
         Name: dev_jumphost
@@ -67,7 +67,7 @@ vpc_instances:
 
   - instance_type: m1.large
     image: ami-9c78c0f5
-    keypair: dfed-testing
+    keypair: testmonkey
     group: dev_vpc
     instance_tags: 
         Name: dev_db
@@ -80,7 +80,7 @@ vpc_instances:
 
   - instance_type: m1.large
     image: ami-9c78c0f5
-    keypair: dfed-testing
+    keypair: testmonkey
     group: dev_vpc
     instance_tags: 
         Name: dev_app
@@ -93,7 +93,7 @@ vpc_instances:
 
   - instance_type: m1.large
     image: ami-9c78c0f5
-    keypair: dfed-testing
+    keypair: testmonkey
     group: dev_vpc
     instance_tags: 
         Name: dev_proxy

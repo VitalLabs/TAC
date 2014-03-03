@@ -1,0 +1,94 @@
+###VPC Below - note: ami-4f9fee26 is an amazon marketplace AMI for VPC Nat infrastructure
+subnets_hash:
+    name: dev
+vpc_cidr_block: 172.16.0.0/16
+vpc_subnets:
+    - cidr: 172.16.1.0/24
+    #- cidr: 172.16.2.0/24
+    #- cidr: 172.16.3.0/24
+vpc_internet_gateway: "yes"
+vpc_route_tables:
+    - subnets:
+       - 172.16.1.0/24
+      routes:
+       - dest: 0.0.0.0/0
+         gw: igw
+vpc_public_subnet: 172.16.1.0/24
+vpc_nat_instance_id: ami-4f9fee26 
+vpc_nat_instance_type: m1.small
+
+#The variables for the Loadbalancer
+
+#vpc_lb_name: "dev-lb"
+#vpc_lb_listeners:
+#  - protocol: http 
+#    load_balancer_port: 80
+#    instance_port: 80
+#    instance_protocol: http
+#vpc_lb_health_check:
+#    target: "HTTP:80/index.html"
+#    timeout: 5 
+#    interval: 30 
+#    unhealthy_threshold: 2
+#    healthy_threshold: 10
+#vpc_lb_subnets:
+#   - 10.0.1.0/24
+#vpc_lb_cert_name: dev_cert
+#vpc_lb_cert_file_name: cert_dev.crt
+#vpc_lb_key_file_name: mykey_dev.key
+
+
+vpc_instances:
+
+  - instance_type: m1.small
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: prod_vpc
+    instance_tags: 
+        Name: prod_jumphost
+        prod_jumphost: ""
+    exact_count: 1
+    count_tag: 
+        Name: prod_jumphost
+    subnet: 172.16.1.0/24
+    #subnet: 172.16.2.0/24
+    #subnet: 172.16.3.0/24
+
+  - instance_type: m1.large
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: prod_vpc
+    instance_tags: 
+        Name: prod_db
+        prod_all: ""
+    exact_count: 2
+    count_tag: 
+        Name: prod_db
+    subnet: 172.16.1.0/24
+    #subnet: 172.16.3.0/24
+
+  - instance_type: m1.large
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: prod_vpc
+    instance_tags: 
+        Name: prod_app
+        prod_all: ""
+    exact_count: 2
+    count_tag: 
+        Name: prod_app
+    subnet: 172.16.1.0/24
+    #subnet: 172.16.2.0/24
+
+  - instance_type: m1.large
+    image: ami-9c78c0f5
+    keypair: anstest
+    group: prod_proxy
+    instance_tags: 
+        Name: prod_proxy
+        prod_all: ""
+    exact_count: 2
+    count_tag: 
+        Name: prod_proxy
+    subnet: 172.16.1.0/24
+    #subnet: 172.16.1.0/24
