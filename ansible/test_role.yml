@@ -17,7 +17,7 @@
 
   roles:
   - app-deploy
-  sudo: true
+ 
 
 # ##Testing playbook for individual roles
 # ##This assumes VPC was created and instances are running.
