@@ -16,6 +16,7 @@ vpc_route_tables:
 vpc_public_subnet: 10.0.1.0/24
 vpc_nat_instance_id: ami-4f9fee26 
 vpc_nat_instance_type: m1.small
+
 vpc_group:
     name: dev_vpc
     desc: the security group for the dev vpc
@@ -24,6 +25,31 @@ vpc_group:
         from_port: 22
         to_port: 22
         cidr_ip: 0.0.0.0/0
+
+
+vpc_public_group:
+    name: dev_vpc_pub_sec_group
+    desc: the public security group for the dev vpc
+    rules:
+       - proto: tcp
+         from_port: 80
+         to_port: 80
+         cidr_ip: 0.0.0.0/0
+       - proto: tcp
+         from_port: 443
+         to_port: 443
+         cidr_ip: 0.0.0.0/0
+       - proto: tcp
+         from_port: 22
+         to_port: 22
+         cidr_ip: 0.0.0.0/0
+
+vpc_private_group:
+    name: dev_vpc_priv_sec_group
+    desc: the private security group for the dev vpc
+    rules:
+       - proto: all
+         cidr_ip: 0.0.0.0/0
 
 vpc_instances:
 
