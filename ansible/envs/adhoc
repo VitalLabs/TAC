@@ -3,7 +3,7 @@ ec2_instances:
 
   - instance_type: m1.small
     image: ami-9c78c0f5
-    keypair: anstest
+    keypair: dfed-testing
     group: default
     instance_tags: 
         Name: dev_jumphost
@@ -14,7 +14,7 @@ ec2_instances:
 
   - instance_type: m1.large
     image: ami-9c78c0f5
-    keypair: anstest
+    keypair: dfed-testing
     group: default
     instance_tags: 
         Name: dev_db
@@ -25,7 +25,7 @@ ec2_instances:
 
   - instance_type: m1.large
     image: ami-9c78c0f5
-    keypair: anstest
+    keypair: dfed-testing
     group: default
     instance_tags: 
         Name: dev_app
@@ -36,7 +36,7 @@ ec2_instances:
 
   - instance_type: m1.large
     image: ami-9c78c0f5
-    keypair: anstest
+    keypair: dfed-testing
     group: default
     instance_tags: 
         Name: dev_proxy
