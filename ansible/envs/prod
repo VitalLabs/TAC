@@ -16,14 +16,51 @@ vpc_route_tables:
 vpc_public_subnet: 172.16.1.0/24
 vpc_nat_instance_id: ami-4f9fee26 
 vpc_nat_instance_type: m1.small
-vpc_group:
-    name: prod_vpc
-    desc: the security group for the dev vpc
+
+vpc_public_group:
+    name: dev_vpc_pub_sec_group
+    desc: the public security group for the dev vpc
     rules:
-      - proto: tcp
-        from_port: 22
-        to_port: 22
-        cidr_ip: 0.0.0.0/0
+       - proto: tcp
+         from_port: 80
+         to_port: 80
+         cidr_ip: 0.0.0.0/0
+       - proto: tcp
+         from_port: 443
+         to_port: 443
+         cidr_ip: 0.0.0.0/0
+       - proto: tcp
+         from_port: 22
+         to_port: 22
+         cidr_ip: 0.0.0.0/0
+
+vpc_private_group:
+    name: dev_vpc_priv_sec_group
+    desc: the private security group for the dev vpc
+    rules:
+       - proto: all
+         cidr_ip: 0.0.0.0/0
+
+#The variables for the Loadbalancer
+
+#vpc_lb_name: "dev-lb"
+#vpc_lb_listeners:
+#  - protocol: http 
+#    load_balancer_port: 80
+#    instance_port: 80
+#    instance_protocol: http
+#vpc_lb_health_check:
+#    target: "HTTP:80/index.html"
+#    timeout: 5 
+#    interval: 30 
+#    unhealthy_threshold: 2
+#    healthy_threshold: 10
+#vpc_lb_subnets:
+#   - 10.0.1.0/24
+#vpc_lb_cert_name: dev_cert
+#vpc_lb_cert_file_name: cert_dev.crt
+#vpc_lb_key_file_name: mykey_dev.key
+
 
 vpc_instances:
 
@@ -74,7 +111,7 @@ vpc_instances:
     instance_tags: 
         Name: prod_proxy
         prod_all: ""
-    exact_count: 1
+    exact_count: 2
     count_tag: 
         Name: prod_proxy
     subnet: 172.16.1.0/24
