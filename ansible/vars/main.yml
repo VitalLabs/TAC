@@ -21,7 +21,7 @@ aws_creds:
 
 cluster_name: evaluation
 cassandra_cluster: "{{ cluster_name }}"
-cassandra_listen_address: 127.0.0.1
+cassandra_listen_address: "{{ ansible_default_ipv4.address }}"
 cassandra_native_port: 19042
 
 # Datastax repository credentials
