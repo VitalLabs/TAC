@@ -1,4 +1,15 @@
 ---
+
+
+    
+
+              
+- name: add the deploy public key
+  authorized_key: user=ubuntu key="{{ item }}"
+  with_file:
+    - deploy-key.pub
+
+
 # Install deployer private key into deploying account
 - name: install our deployer key
   s3: aws_access_key={{ ec2_access_key }}
@@ -6,21 +17,14 @@
       mode=get
       bucket=vr-chef
       object=/vr_deploy
-      dest=/home/deploy/.ssh/id_rsa
+      dest=/home/ubuntu/.ssh/id_rsa
 
 - name: set secure permissions on private key
-  file: path=/home/deploy/.ssh/id_rsa
-        owner=deploy group=deploy
+  file: path=/home/ubuntu/.ssh/id_rsa
+        owner=ubuntu group=ubuntu
         mode=0600
       
-- name: test for hostkey file
-  shell: cat ~/.ssh/known_hosts
-  register: known_hosts
-  ignore_errors: true
 
-- name: remove the old host key, if any
-  command: "ssh-keygen -R github.com"
-  when: known_hosts|success
 
 - name: make sure we have the current hostkey
   shell: "ssh-keyscan github.com >> ~/.ssh/known_hosts"

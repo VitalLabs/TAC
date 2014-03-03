@@ -24,19 +24,4 @@
 - name: first time ntp start
   service: name=ntp state=started enabled=yes
 
-# Enable the deploy user
-- name: ensure the deploy user is present
-  user: name=deploy home=/home/deploy
-        state=present groups=admin
-        comment="Deployer Account" 
-    
-- name: set umask for group write perms
-  lineinfile: "dest=/home/deploy/.profile regexp='^umask' line='umask 002'"
-              
-- name: add the deploy public key
-  authorized_key: user=deploy key="{{ item }}"
-  with_file:
-    - deploy-key.pub
 
-- name: deploy can sudo
-  lineinfile: "dest=/etc/sudoers state=present regexp='^deploy' line='deploy ALL=(ALL) NOPASSWD: ALL'"

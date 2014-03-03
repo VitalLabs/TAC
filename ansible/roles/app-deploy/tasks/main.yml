@@ -1,42 +1,85 @@
 # Deploy github-based apps to immutant via source
 ---
-- name: make sure permissions are appropriate for deployer to update
-  file: path=/var/lib/immutant/applications/{{ app_name }}
+
+#Deploy Dtomic Client needed for app.
+
+- name: Check datomic installation
+  command: "ls /home/{{ maven_user }}/.m2/repository/com/datomic/datomic-pro/{{ datomic_version }}"
+  register: datomic_exists
+  ignore_errors: true
+
+- name: Create temp directory
+  file: state=directory path=/tmp/datomic owner={{ maven_user }}
+  sudo: true
+  when: datomic_exists|failed
+
+- name: Download datomic
+  s3: bucket=vr-dist object=/archives/{{ datomic_filename }}.zip dest=/tmp/datomic/{{ datomic_filename }}.zip mode=get aws_access_key={{ aws_access }} aws_secret_key={{ aws_secret }}
+  sudo: true
+  when: datomic_exists|failed
+
+- name: Unpack datomic
+  command: chdir=/tmp/datomic unzip {{ datomic_filename }}.zip
+  sudo: true
+  when: datomic_exists|failed
+
+- name: Local install to the maven_user repository
+  command: su "{{ maven_user }}" -c 'bin/maven-install' chdir="/tmp/datomic/{{ datomic_filename }}"
+  register: datomic_install
+  sudo: true
+  when: datomic_exists|failed
+
+- name: Remove temp directory
+  file: path=/tmp/datomic
+        state=absent
         recurse=yes
-        owner=immutant
-        group=deploy
+  sudo: true
+  when: datomic_install|success
+
+
+  #Deploy App Code
+
+
+
+- name: make sure permissions are appropriate for deployer to update
+  file: path=/var/lib/immutant/applications/{{ switchboard_app_name }}
+        recurse=yes
+        owner=ubuntu
+        group=ubuntu
         mode=775
   sudo: true
-  tags: git_update
   ignore_errors: true
+
+
   
-- name: ensure up to date application source
-  git: repo={{ app_git_repo }}
-       dest=/var/lib/immutant/applications/{{ app_name }}
-       version={{ app_git_version }}
+- name: ensure up to date application source /var/lib/immutant/applications/{{ switchboard_app_name }}
+  git: repo={{ clojure_app_git_repo }}
+       dest=/var/lib/immutant/applications/{{ switchboard_app_name }}
+       version={{ clojure_app_git_version }}
        depth=1
        update=yes
   register: git_pull
 
+
 - name: make immutant the owner of the tree
-  file: path=/var/lib/immutant/applications/{{ app_name }}
+  file: path=/var/lib/immutant/applications/{{ switchboard_app_name }}
         recurse=yes
-        owner=immutant
-        group=deploy
+        owner=ubuntu
+        group=ubuntu
         mode=775
   sudo: true
 
-- name: deploy the application configuration file
-  copy: src={{ app_config }}
-        dest=/var/lib/immutant/applications/{{ app_name }}{{ app_root }}/config/config.edn
-        owner=immutant
-  sudo: true
+# - name: deploy the application configuration file /var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config-template.edn
+#   copy: src=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config-template.edn   
+#         dest=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config.edn
+#         owner=ubuntu
+#   sudo: true
   
 # Deploy to immutant
 - name: Deploy the application to the local immutant
   environment:
     IMMUTANT_HOME: /var/lib/immutant/current
-  command: "su immutant -c 'lein with-profile {{ app_profiles }} immutant deploy --context-path {{ app_context }}' chdir=/var/lib/immutant/applications/{{ app_name }}{{ app_root }}" # --virtual-host {{ app_bind }}
+  command: "su ubuntu -c 'lein with-profile {{ switchboard_profiles }} immutant deploy --context-path {{ switchboard_context }}' chdir=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}" # --virtual-host {{ switchboard_address }}
   sudo: true
 
 

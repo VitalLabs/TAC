@@ -2,7 +2,7 @@
 
  <VirtualHost *:80>
     ServerName {{ orchestra_vhost }}
- 	DocumentRoot {{ app_dir }}{{ app_root }}/out/public
+ 	DocumentRoot {{ clojure_app_dir }}{{ clojure_app_root }}/out/public
 	DirectoryIndex orchestra.html
 
 #	MCacheSize 16394

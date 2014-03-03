@@ -21,36 +21,43 @@
   file: state=directory path="{{ clojure_app_log_dir }}" owner={{ clojure_app_user }} group=www-data
   sudo: true
   
+  
 - name: make sure our application repository exists
   file: state=directory path="{{ clojure_app_dir }}" owner={{ clojure_app_user }} group=www-data
   sudo: true
   
+  
 # Get application distribution
-- name: get application repository
+- name: get application repository {{ clojure_app_git_repo }}  {{ clojure_app_dir }} {{ clojure_app_git_version }}
   git: repo={{ clojure_app_git_repo }}
        dest={{ clojure_app_dir }}
        version={{ clojure_app_git_version }}
        depth=1
        update=yes
+       accept_hostkey=true
   notify:
     - rebuild clojure assets
+  tags: getcode
 
 - name: make {{ clojure_app_user }} the owner of the tree
   file: path={{ clojure_app_dir }} owner={{ clojure_app_user }} group=admin
         recurse=yes
   sudo: true
 
+
 - name: build the UI stylesheets
   command: "script/build-styles chdir={{ clojure_app_dir }}{{ clojure_app_root }}"
 
+
 - name: build the application javascript
   command: "lein run -m script.build chdir={{ clojure_app_dir }}{{ clojure_app_root }}"
+
 
 - name: update the root html parameters
   template: src=config.js.j2
             dest="{{ clojure_app_dir }}{{ clojure_app_root }}/out/public/config.js"
             mode=644
-  sudo: true
+
               
 # Upstart script for eval server at localhost:3000
 - name: application upstart script

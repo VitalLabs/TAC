@@ -1,15 +1,15 @@
 # DATABASE: Ensure our database tier is running correctly
-- name: Deploy Initial Configs: DB.
-  hosts: dev_db
+- name: Deploy Initial Configs DB
+  hosts: tag_Name_dev_db
   remote_user: ubuntu
   sudo: true
   vars_files:
   - vars/main.yml
   pre_tasks:
 
-  - name: set up jumphost for DB subnet
-    connection: local
-    shell: echo "I haven't figured out how to pull this off quite yet."
+  # - name: set up jumphost for DB subnet
+  #   connection: local
+  #   shell: echo "I haven't figured out how to pull this off quite yet."
 
   roles:
 
@@ -19,20 +19,35 @@
   - db-datomic
 
 # PROXY: Ensure we have a local proxy ready to route requests
-- name: Deploy Initial Configs: Proxy
-  hosts: dev_proxy
-  remote_user: deploy
+- name: Deploy Initial Configs Proxy Common
+  hosts: tag_Name_dev_proxy
+  remote_user: ubuntu
+  sudo: true
   vars_files:
   - vars/main.yml
   
   roles:
-  
   - common
+
+
+
+  # PROXY: Ensure we have a local proxy ready to route requests
+- name: Deploy Initial Configs Proxy
+  hosts: tag_Name_dev_proxy
+  remote_user: ubuntu
+  vars_files:
+  - vars/main.yml
+  sudo: true
+  roles:
   - proxy-config
 
-- name: Deploy Initial Configs: Switchboard/Orchestra 
-  hosts: dev_app
-  remote_user: deploy
+
+
+
+- name: Deploy Initial Configs Switchboard Orchestra Common
+  hosts: tag_Name_dev_app
+  remote_user: ubuntu
+  sudo: true
   vars_files:
   - vars/main.yml
 
@@ -41,6 +56,7 @@
   - common
   - java
   - app-github
-  - app-cloture-config
   - app-immutant-config
+  - app-clojure-config
   - app-deploy
+

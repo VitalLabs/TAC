@@ -7,7 +7,7 @@ ec2_region: us-east-1
 ec2_zone: us-east-1a
 ec2_image: ami-9c78c0f5
 ec2_instance_type: m1.large
-ec2_keypair: anstest
+ec2_keypair: swb-testcluster-keypair
 ec2_security_group: default
 ec2_app_instance_count: 2
 ec2_proxy_instance_count: 2
@@ -24,13 +24,27 @@ cassandra_cluster: "{{ cluster_name }}"
 cassandra_listen_address: 127.0.0.1
 cassandra_native_port: 19042
 
+# Datastax repository credentials
+dse_username: ian_vitalreactor.com
+dse_password: urKxIEZ6pF4KbFN
+
+
 datomic_listen_address: localhost
 datomic_protocol: dev
 datomic_version: 0.9.4384
 datomic_type: datomic-pro
 datomic_filename: "{{ datomic_type }}-{{datomic_version }}"
+datomic_protocol: "free"
+datomic_dir: /var/lib/datomic
+datomic_data_dir: /var/lib/datomic/data
+# Datomic license key (PE)
+datomic_license: DrI7ENRtMKhfS7L7LRdB2FvH9DxmGxN1PsuFK1albRaPMAs0YbkKCSs8Qsm1+K7lWmTGXDvypOmqt3T/PwZwf213lRQ3zVdTEgfDbLDBCPhsc453D210OvtLI1aI9U3PcQKMiv8WJ9/jEtPnIKrbbSx2O53t5F5CvwnpwjjYsWym+TQfqgQZw/LG8aVTL5ges3OOIC+7NjY1PFdHIKOx41aL5C3+tdvMtm4LRvEbDx+IRAs+xuL5Y3meuV4PmT84sGDmi+0oU1OU/fLS5ng6BeSNO5vNzWNVXLIeHD4V6tTYOA/oI69+3cxojmfZPY7+IpiCJxZQi4LTn3SH+CZVMQ==
+datomic_download_key: d7fe09a2-c1c9-4a12-a6ca-ca953784bb74
 
-clojure_app_user: "deploy"
+maven_user: ubuntu
+
+# the name clojure isnt really a good name since its all clojure anyway..  some are orchestra relate and some are switchboard related
+clojure_app_user: "ubuntu"
 clojure_app_name: "orchestra"
 clojure_app_dir: "/var/lib/swb-orchestra"
 clojure_app_root: "/orchestra"
@@ -43,35 +57,33 @@ clojure_app_log_dir: "/var/log/clojure"
 #For lein in app-immutant-deploy:
 lein_dir: /usr/local/bin
 
-immutant_version: 1.1.1
+immutant_version: 1.1.0
 immutant_profiles: "prod"
 
 switchboard_version: HEAD
 switchboard_config: /var/admin/files/switchboard_eval.edn
-switchboard_client_url: http://eval.orchestra.md
-switchboard_vhost: eval.swb.io
+switchboard_client_url: http://staging.orchestra.md
+switchboard_vhost: staging.swb.io
 switchboard_address: localhost
 switchboard_port: 8080
 switchboard_context: api
 switchboard_profiles: dev
 switchboard_app: "1"
+switchboard_app_name: "switchboard"
+switchboard_app_root: "/switchboard"
 
 orchestra_commit: HEAD
 orchestra_profiles: user,dev
-orchestra_vhost: eval.orchestra.md
+orchestra_vhost: staging.orchestra.md
 orchestra_address: localhost
 orchestra_port: 3000
 
-# Datastax repository credentials
-dse_username: 
-dse_password: 
 
-# Datomic license key (PE)
-datomic_license: 
+
 
 java_download: http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jdk-7u45-linux-x64.tar.gz
 java_name: jdk1.7.0_45
 java_download_folder: /usr/src
-java_archive: "{{download_folder}}/{{java_name}}.tar.gz"
+java_archive: "{{java_download_folder}}/{{java_name}}.tar.gz"
 java_folder: /usr/lib/jvm
 java_alias: java-7-oracle

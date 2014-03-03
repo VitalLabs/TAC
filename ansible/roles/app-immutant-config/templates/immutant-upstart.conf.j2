@@ -19,7 +19,7 @@ export LAUNCH_JBOSS_IN_BACKGROUND
 
 script
 bash << "EOF"
-  su - immutant
+  su - ubuntu
   /var/lib/immutant/current/jboss/bin/standalone.sh -c standalone-ha.xml -b {{ switchboard_address }} -Djboss.port={{ switchboard_port }} >> /var/log/immutant/immutant.log 2>&1
 EOF
 end script
