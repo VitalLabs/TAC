@@ -165,10 +165,14 @@
 
   - name: tag the cassandras clusters for later use
     shell: >
-      aws ec2 create-tags --resource {{ cassandra_seed }} --tags Key=cassandra_seed,Value=
+      aws ec2 create-tags --resource {{ cassandra_seed }} --tags Key=cassandra_seed,Value= 
     environment: aws_creds
 
-    
+  - name: the seed is also the datomic master
+    shell: >
+      aws ec2 create-tags --resource {{ cassandra_seed }} --tags Key=datmoic_master,Value=
+
+
 # - name: Update and reboot for freshness
 #   hosts: dev_all
 #   remote_user: ubuntu
