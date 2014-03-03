@@ -147,6 +147,8 @@
     register: ec2
     with_items: vpc_instances
 
+  - debug: msg={{ environ| default("dev") }}
+
   - name: Wait for the instances to be fully up
     local_action: wait_for host={{ item.public_ip }} port=22 delay=30
     with_items: vpc_instances
