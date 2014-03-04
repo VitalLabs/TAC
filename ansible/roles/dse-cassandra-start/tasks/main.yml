@@ -1,12 +1,12 @@
 ---
 
-# - name: configure cassandra
-#   template: src=cassandra.yml.j2 dest=/etc/dse/cassandra/cassandra.yaml 
-#   tags: datastax
-#   notify:
-#     - restart dse
+- name: configure cassandra
+  template: src=cassandra.yml.j2 dest=/etc/dse/cassandra/cassandra.yaml 
+  tags: datastax
+  notify:
+    - restart dse
     
 
-# - name: restart dse
-#   service: name=dse state=started enabled=yes
-#   local_action: wait_for host={{ item.public_ip }} port={{ cassandra_port }}
+- name: restart dse
+  service: name=dse state=started enabled=yes
+  local_action: wait_for host={{ item.public_ip }} port={{ cassandra_port }}
