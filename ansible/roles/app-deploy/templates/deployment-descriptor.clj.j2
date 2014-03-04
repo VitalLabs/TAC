@@ -1,11 +1,11 @@
 {:root "/var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target{{ switchboard_app_root }}.ima"
  :resolve-dependecies true
  :nrepl-port 4005
- :init {{ switchboard_init }}
+ :init "{{ switchboard_init }}"
  :context-path "/{{ switchboard_context }}" 
  :virtual-host "{{ switchboard_address }}"
  :datomic.template "{{ datomic_template }}"
- :data-persist {{ switchboard_data_persist }}
+ :data-persist true
   
 
  :twilio.enable "false"
