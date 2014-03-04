@@ -9,11 +9,18 @@
   sudo: true
   tasks: []
 
+
+
+
+  
+
 - name: test the role.
   hosts: tag_Name_dev_app
   remote_user: ubuntu
   vars_files:
   - vars/main.yml
+  - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
+
 
   roles:
   - app-deploy

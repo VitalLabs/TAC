@@ -1,0 +1,30 @@
+{:root "/var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target{{ switchboard_app_root }}.ima"
+ :resolve-dependecies {{ switchboard_resolve_dependecies }}
+ :nrepl-port 4005
+ :init {{ switchboard_init }}
+ :context-path "/{{ switchboard_context }}" 
+ :virtual-host "{{ switchboard_address }}"
+ :datomic.template {{ datomic_template }}
+ :data-persist {{ switchboard_data_persist }}
+  
+
+ #TODO  Integrate
+ :twilio.enable "false"
+ :twilio.sid {{ twilio_sid }}
+ :twilio.token {{ twilio_token }}
+ :twilio.subname "C3N Staging"
+ :twilio.app.name "C3N Trackers"
+ :twilio.handler.message  "http://localhost:8080/service/twilio/message"
+ :twilio.handler.status "http://localhost:8080/service/twilio/status"
+ :twilio.numbers.country "US"
+ :twilio.numbers.code 415
+
+
+ :service.smtp/host "smtp.sendgrid.net"
+ :service.smtp/ssl true
+ :service.smtp/enable true
+ :service.smtp/user {{ service_smtp_user }}
+ :service.smtp/pass {{ service_smtp_user }}
+
+ :lein-profiles [:{{ switchboard_profiles }}]}
+ 
