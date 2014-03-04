@@ -12,6 +12,10 @@
 
   tasks: []
 
+- name: Gather more facts
+  local_action: ec2_facts
+
+
 - name: Deploy Initial Configs DB
   hosts: tag_Name_dev_db
   remote_user: ubuntu
