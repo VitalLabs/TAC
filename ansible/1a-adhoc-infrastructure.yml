@@ -28,17 +28,17 @@
     register: ec2
     with_items: ec2_instances
 
-  - name: get instance IDs to tag the cassandra instances
-    shell: >
-      aws ec2 describe-instances --filters "Name=tag-value,Values=dev_db" | grep InstanceId | awk '{print $2}' | sed s/\"//g | sed s/\,//g | grep -v "\[" | sort -u | head -1
-    register: cassandra_seed
-    environment: aws_creds
+  # - name: get instance IDs to tag the cassandra instances
+  #   shell: >
+  #     aws ec2 describe-instances --filters "Name=tag-value,Values=dev_db" | grep InstanceId | awk '{print $2}' | sed s/\"//g | sed s/\,//g | grep -v "\[" | sort -u | head -1
+  #   register: cassandra_seed
+  #   environment: aws_creds
 
-  - name: tag the cassandras clusters for later use
-    shell: >
-      aws ec2 create-tags --resource {{ cassandra_seed }} --tags Key=cassandra_seed,Value= 
-    environment: aws_creds
+  # - name: tag the cassandras clusters for later use
+  #   shell: >
+  #     aws ec2 create-tags --resource {{ cassandra_seed }} --tags Key=cassandra_seed,Value= 
+  #   environment: aws_creds
 
-  - name: the seed is also the datomic master
-    shell: >
-      aws ec2 create-tags --resource {{ cassandra_seed }} --tags Key=datomic_master,Value=
+  # - name: the seed is also the datomic master
+  #   shell: >
+  #     aws ec2 create-tags --resource {{ cassandra_seed }} --tags Key=datomic_master,Value=
