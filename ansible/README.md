@@ -15,3 +15,12 @@ Then cd into this playbook directory and run as needed.
 Note: For a environment deployment you must have the following file  on your local hard drive to configure secure settings:
 
 switchboard_config: /.ssh/switchboard_vars.yml
+
+Example settings for this file:
+
+ twilio_sid: "****"
+ twilio_token: "****"
+
+
+ service_smtp_user: "********************************"
+ service_smtp_pass: "********************************"
