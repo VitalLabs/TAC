@@ -170,7 +170,7 @@
 
   - name: the seed is also the datomic master
     shell: >
-      aws ec2 create-tags --resource {{ cassandra_seed }} --tags Key=datmoic_master,Value=
+      aws ec2 create-tags --resource {{ cassandra_seed }} --tags Key=datomic_master,Value=
 
 
 # - name: Update and reboot for freshness
