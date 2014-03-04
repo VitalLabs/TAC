@@ -141,7 +141,12 @@
 
 
 - name: configure and install switchboard
-  template: src=deployment-descriptor.clj.j2 dest=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }} 
+  template: src=deployment-descriptor.clj.j2 dest=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj
+  sudo: true
+
+- name: redeploy app
+  command: su ubuntu -c 'touch /var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj.dodeploy'
+  sudo: true
 
 
 # # Deploy to immutant - it takes a deployment descriptor that points to actual .ima file
