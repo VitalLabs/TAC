@@ -30,7 +30,9 @@ dse_password: urKxIEZ6pF4KbFN
 
 
 
-datomic_template: "datomic:dev://{{ datomic_master_ip}}:4334/<db>"
+#datomic_template: "datomic:dev://{{ datomic_master_ip}}:4334/<db>"
+datomic_template: "datomic:dev://ec2-184-73-61-16.compute-1.amazonaws.com:4334/<db>"
+
 datomic_listen_address: localhost
 datomic_protocol: dev
 datomic_version: 0.9.4384
