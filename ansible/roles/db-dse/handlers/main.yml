@@ -1,4 +1,0 @@
----
-# handlers file for db
-- name: restart dse
-  service: name=dse state=restarted

@@ -27,9 +27,4 @@
     - restart dse
   sudo: true
 
-- name: register the seed first
-  local_action: shell: >
-   aws ec2 describe-instances --filters "Name=tag-key,Values=cassandra_seed" | grep PrivateIpAddress | awk '{print $2}' | sed s/\"//g | sed s/\,//g | grep -v "\[" | sort -u
-  register: cassandra_seed_ip
-  environment: aws_creds
 
