@@ -69,7 +69,6 @@
 
 
 
-
 ## You must place a yml config in your .ssh location for this playbook task to run!
 - name: Deploy Initial Configs Switchboard Orchestra Common
   hosts: tag_Name_dev_app
