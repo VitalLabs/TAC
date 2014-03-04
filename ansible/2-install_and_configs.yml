@@ -30,6 +30,7 @@
   - java
   - db-dse
   - db-datomic
+  - dse-cassandra-start
 
 - name: Bring up Cassandra in serial
   hosts: tag_Name_dev_db
