@@ -29,6 +29,10 @@ dse_username: ian_vitalreactor.com
 dse_password: urKxIEZ6pF4KbFN
 
 
+
+#datomic_template: "datomic:dev://{{ datomic_master_ip}}:4334/<db>"
+datomic_template: "datomic:dev://ec2-184-73-61-16.compute-1.amazonaws.com:4334/<db>"
+
 datomic_listen_address: localhost
 datomic_protocol: dev
 datomic_version: 0.9.4384
@@ -61,7 +65,6 @@ immutant_version: 1.1.0
 immutant_profiles: "prod"
 
 switchboard_version: HEAD
-switchboard_config: /var/admin/files/switchboard_eval.edn
 switchboard_client_url: http://staging.orchestra.md
 switchboard_vhost: staging.swb.io
 switchboard_address: localhost
@@ -71,6 +74,9 @@ switchboard_profiles: dev
 switchboard_app: "1"
 switchboard_app_name: "switchboard"
 switchboard_app_root: "/switchboard"
+switchboard_init: switchboard.server/run-immutant-dev
+switchboard_data_persist: true
+switchboard_resolve_dependecies: true
 
 orchestra_commit: HEAD
 orchestra_profiles: user,dev
