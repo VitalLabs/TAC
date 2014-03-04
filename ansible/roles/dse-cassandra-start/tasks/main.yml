@@ -9,4 +9,4 @@
 
 - name: restart dse
   service: name=dse state=started enabled=yes
-  local_action: wait_for host={{ item.public_ip }} port={{ cassandra_port }}
+  wait_for: host={{ item.public_ip }} port={{ cassandra_port }}
