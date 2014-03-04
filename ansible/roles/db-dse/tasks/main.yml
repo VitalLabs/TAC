@@ -2,29 +2,34 @@
 # tasks file for db
 
 # DSE DEPLOYMENT
+- name: setup
 
-- name: configure the datastax enterprise repository
-  apt_repository: repo="deb http://{{ dse_username }}:{{ dse_password }}@debian.datastax.com/enterprise stable main" state=present
-  
-- name: add dse repository key
-  apt_key: url=https://debian.datastax.com/debian/repo_key state=present
+  - name: configure the datastax enterprise repository
+    apt_repository: repo="deb http://{{ dse_username }}:{{ dse_password }}@debian.datastax.com/enterprise stable main" state=present
+    
+  - name: add dse repository key
+    apt_key: url=https://debian.datastax.com/debian/repo_key state=present
 
-- name: install DSE packages
-  apt: pkg=dse-full state=installed force=yes
-  notify:
-    - restart dse
+  - name: install DSE packages
+    apt: pkg=dse-full state=installed force=yes
+    notify:
+      - restart dse
 
-- name: register the seed first
-    shell: >
-      aws ec2 describe-instances --filters "Name=tag-key,Values=cassandra_seed" | grep PrivateIpAddress | awk '{print $2}' | sed s/\"//g | sed s/\,//g | grep -v "\[" | sort -u
-    register: cassandra_seed_ip
-    environment: aws_creds
+  - name: register the seed first
+      shell: >
+        aws ec2 describe-instances --filters "Name=tag-key,Values=cassandra_seed" | grep PrivateIpAddress | awk '{print $2}' | sed s/\"//g | sed s/\,//g | grep -v "\[" | sort -u
+      register: cassandra_seed_ip
+      environment: aws_creds
 
-- name: configure cassandra
-  template: src=cassandra.yml.j2 dest=/etc/dse/cassandra/cassandra.yaml 
-  tags: datastax
-  notify:
-    - restart dse
+- name: serially bring up cassandra
+  serial: 1
 
-- name: restart dse
-  service: name=dse state=started enabled=yes
+  - name: configure cassandra
+    template: src=cassandra.yml.j2 dest=/etc/dse/cassandra/cassandra.yaml 
+    tags: datastax
+    notify:
+      - restart dse
+
+  - name: restart dse
+    service: name=dse state=started enabled=yes
+    local_action: wait_for host={{ item.public_ip }} port={{ cassandra_port }}
