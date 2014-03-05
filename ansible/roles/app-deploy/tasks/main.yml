@@ -151,8 +151,9 @@
 
 
 - name: If is still undeploying then wait till its done
-  wait_for: path=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj.undeployed timeout=120
+  wait_for: path=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj.undeployed timeout=30
   sudo: true
+  ignore_errors: true
 
  
 - name: configure and install switchboard 

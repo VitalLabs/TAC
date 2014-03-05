@@ -171,7 +171,7 @@
 				<protocol type="S3_PING">
 				  <property name="access_key">{{ ec2_access_key }}</property>
 				  <property name="secret_access_key">{{ ec2_secret_key }}</property>
-				  <property name="location">vr-s3ping</property>
+				  <property name="location">{{ immutant_cluster_bucket }}</property>
 				</protocol>
                 <protocol type="MERGE2"/>
                 <protocol type="FD_SOCK" socket-binding="jgroups-tcp-fd"/>

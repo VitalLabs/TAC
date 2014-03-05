@@ -22,6 +22,7 @@ aws_creds:
 cluster_name: evaluation
 cassandra_cluster: "{{ cluster_name }}"
 cassandra_listen_address: "{{ ansible_default_ipv4.address }}"
+cassandra_hosts: ["ec2-54-224-232-82.compute-1.amazonaws.com"]
 cassandra_native_port: 19042
 
 cassandra_versions:
@@ -81,7 +82,7 @@ lein_dir: /usr/local/bin
 immutant_version: 1.1.0
 immutant_profiles: "prod"
 #this bucket changes per environment
-immutant_cluster_bucket: immutant_cluster_staging
+immutant_cluster_bucket: immutant_s3ping_staging
 
 switchboard_version: HEAD
 switchboard_client_url: http://staging.orchestra.md
@@ -89,7 +90,7 @@ switchboard_vhost: staging.swb.io
 switchboard_address: localhost
 switchboard_port: 8080
 switchboard_context: api
-switchboard_profiles: dev
+switchboard_profiles: prod
 switchboard_app: "1"
 switchboard_app_name: "switchboard"
 switchboard_app_root: "/switchboard"
