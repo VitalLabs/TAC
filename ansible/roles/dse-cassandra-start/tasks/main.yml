@@ -1,15 +1,18 @@
 ---
 
 - name: compute cassandra tokens for snitch/seed things.
-  
+  debug: msg="placeholder"
 
 - name: configure cassandra
   template: src=cassandra.yml.j2 dest=/etc/dse/cassandra/cassandra.yaml 
   tags: datastax
   notify:
     - restart dse
-    
 
 - name: restart dse
+  tags: datastax
   service: name=dse state=started enabled=yes
-  wait_for: host={{ item.public_ip }} port={{ cassandra_port }}
+
+- name: pause until cassandra is up
+  tags: datastax
+  wait_for: host={{ inventory_hostname }} port={{ cassandra_port }}
