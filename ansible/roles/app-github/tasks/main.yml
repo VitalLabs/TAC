@@ -1,14 +1,8 @@
 ---
-
-
-    
-
-              
 - name: add the deploy public key
   authorized_key: user=ubuntu key="{{ item }}"
   with_file:
     - deploy-key.pub
-
 
 # Install deployer private key into deploying account
 - name: install our deployer key
@@ -23,8 +17,6 @@
   file: path=/home/ubuntu/.ssh/id_rsa
         owner=ubuntu group=ubuntu
         mode=0600
-      
-
 
 - name: make sure we have the current hostkey
   shell: "ssh-keyscan github.com >> ~/.ssh/known_hosts"

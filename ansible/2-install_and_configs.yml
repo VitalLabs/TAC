@@ -1,27 +1,22 @@
-
-
-
+---
 # DATABASE: Ensure our database tier is running correctly
-
-- name: Need Facts
+- name: Gather facts from all hosts
   hosts: dev_all
   remote_user: deploy
-  sudo: true
-  vars_files:
-  - vars/main.yml
 
-  tasks: []
-
-- name: Gather more facts
-  local_action: ec2_facts
+  tasks:
+  - name: Gather EC2-based facts
+    ec2_facts:
 
 
 - name: Deploy Initial Configs DB
   hosts: tag_Name_dev_db
   remote_user: ubuntu
   sudo: true
+
   vars_files:
   - vars/main.yml
+
   pre_tasks:
 
   # - name: set up jumphost for DB subnet
@@ -29,23 +24,23 @@
   #   shell: echo "I haven't figured out how to pull this off quite yet."
 
   roles:
-
   - common
   - java
   - db-dse
   - db-datomic
   - dse-cassandra-start
 
+
 - name: Bring up Cassandra in serial
   hosts: tag_Name_dev_db
   remote_user: ubuntu
   sudo: true
   serial: 1
+
   vars_files:
   - vars/main.yml
 
   roles:
-
   - dse-cassandra-start
 
 
@@ -60,18 +55,18 @@
   roles:
   - common
 
-  # PROXY: Ensure we have a local proxy ready to route requests
+
+# PROXY: Ensure we have a local proxy ready to route requests
 - name: Deploy Initial Configs Proxy
   hosts: tag_Name_dev_proxy
   remote_user: ubuntu
+  sudo: true
+
   vars_files:
   - vars/main.yml
-  sudo: true
+
   roles:
   - proxy-config
-
-
-
 
 
 ## You must place a yml config in your .ssh location for this playbook task to run!
@@ -79,16 +74,15 @@
   hosts: tag_Name_dev_app
   remote_user: ubuntu
   sudo: true
+
   vars_files:
   - vars/main.yml
   - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
 
   roles:
-  
   - common
   - java
   - app-github
   - app-immutant-config
   - app-clojure-config
   - app-deploy
-
