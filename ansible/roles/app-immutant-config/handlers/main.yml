@@ -1,11 +1,6 @@
 ---
 - name: restart immutant
   service: name=immutant state=restarted
-  notify:
-    - restart datomic
   sudo: true
 
-- name: restart datomic
-  service: name=datomic state=restarted
-  sudo: true
     

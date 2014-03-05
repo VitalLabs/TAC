@@ -2,12 +2,17 @@
 ---
 
 
-  ###
-- name: get the datomic master ip
-  shell: >
-    aws ec2 describe-instances --filters "Name=tag-key,Values=datomic_master" | grep PrivateIpAddress | awk '{print $2}' | sed s/\"//g | sed s/\,//g | grep -v "\[" | sort -u
-  register: datomic_master_ip
-  environment: aws_creds
+#   ###
+# - name: get the datomic master ip
+#   local_action: command "aws ec2 describe-instances --filters "Name=tag-key,Values=datomic_master" | grep PrivateIpAddress | awk '{print $2}' | sed s/\"//g | sed s/\,//g | grep -v "\[" | sort -u"
+#   register: datomic_master_ip
+#   environment: aws_creds
+#   tags: get-datomic-key
+
+#     ###
+# - name: debug the datomic master ip
+#   debug: msg="{{ datomic_master_ip }}"
+#   tags: get-datomic-key
 
 ##Deploy Dtomic Client needed for app.
 
@@ -140,11 +145,22 @@
   sudo: true
 
 
-- name: configure and install switchboard
+- name: Undeploy app by removing the file
+  file: state=absent path=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj
+  ignore_errors: true
+
+
+- name: If is still undeploying then wait till its done
+  wait_for: path=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj.undeployed timeout=120
+  sudo: true
+
+ 
+- name: configure and install switchboard 
   template: src=deployment-descriptor.clj.j2 dest=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj
   sudo: true
 
-- name: redeploy app
+
+- name: Install app
   command: su ubuntu -c 'touch /var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj.dodeploy'
   sudo: true
 

@@ -48,7 +48,7 @@ dse_password: urKxIEZ6pF4KbFN
 
 
 #datomic_template: "datomic:dev://{{ datomic_master_ip}}:4334/<db>"
-datomic_template: "datomic:dev://ec2-184-73-61-16.compute-1.amazonaws.com:4334/<db>"
+datomic_template: "datomic:dev://ec2-54-224-232-82.compute-1.amazonaws.com:4334/<db>"
 
 datomic_listen_address: localhost
 datomic_protocol: dev
@@ -80,6 +80,8 @@ lein_dir: /usr/local/bin
 
 immutant_version: 1.1.0
 immutant_profiles: "prod"
+#this bucket changes per environment
+immutant_cluster_bucket: immutant_cluster_staging
 
 switchboard_version: HEAD
 switchboard_client_url: http://staging.orchestra.md
@@ -110,3 +112,6 @@ java_download_folder: /usr/src
 java_archive: "{{java_download_folder}}/{{java_name}}.tar.gz"
 java_folder: /usr/lib/jvm
 java_alias: java-7-oracle
+
+
+github_s3_bucket_name: vr-chef-dev
