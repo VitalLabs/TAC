@@ -2,7 +2,8 @@
 ###General EC2 Below
 
 # designates ec2 account, used to create dynamic bucket names if ec2 account is different!
-ec2_identifier: ryansHome
+# Must be lowercase.
+ec2_identifier: ryans-home-account
 
 ec2_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
 ec2_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
@@ -19,12 +20,16 @@ aws_creds:
   AWS_DEFAULT_REGION: "{{ ec2_region }}"
   AWS_ACCESS_KEY: "{{ ec2_access_key }}"
   AWS_SECRET_KEY: "{{ ec2_secret_key }}"
+  AWS_ACCESS_KEY_ID: "{{ ec2_access_key }}"
+  AWS_SECRET_ACCESS_KEY: "{{ ec2_secret_key }}"
 
 ###Non-Infrastructure here:
 
 cluster_name: evaluation
 cassandra_cluster: "{{ cluster_name }}"
 cassandra_listen_address: "{{ ansible_default_ipv4.address }}"
+
+#hardcoded until I can get this list..waintign for David to land somewhere
 cassandra_hosts: ["ec2-54-224-232-82.compute-1.amazonaws.com"]
 cassandra_native_port: 19042
 
@@ -86,7 +91,9 @@ lein_dir: /usr/local/bin
 
 immutant_version: 1.1.0
 immutant_profiles: "dev"
-#this bucket changes per environment
+
+# This bucket changes per environment. Since bucket names must be unqui in ALL s3 customers we need to add this namign mechanism
+# Must be lowercase
 immutant_cluster_bucket: immutant_s3ping_{{ switchboard_profiles }}_{{ ec2_identifier }}
 
 switchboard_version: deployment-config-changes
