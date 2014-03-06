@@ -50,7 +50,11 @@ seed_provider:
       parameters:
           # seeds is actually a comma-delimited list of addresses.
           # Ex: "<ip1>,<ip2>,<ip3>"
+{% if (inventory_hostname in groups['cassandra_seed']) %}
+          - seeds: 
+{% else %}
           - seeds: "{{ cassandra_seed_ip }}"
+{% endif %}
 
 # Pressure tuning
 flush_largest_memtables_at: 0.75
