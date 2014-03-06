@@ -1,0 +1,17 @@
+## You must place a yml config in your .ssh location for this playbook task to run!
+- name: Deploy Initial Configs Switchboard Orchestra Common
+  hosts: tag_Name_dev_app
+  remote_user: ubuntu
+  sudo: true
+
+  vars_files:
+  - vars/main.yml
+  - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
+
+  roles:
+  - common
+  - java
+  - app-github
+  - app-immutant-config
+  - app-clojure-config
+  - app-deploy

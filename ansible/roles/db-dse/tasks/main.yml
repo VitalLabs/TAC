@@ -5,26 +5,21 @@
 
 - name: configure the datastax enterprise repository
   apt_repository: repo="deb http://{{ dse_username }}:{{ dse_password }}@debian.datastax.com/enterprise stable main" state=present
-  sudo: true
   
 - name: add dse repository key
   apt_key: url=https://debian.datastax.com/debian/repo_key state=present
-  sudo: true
 
 - name: update apt-get
   apt: update_cache=yes
-  sudo: true
 
 - name: install DSE packages 
-  apt: pkg='{{ item }}' state=installed force=yes
+  apt: pkg={{ item }} state=installed force=yes
   with_items: cassandra_versions
-
-# sudo apt-get install dse-full=3.2.5-1 dse=3.2.5-1 dse-hive=3.2.5-1 dse-pig=3.2.5-1 dse-demos=3.2.5-1 dse-libsolr=3.2.5-1 dse-libtomcat=3.2.5-1 
-# dse-libsqoop=3.2.5-1 dse-liblog4j=3.2.5-1 dse-libmahout=3.2.5-1 dse-libhadoop-native=3.2.5-1 dse-libcassandra=3.2.5-1 dse-libhive=3.2.5-1 dse-libpig=3.2.5-1 dse-libhadoop=3.2.5-1
-
-
   notify:
     - restart dse
-  sudo: true
 
-
+- name: configure cassandra
+  template: src=cassandra.yml.j2 dest=/etc/dse/cassandra/cassandra.yaml
+  tags: datastax
+  notify:
+    - restart dse
