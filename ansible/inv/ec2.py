@@ -278,9 +278,7 @@ class Ec2Inventory(object):
  
             reservations = conn.get_all_instances()
             for reservation in reservations:
-                print reservation
                 for instance in reservation.instances:
-                    print instance
                     self.add_instance(instance, region)
         
         except boto.exception.BotoServerError, e:
