@@ -1,21 +1,23 @@
 ---
-#Create and config the VPC
+# Create and config the VPC
 - name: VPC creation and configure
   hosts: localhost
   connection: local
   gather_facts: False
+
   vars_files:
   - vars/main.yml
+
   tasks:
 
-  - name: Include the variables specific to the vpc
+  - name: Include the variables specific to this environment
     include_vars: envs/{{ environ| default("dev") }}
 
   - name: Create the VPC 
     local_action:
         module: ec2_vpc
         state: present
-      #  instance_tenancy: dedicates
+      #  instance_tenancy: dedicated
         region: "{{ ec2_region }}"
         ec2_access_key: "{{ ec2_access_key }}"
         ec2_secret_key: "{{ ec2_secret_key }}"
@@ -30,20 +32,6 @@
 
   - debug: var=vpc
 
-  - name: Write out a temporary file for mapping subnet to id
-    template: src=templates/subnet_id.j2 dest=/tmp/subnet_id
-
-  - name: Get the contents of subnet mapping file and set it as a fact
-    set_fact:
-      subnet_maps: "{{ lookup('file', '/tmp/subnet_id') }}"
-
-  - name: Write out a temporary file for mapping publics ubnet to id
-    template: src=templates/public_subnets.j2 dest=/tmp/public_subnet_id
-
-  - name: Get the contents of public subnet mapping file and set it as a fact
-    set_fact:
-      public_subnets: "{{ lookup('file', '/tmp/public_subnet_id') }}"
-    
   - name: Create the public security group for the VPC
     local_action:
       module: ec2_group
@@ -68,8 +56,7 @@
       rules: "{{ vpc_private_group.rules }}"
     register: private_sec_group
 
-  ### This is the NAT instance for routing traffic and jumphost, etc.
-
+  # This is the NAT instance for routing traffic and jumphost, etc.
   - name: Create the NAT Instance
     ec2:
       region: "{{ ec2_region }}"
@@ -143,7 +130,7 @@
       keypair: "{{ item.keypair }}"
       instance_type: "{{ item.instance_type }}"
       image: "{{ item.image }}"
-      vpc_subnet_id: "{{ subnet_maps[item.subnet] }}"
+      vpc_subnet_id: "{{ vpc.subnets[0].id }}"
       wait: true
       instance_tags: "{{ item.instance_tags }}"
       exact_count: "{{ item.exact_count }}"
@@ -151,49 +138,4 @@
     register: ec2
     with_items: vpc_instances
 
-  - debug: msg={{ environ| default("dev") }}
-
-  - name: Wait for the instances to be fully up
-    local_action: wait_for host={{ item.public_ip }} port=22 delay=30
-    with_items: vpc_instances
-
-  - name: get instance IDs to tag the cassandra instances
-    shell: >
-      aws ec2 describe-instances --filters "Name=tag-value,Values=dev_db" | grep InstanceId | awk '{print $2}' | sed s/\"//g | sed s/\,//g | grep -v "\[" | sort -u | head -1
-    register: cassandra_seed
-    environment: aws_creds
-
-  - name: tag the cassandras clusters for later use
-    shell: >
-      aws ec2 create-tags --resource {{ cassandra_seed }} --tags Key=cassandra_seed,Value= 
-    environment: aws_creds
-
-  - name: the seed is also the datomic master
-    shell: >
-      aws ec2 create-tags --resource {{ cassandra_seed }} --tags Key=datomic_master,Value=
-
-
-# - name: Update and reboot for freshness
-#   hosts: dev_all
-#   remote_user: ubuntu
-#   sudo: true
-#   tasks:
-  
-#   - name: make sure python is there
-#     raw: sudo apt-get install python
-
-#   - name: dist upgrade
-#     apt: upgrade=dist
-#     with_items: ec2.dev_all
-
-#   - name: reboot to make sure everything is fresh
-#     shell: /sbin/reboot &
-#     with_items: ec2.dev_all
-
-#   - name: wait for the server to go down (reboot)
-#     local_action: wait_for host={{ item.public_ip }} port=22 state=stopped
-#     with_items: ec2.dev_all
-
-#   - name: Wait for the server to wake back up
-#     local_action: wait_for host={{ item.public_ip }} port=22 delay=30
-#     with_items: ec2.dev_all
+  - debug: var=ec2

@@ -1,0 +1,16 @@
+---
+- name: bootstrap the jumphost with useful tools
+  hosts: tag_Name_dev_jumphost
+  remote_user: ubuntu
+  sudo: true
+
+  roles:
+  - common
+
+  post_tasks:
+  
+  - name: set up easy_install
+    apt: name=python-pip state=present
+  
+  - name: install Ansible
+    pip: name=ansible state=present

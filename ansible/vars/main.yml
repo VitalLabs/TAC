@@ -7,7 +7,7 @@ ec2_region: us-east-1
 ec2_zone: us-east-1a
 ec2_image: ami-9c78c0f5
 ec2_instance_type: m1.large
-ec2_keypair: swb-testcluster-keypair
+ec2_keypair: tgerla-test
 ec2_security_group: default
 ec2_app_instance_count: 2
 ec2_proxy_instance_count: 2
@@ -16,6 +16,8 @@ aws_creds:
   AWS_DEFAULT_REGION: "{{ ec2_region }}"
   AWS_ACCESS_KEY: "{{ ec2_access_key }}"
   AWS_SECRET_KEY: "{{ ec2_secret_key }}"
+  AWS_ACCESS_KEY_ID: "{{ ec2_access_key }}"
+  AWS_SECRET_ACCESS_KEY: "{{ ec2_secret_key }}"
 
 ###Non-Infrastructure here:
 
