@@ -23,7 +23,7 @@ ec2_instances:
     instance_tags: 
         Name: dev_db
         dev_all: ""
-    exact_count: 2
+    exact_count: 1 
     count_tag: 
         Name: dev_db
 
@@ -32,12 +32,11 @@ ec2_instances:
     keypair: "{{instances_keypair}}"
     group: default
     instance_tags: 
-        Name: dev_db
+        Name: dev_db_seed
         dev_all: ""
-        dev_cassandra_master: ""
     exact_count: 1 
     count_tag: 
-        dev_cassandra_master: ""
+        Name: dev_db_seed
 
   - instance_type: m1.large
     image: "{{image_id}}"
@@ -46,7 +45,7 @@ ec2_instances:
     instance_tags: 
         Name: dev_app
         dev_all: ""
-    exact_count: 2
+    exact_count: 0
     count_tag: 
         Name: dev_app
 
@@ -57,6 +56,6 @@ ec2_instances:
     instance_tags: 
         Name: dev_proxy
         dev_all: ""
-    exact_count: 1
+    exact_count: 0 
     count_tag: 
         Name: dev_proxy

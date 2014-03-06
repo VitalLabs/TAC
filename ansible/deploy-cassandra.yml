@@ -1,16 +1,7 @@
 ---
 # DATABASE: Ensure our database tier is running correctly
-- name: Gather facts from all hosts
-  hosts: {{environ|default('dev')}}_all
-  remote_user: deploy
-
-  tasks:
-  - name: Gather EC2-based facts
-    ec2_facts:
-
-
 - name: Deploy Initial Configs DB
-  hosts: tag_Name_{{environ|default('dev')}}_db
+  hosts: tag_Name_{{environ|default('dev')}}_db:tag_Name_{{environ|default('dev')}}_db_seed
   remote_user: ubuntu
   sudo: true
 
@@ -20,12 +11,12 @@
   pre_tasks:
 
   roles:
-  - common
+#  - common
   - java
   - db-dse
 
 - name: Bring up Cassandra seed(s) in serial
-  hosts: tag_{{environ|default('dev')}}_cassandra_master_
+  hosts: tag_Name_{{environ|default('dev')}}_db_seed
   remote_user: ubuntu
   sudo: true
   serial: 1
@@ -37,7 +28,7 @@
   - dse-cassandra-start
 
 - name: Bring up the rest of the Cassandra hosts
-  hosts: tag_Name_{{environ|default('dev')}}_db:!tag_{{environ|default('dev')}}_cassandra_master_
+  hosts: tag_Name_{{environ|default('dev')}}_db
   remote_user: ubuntu
   sudo: true
   

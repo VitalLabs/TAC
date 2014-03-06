@@ -28,9 +28,8 @@ aws_creds:
 cluster_name: evaluation
 cassandra_cluster: "{{ cluster_name }}"
 cassandra_listen_address: "{{ ansible_default_ipv4.address }}"
+cassandra_hosts: "{{ groups['tag_Name_' + environ|default('dev') + '_db'] }}"
 
-#hardcoded until I can get this list..waintign for David to land somewhere
-cassandra_hosts: ["ec2-54-224-232-82.compute-1.amazonaws.com"]
 cassandra_intermode_port: 7000
 cassandra_native_port: 19042
 
