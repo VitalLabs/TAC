@@ -26,7 +26,7 @@
  :service.smtp/pass "{{ service_smtp_user }}"
 
  :datastax.hosts {{cassandra_hosts}}
- :datastax.port [{{cassandra_native_port}}]
+ :datastax.port {{cassandra_native_port}}
 
  :lein-profiles [:{{ switchboard_profiles }}]}
  
