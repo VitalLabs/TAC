@@ -11,6 +11,9 @@
   
   - name: set up easy_install
     apt: name=python-pip state=present
+
+  - name: remove outdated version of boto (the next pip install will install the right version)
+    apt: name=python-boto state=absent
   
   - name: install Ansible
     pip: name=ansible state=present
