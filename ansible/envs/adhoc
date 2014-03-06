@@ -1,9 +1,13 @@
 ---
+
+instances_keypair: "{{ec2_keypair}}"
+image_id: "{{ec2_image}}"
+
 ec2_instances:
 
   - instance_type: m1.small
-    image: ami-9c78c0f5
-    keypair: ryanvitalreactor
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
     group: default
     instance_tags: 
         Name: dev_jumphost
@@ -13,19 +17,31 @@ ec2_instances:
         Name: dev_jumphost
 
   - instance_type: m1.large
-    image: ami-9c78c0f5
-    keypair: ryanvitalreactor
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
     group: default
     instance_tags: 
         Name: dev_db
         dev_all: ""
-    exact_count: 3
+    exact_count: 2
     count_tag: 
         Name: dev_db
 
   - instance_type: m1.large
-    image: ami-9c78c0f5
-    keypair: ryanvitalreactor
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
+    group: default
+    instance_tags: 
+        Name: dev_db
+        dev_all: ""
+        dev_cassandra_master: ""
+    exact_count: 1 
+    count_tag: 
+        dev_cassandra_master: ""
+
+  - instance_type: m1.large
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
     group: default
     instance_tags: 
         Name: dev_app
@@ -35,8 +51,8 @@ ec2_instances:
         Name: dev_app
 
   - instance_type: m1.large
-    image: ami-9c78c0f5
-    keypair: ryanvitalreactor
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
     group: default
     instance_tags: 
         Name: dev_proxy

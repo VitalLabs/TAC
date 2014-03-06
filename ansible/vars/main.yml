@@ -3,11 +3,11 @@
 
 ec2_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
 ec2_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
-ec2_region: us-east-1
-ec2_zone: us-east-1a
-ec2_image: ami-9c78c0f5
+ec2_region: us-west-2
+ec2_zone: us-west-2a
+ec2_image: ami-7eab224e
 ec2_instance_type: m1.large
-ec2_keypair: tgerla-test
+ec2_keypair: tgerla-test-west
 ec2_security_group: default
 ec2_app_instance_count: 2
 ec2_proxy_instance_count: 2
