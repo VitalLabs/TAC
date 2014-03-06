@@ -57,7 +57,8 @@ dse_password: urKxIEZ6pF4KbFN
 
 
 #datomic_template: "datomic:dev://{{ datomic_master_ip}}:4334/<db>"
-datomic_template: "datomic:{{ datomic_protocol }}://ec2-54-224-232-82.compute-1.amazonaws.com:4334/<db>"
+# datomic:ddb://{aws-region}/{dynamodb-table}/<db>?aws_access_key_id={XXX}&aws_secret_key={YYY}
+datomic_template: "datomic:ddb://{{ ec2_region }}/{{ datomic_storage_table }}/<db>?aws_access_key_id={{ ec2_access_key }}&aws_secret_key={{ ec2_secret_key }}"
 
 datomic_listen_address: localhost
 datomic_protocol: ddb
