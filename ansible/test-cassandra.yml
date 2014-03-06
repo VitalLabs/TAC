@@ -1,0 +1,38 @@
+---
+# DATABASE: Ensure our database tier is running correctly
+- name: Gather facts from all hosts
+  hosts: dev_all
+  remote_user: deploy
+
+  tasks:
+  - name: Gather EC2-based facts
+    ec2_facts:
+
+
+- name: Deploy Initial Configs DB
+  hosts: tag_Name_dev_db
+  remote_user: ubuntu
+  sudo: true
+
+  vars_files:
+  - vars/main.yml
+
+  pre_tasks:
+
+  roles:
+  - common
+  - java
+  - db-dse
+  - db-datomic
+
+- name: Bring up Cassandra in serial
+  hosts: tag_Name_dev_db
+  remote_user: ubuntu
+  sudo: true
+  serial: 1
+
+  vars_files:
+  - vars/main.yml
+
+  roles:
+  - dse-cassandra-start
