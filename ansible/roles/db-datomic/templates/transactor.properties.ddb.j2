@@ -81,10 +81,10 @@ object-cache-max=1g
 
 # Data directory is used for dev: and free: storage, and
 # as a temporary directory for all storages.
-# data-dir=data
+data-dir={{ datomic_data_dir }}
 
 # Transactor will log here, see bin/logback.xml to configure logging.
-# log-dir=log
+log-dir={{ datomic_log_dir }}
 
 # Transactor will write process pid here on startup
 # pid-file=transactor.pid
