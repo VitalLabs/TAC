@@ -121,6 +121,7 @@
        depth=1
        update=yes
   register: git_pull
+  sudo: false
 
 
 - name: make immutant the owner of the tree
