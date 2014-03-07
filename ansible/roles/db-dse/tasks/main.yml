@@ -20,6 +20,5 @@
 
 - name: configure cassandra
   template: src=cassandra.yml.j2 dest=/etc/dse/cassandra/cassandra.yaml
-  tags: datastax
   notify:
     - restart dse

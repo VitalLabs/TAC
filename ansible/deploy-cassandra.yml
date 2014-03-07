@@ -1,6 +1,5 @@
 ---
-# DATABASE: Ensure our database tier is running correctly
-- name: Deploy Initial Configs DB
+- name: Deploy the initial common configuration and setup for DSE hosts
   hosts: tag_Name_{{environ|default('dev')}}_db:tag_Name_{{environ|default('dev')}}_db_seed
   remote_user: ubuntu
   sudo: true
@@ -11,9 +10,9 @@
   pre_tasks:
 
   roles:
-#  - common
+  - common
   - java
-  - db-dse
+  - {role: db-dse, tags: ["datastax"]}
 
 - name: Bring up Cassandra seed(s) in serial
   hosts: tag_Name_{{environ|default('dev')}}_db_seed
@@ -25,7 +24,7 @@
   - vars/main.yml
 
   roles:
-  - dse-cassandra-start
+  - {role: dse-cassandra-start, tags: ["datastax"]}
 
 - name: Bring up the rest of the Cassandra hosts
   hosts: tag_Name_{{environ|default('dev')}}_db
@@ -36,4 +35,4 @@
   - vars/main.yml
 
   roles:
-  - dse-cassandra-start
+  - {role: dse-cassandra-start, tags: ["datastax"]}

@@ -23,7 +23,7 @@ ec2_instances:
     instance_tags: 
         Name: dev_db
         dev_all: ""
-    exact_count: 1 
+    exact_count: 3 
     count_tag: 
         Name: dev_db
 
