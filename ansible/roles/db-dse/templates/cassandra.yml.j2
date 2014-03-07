@@ -9,7 +9,8 @@
 # one logical cluster from joining another.
 cluster_name: {{ cassandra_cluster }}
 
-initial_token: 1
+# initial_token: 1
+num_tokens: 256
 hinted_handoff_enabled: true
 max_hint_window_in_ms: 10800000 # 3 hours
 hinted_handoff_throttle_in_kb: 1024
@@ -50,7 +51,7 @@ seed_provider:
       parameters:
           # seeds is actually a comma-delimited list of addresses.
           # Ex: "<ip1>,<ip2>,<ip3>"
-          - seeds: "{{ cassandra_seed_ip }}"
+          - seeds: {% for host in groups['tag_Name_dev_db_seed'] %}{{ hostvars[host]['ansible_default_ipv4'].address }}{% if not loop.last %}, {% endif %}{% endfor %} 
 
 # Pressure tuning
 flush_largest_memtables_at: 0.75

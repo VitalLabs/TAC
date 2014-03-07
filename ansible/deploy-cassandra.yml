@@ -1,0 +1,39 @@
+---
+# DATABASE: Ensure our database tier is running correctly
+- name: Deploy Initial Configs DB
+  hosts: tag_Name_{{environ|default('dev')}}_db:tag_Name_{{environ|default('dev')}}_db_seed
+  remote_user: ubuntu
+  sudo: true
+
+  vars_files:
+  - vars/main.yml
+
+  pre_tasks:
+
+  roles:
+#  - common
+  - java
+  - db-dse
+
+- name: Bring up Cassandra seed(s) in serial
+  hosts: tag_Name_{{environ|default('dev')}}_db_seed
+  remote_user: ubuntu
+  sudo: true
+  serial: 1
+
+  vars_files:
+  - vars/main.yml
+
+  roles:
+  - dse-cassandra-start
+
+- name: Bring up the rest of the Cassandra hosts
+  hosts: tag_Name_{{environ|default('dev')}}_db
+  remote_user: ubuntu
+  sudo: true
+  
+  vars_files:
+  - vars/main.yml
+
+  roles:
+  - dse-cassandra-start

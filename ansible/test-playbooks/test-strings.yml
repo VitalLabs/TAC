@@ -1,0 +1,13 @@
+---
+- name: gather facts from all hosts
+  hosts: all:!localhost
+  remote_user: ubuntu
+  tasks: []
+
+- name: render the test template
+  hosts: localhost
+  tasks:
+
+  - template: src=test-strings.j2 dest=/tmp/test-seeds
+
+  - debug: msg="look at /tmp/test-seeds for the output"

@@ -7,11 +7,11 @@ ec2_identifier: ryans-home-account
 
 ec2_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
 ec2_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
-ec2_region: us-east-1
-ec2_zone: us-east-1a
-ec2_image: ami-9c78c0f5
+ec2_region: us-west-2
+ec2_zone: us-west-2a
+ec2_image: ami-7eab224e
 ec2_instance_type: m1.large
-ec2_keypair: swb-testcluster-keypair
+ec2_keypair: tgerla-test-west
 ec2_security_group: default
 ec2_app_instance_count: 2
 ec2_proxy_instance_count: 2
@@ -28,9 +28,9 @@ aws_creds:
 cluster_name: evaluation
 cassandra_cluster: "{{ cluster_name }}"
 cassandra_listen_address: "{{ ansible_default_ipv4.address }}"
+cassandra_hosts: "{{ groups['tag_Name_' + environ|default('dev') + '_db'] }}"
 
-#hardcoded until I can get this list..waintign for David to land somewhere
-cassandra_hosts: ["ec2-54-224-232-82.compute-1.amazonaws.com"]
+cassandra_intermode_port: 7000
 cassandra_native_port: 19042
 
 cassandra_versions:
