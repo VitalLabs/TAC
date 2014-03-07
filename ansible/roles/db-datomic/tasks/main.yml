@@ -6,10 +6,10 @@
   user: name=datomic state=present
 
 - name: Create datomic data directory
-  file: state=directory path={{ datomic_data_dir }} owner=datomic group=datomic
+  file: state=directory path={{ datomic_data_dir }} owner=ubuntu group=ubuntu
 
 - name: Make datomic log directory
-  file: state=directory path=/var/log/datomic owner=datomic group=datomic
+  file: state=directory path=/var/log/datomic owner=ubuntu group=ubuntu
     
 # Download and make current if necessary
 - name: Check datomic installation
@@ -18,7 +18,7 @@
   ignore_errors: true
 
 - name: Create datomic directory
-  file: state=directory path={{ datomic_dir }} owner=datomic group=datomic
+  file: state=directory path={{ datomic_dir }} owner=ubuntu group=ubuntu
   when: datomic_exists|failed
 
 - name: Download datomic
@@ -30,13 +30,16 @@
   when: datomic_exists|failed
 
 - name: datomic dir permissions
-  shell: chown -R datomic:datomic {{ datomic_dir }}/{{ datomic_filename }}
+  shell: chown -R ubuntu:ubuntu {{ datomic_dir }}/{{ datomic_filename }}
+
+- name: datomic log dir permissions
+  shell: chown -R ubuntu:ubuntu {{ datomic_log_dir }}
 
 - name: Link datomic
   file: src={{ datomic_dir }}/{{ datomic_filename }}
         dest={{ datomic_dir }}/current
-        owner=datomic
-        group=datomic
+        owner=ubuntu
+        group=ubuntu
         state=link
   notify:
     - restart datomic
@@ -51,10 +54,10 @@
 
 # Configure distribution
 - name: Upload datomic properties file
-  template: src=transactor.properties.{{  datomic_protocol  }}.j2 dest={{ datomic_dir }}/transactor.properties owner=datomic group=datomic mode=0664
+  template: src=transactor.properties.{{  datomic_protocol  }}.j2 dest={{ datomic_dir }}/transactor.properties owner=ubuntu group=ubuntu mode=0664
 
 - name: Ensure Datomic Transactor Settings {{ aws_creds }}
-  command: "bin/datomic ensure-transactor {{ datomic_dir }}/transactor.properties {{ datomic_dir }}/transactor.propertiess chdir={{ datomic_dir }}/current"
+  command: "bin/datomic ensure-transactor {{ datomic_dir }}/transactor.properties {{ datomic_dir }}/transactor.properties chdir={{ datomic_dir }}/current"
   notify:
     - restart datomic
   environment: aws_creds  
