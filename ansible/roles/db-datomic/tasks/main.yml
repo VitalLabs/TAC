@@ -56,20 +56,17 @@
 - name: gather ec2-specific facts
   action: ec2_facts
   environment: aws_creds
-  tags: datomic-conf
+
 
 
 # Configure distribution
 - name: Upload datomic properties file with host 
   template: src=transactor.properties.{{  datomic_protocol  }}.j2 dest={{ datomic_dir }}/transactor.properties owner=ubuntu group=ubuntu mode=0664
   when: not datomic.stat.exists
-  tags: datomic-conf
 
 - name: Ensure Datomic Transactor Settings 
   command: "bin/datomic ensure-transactor {{ datomic_dir }}/transactor.properties {{ datomic_dir }}/transactor.properties chdir={{ datomic_dir }}/current"
   environment: aws_creds  
-  when: not datomic.stat.exists
-  tags: datomic-conf
 
 - name: datomic log dir permissions
   shell: chown -R ubuntu:ubuntu {{ datomic_log_dir }}

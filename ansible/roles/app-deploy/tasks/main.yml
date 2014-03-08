@@ -154,10 +154,13 @@
   sudo: true
   ignore_errors: true
 
+
+
  
 - name: configure and install switchboard 
   template: src=deployment-descriptor.clj.j2 dest=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj
   sudo: true
+  tags: datomic-conf
 
 
 - name: Install app
