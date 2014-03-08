@@ -38,6 +38,7 @@
   notify:
     - rebuild clojure assets
   tags: getcode
+  sudo: false
 
 - name: make {{ clojure_app_user }} the owner of the tree
   file: path={{ clojure_app_dir }} owner={{ clojure_app_user }} group=admin
@@ -51,6 +52,8 @@
 
 - name: build the application javascript
   command: "lein run -m script.build chdir={{ clojure_app_dir }}{{ clojure_app_root }}"
+  tags: build_js
+  sudo: false
 
 
 - name: update the root html parameters
