@@ -18,7 +18,12 @@
   notify:
     - restart dse
 
-- name: configure cassandra
+
+  # Example that prints the loopback address and gateway for each host
+
+- debug: msg="System  {{ groups['tag_Name_dev_db_seed'] }} || {{ inventory_hostname }} ||has gateway {{ ansible_default_ipv4 }}"
+- name: configure cassandra 
+
   template: src=cassandra.yml.j2 dest=/etc/dse/cassandra/cassandra.yaml
   tags: datastax
   notify:
