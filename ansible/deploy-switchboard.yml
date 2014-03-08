@@ -15,9 +15,9 @@
   - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
 
   roles:
-  #- common
- # - java
- # - app-github
-  #- app-immutant-config
-  #- app-clojure-config
+  - common
+  - java
+  - app-github
+  - app-immutant-config
+  - app-clojure-config
   - app-deploy
