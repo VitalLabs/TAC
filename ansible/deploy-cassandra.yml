@@ -10,6 +10,10 @@
 
   pre_tasks:
 
+  tasks:
+   - name: Gather EC2-based facts
+     ec2_facts:
+
   roles:
   - common
   - java
