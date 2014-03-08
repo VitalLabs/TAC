@@ -1,7 +1,7 @@
 ################################################################
 
 protocol=ddb
-host={{ hostvars[groups['tag_Name_dev_db_seed'][0]]['ansible_ec2_public_hostname'] }}
+host={{ ec2_public_dns_name }}
 
 port=4334
 
