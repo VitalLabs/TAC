@@ -75,8 +75,8 @@ native_transport_port: {{ cassandra_native_port }}
 # native_transport_max_threads: 128
 
 start_rpc: true
-rpc_address: localhost
-rpc_port: 9160
+rpc_address: {{ cassandra_rpc_address }}
+rpc_port: {{ cassandra_rpc_port }}
 rpc_keepalive: true
 rpc_server_type: sync
 # rpc_min_threads: 16

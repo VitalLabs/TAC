@@ -155,7 +155,8 @@
   ignore_errors: true
 
 
-
+- debug: msg="System Groups {{ groups  }} "
+- debug: msg="System  {{ groups['tag_'+environ|default('dev')+'_cassandra_']  }} || {{ hostvars[groups['tag_'+environ|default('dev')+'_cassandra_'][0]] }} ||has gateway {{ ansible_default_ipv4 }}"
  
 - name: configure and install switchboard 
   template: src=deployment-descriptor.clj.j2 dest=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj

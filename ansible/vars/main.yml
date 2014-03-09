@@ -34,12 +34,15 @@ aws_creds:
 
 ###Non-Infrastructure here:
 
-cluster_name: evaluation
+cluster_name: staging
 cassandra_cluster: "{{ cluster_name }}"
 cassandra_listen_address: "{{ ansible_default_ipv4.address }}"
 
 cassandra_intermode_port: 7000
-cassandra_native_port: 19042
+cassandra_native_port: 9042
+
+cassandra_rpc_port: 9160
+cassandra_rpc_address: 0.0.0.0
 
 cassandra_versions:
      - "dse-full=3.2.5-1"
