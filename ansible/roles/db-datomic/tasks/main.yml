@@ -68,6 +68,8 @@
 
 - name: Ensure Datomic Transactor Settings 
   command: "bin/datomic ensure-transactor {{ datomic_dir }}/transactor.properties {{ datomic_dir }}/transactor.properties chdir={{ datomic_dir }}/current"
+  notify:
+    - restart datomic
   environment: aws_creds 
 
 
