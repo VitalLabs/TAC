@@ -44,7 +44,7 @@ ec2_instances:
         Name: dev_db
         dev_all: ""
         dev_cassandra: ""
-    exact_count: 1 
+    exact_count: 3 
     count_tag: 
         Name: dev_db
 
