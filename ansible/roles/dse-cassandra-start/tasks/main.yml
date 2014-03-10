@@ -1,8 +1,6 @@
 ---
 - name: start dse
-  tags: datastax
   service: name=dse state=started enabled=yes
 
 - name: pause until cassandra is up
-  tags: datastax
   wait_for: host={{ inventory_hostname }} port={{ cassandra_intermode_port }}
