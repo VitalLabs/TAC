@@ -23,7 +23,8 @@ ec2_instances:
     instance_tags: 
         Name: dev_db
         dev_all: ""
-    exact_count: 3 
+        dev_cassandra: ""
+    exact_count: 1 
     count_tag: 
         Name: dev_db
 
@@ -34,6 +35,7 @@ ec2_instances:
     instance_tags: 
         Name: dev_db_seed
         dev_all: ""
+        dev_cassandra: ""
     exact_count: 1 
     count_tag: 
         Name: dev_db_seed

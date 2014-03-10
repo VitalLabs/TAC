@@ -1,7 +1,8 @@
 ################################################################
 
 protocol=ddb
-host=host={{ datomic_listen_address }}
+host={{ ec2_public_dns_name }}
+
 port=4334
 
 
@@ -20,7 +21,7 @@ license-key={{ datomic_license }}
 aws-dynamodb-table={{ datomic_storage_table }}
 
 # See http://docs.amazonwebservices.com/general/latest/gr/rande.html#ddb_region
-aws-dynamodb-region=us-east-1
+aws-dynamodb-region={{ ec2_region }}
 
 # To use DynamoDB Local, change the protocol (above) to ddb-local.
 # Comment out aws-dynamodb-region, and instead use aws-dynamodb-override-endpoint

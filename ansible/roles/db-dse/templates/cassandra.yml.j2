@@ -51,7 +51,7 @@ seed_provider:
       parameters:
           # seeds is actually a comma-delimited list of addresses.
           # Ex: "<ip1>,<ip2>,<ip3>"
-          - seeds: {% for host in groups['tag_Name_dev_db_seed'] %}{{ hostvars[host]['ansible_default_ipv4'].address }}{% if not loop.last %}, {% endif %}{% endfor %} 
+          - seeds: {% for host in groups['tag_Name_dev_db_seed'] %}{{ hostvars[host]['ec2_private_ip_address'] }}{% if not loop.last %}, {% endif %}{% endfor %} 
 
 # Pressure tuning
 flush_largest_memtables_at: 0.75
@@ -75,8 +75,8 @@ native_transport_port: {{ cassandra_native_port }}
 # native_transport_max_threads: 128
 
 start_rpc: true
-rpc_address: localhost
-rpc_port: 9160
+rpc_address: {{ cassandra_rpc_address }}
+rpc_port: {{ cassandra_rpc_port }}
 rpc_keepalive: true
 rpc_server_type: sync
 # rpc_min_threads: 16
