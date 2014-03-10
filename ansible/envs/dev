@@ -3,6 +3,26 @@
 instances_keypair: "{{ec2_keypair}}"
 image_id: "{{ec2_image}}"
 
+security_groups:
+  - name: jumphost
+    desc: the security group for the jumphost
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+  - name: cassandra
+    desc: the security group for cassandra
+    rules:
+      - proto: tcp
+        from_port: "{{ cassandra_intermode_port }}"
+        to_port: "{{ cassandra_intermode_port }}" 
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "{{ cassandra_native_port }}"
+        to_port: "{{ cassandra_native_port }}"
+        cidr_ip: 0.0.0.0/0
+
 ec2_instances:
 
   - instance_type: m1.small

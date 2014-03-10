@@ -11,7 +11,15 @@
   tasks:
 
   - name: Include the variables specific to the vpc
-    include_vars: envs/dev
+    include_vars: envs/adhoc
+
+  - name: Create security groups
+    ec2_group:
+      name: "{{ item.name }}"
+      description: "{{ item.desc }}"
+      rules: "{{ item.rules }}"
+      region: "{{ ec2_region }}"
+    with_items: security_groups
 
   - name: Launch instances
     ec2: 
