@@ -1,0 +1,131 @@
+###VPC Below - note: ami-4f9fee26 is an amazon marketplace AMI for VPC Nat infrastructure
+subnets_hash:
+    name: dev
+vpc_cidr_block: 10.0.0.0/16
+vpc_subnets:
+    - cidr: 10.0.1.0/24
+      az: us-east-1d
+#    - cidr: 10.0.2.0/24
+#      az: us-east-1a
+#    - cidr: 10.0.3.0/24
+#      az: us-east-1b
+#    - cidr: 10.0.4.0/24
+#      az: us-east-1b
+vpc_internet_gateway: "yes"
+vpc_route_tables:
+    - subnets:
+       - 10.0.1.0/24
+      routes:
+       - dest: 0.0.0.0/0
+         gw: igw
+vpc_public_subnet: 10.0.1.0/24
+vpc_nat_instance_id: ami-4f9fee26 
+vpc_nat_instance_type: m1.small
+
+vpc_group:
+    name: dev_vpc
+    desc: the security group for the dev vpc
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+
+
+vpc_public_group:
+    name: dev_vpc_pub_sec_group
+    desc: the public security group for the dev vpc
+    rules:
+       - proto: tcp
+         from_port: 80
+         to_port: 80
+         cidr_ip: 0.0.0.0/0
+       - proto: tcp
+         from_port: 443
+         to_port: 443
+         cidr_ip: 0.0.0.0/0
+       - proto: tcp
+         from_port: 22
+         to_port: 22
+         cidr_ip: 0.0.0.0/0
+
+vpc_private_group:
+    name: dev_vpc_priv_sec_group
+    desc: the private security group for the dev vpc
+    rules:
+       - proto: all
+         cidr_ip: 0.0.0.0/0
+
+# Base settings for all VPC instances
+instances_keypair: tgerla-test
+image_id: ami-9c78c0f5
+
+# Dev infrastructure framework
+vpc_instances:
+  - instance_type: m1.small
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
+    group: dev_vpc
+    instance_tags: 
+        Name: dev_jumphost
+        dev_jumphost: ""
+    exact_count: 1
+    count_tag: 
+        Name: dev_jumphost
+    subnet: 10.0.1.0/24
+    #subnet: 10.0.2.0/24
+    #subnet: 10.0.3.0/24
+
+  - instance_type: m1.large
+    image: "{{image_id}}"
+    keypair: tgerla-test
+    group: dev_vpc
+    instance_tags: 
+        Name: dev_db
+        dev_all: ""
+    exact_count: 2
+    count_tag: 
+        Name: dev_db
+    subnet: 10.0.1.0/24
+    #subnet: 10.0.3.0/24
+
+  # cassandra seed
+  - instance_type: m1.large
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
+    group: dev_vpc
+    instance_tags: 
+        Name: dev_db
+        dev_all: ""
+        dev_cassandra_seed: ""
+    exact_count: 1
+    count_tag: 
+        dev_cassandra_seed: ""
+    subnet: 10.0.1.0/24
+    #subnet: 10.0.3.0/24
+
+  - instance_type: m1.large
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
+    group: dev_vpc
+    instance_tags: 
+        Name: dev_app
+        dev_all: ""
+    exact_count: 2
+    count_tag: 
+        Name: dev_app
+    subnet: 10.0.1.0/24
+    #subnet: 10.0.2.0/24
+
+  - instance_type: m1.large
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
+    group: dev_vpc
+    instance_tags: 
+        Name: dev_proxy
+        dev_all: ""
+    exact_count: 1
+    count_tag: 
+        Name: dev_proxy
+    subnet: 10.0.1.0/24
+    #subnet: 10.0.1.0/24
