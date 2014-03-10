@@ -13,6 +13,14 @@
   - name: Include the variables specific to the vpc
     include_vars: envs/adhoc
 
+  - name: Create security groups
+    ec2_group:
+      name: "{{ item.name }}"
+      description: "{{ item.desc }}"
+      rules: "{{ item.rules }}"
+      region: "{{ ec2_region }}"
+    with_items: security_groups
+
   - name: Launch instances
     ec2: 
       region: "{{ ec2_region }}"
