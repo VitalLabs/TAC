@@ -24,3 +24,9 @@ Example settings for this file:
 
  service_smtp_user: "********************************"
  service_smtp_pass: "********************************"
+
+
+
+ If you run into any Control Path erorrs then set this environment variable:
+
+ export  ANSIBLE_SSH_CONTROL_PATH="%(directory)s/%%h-%%r"
