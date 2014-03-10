@@ -1,1 +1,3 @@
-all
+# file: group_vars/all
+
+test: test
