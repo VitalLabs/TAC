@@ -11,7 +11,7 @@
   tasks:
 
   - name: Include the variables specific to the vpc
-    include_vars: envs/adhoc
+    include_vars: envs/dev
 
   - name: Create security groups
     ec2_group:
