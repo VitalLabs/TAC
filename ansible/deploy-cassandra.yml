@@ -1,11 +1,8 @@
 ---
 - name: Deploy the initial common configuration and setup for DSE hosts
-  hosts: tag_Name_{{environ|default('dev')}}_db:tag_Name_{{environ|default('dev')}}_db_seed
+  hosts: tag_{{environ|default('dev')}}_cassandra_
   remote_user: ubuntu
   sudo: true
-
-  vars_files:
-  - vars/main.yml
 
   pre_tasks:
 
@@ -24,9 +21,6 @@
   sudo: true
   serial: 1
 
-  vars_files:
-  - vars/main.yml
-
   roles:
   - {role: dse-cassandra-start, tags: ["datastax"]}
 
@@ -35,8 +29,5 @@
   remote_user: ubuntu
   sudo: true
   
-  vars_files:
-  - vars/main.yml
-
   roles:
   - {role: dse-cassandra-start, tags: ["datastax"]}

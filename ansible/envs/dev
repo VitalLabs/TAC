@@ -28,7 +28,7 @@ ec2_instances:
   - instance_type: m1.small
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: default
+    group: jumphost
     instance_tags: 
         Name: dev_jumphost
         dev_jumphost: ""
@@ -39,23 +39,25 @@ ec2_instances:
   - instance_type: m1.large
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: default
+    group: cassandra 
     instance_tags: 
         Name: dev_db
         dev_all: ""
         dev_cassandra: ""
-    exact_count: 3 
+        cassandra: ""
+    exact_count: 1 
     count_tag: 
         Name: dev_db
 
   - instance_type: m1.large
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: default
+    group: cassandra
     instance_tags: 
         Name: dev_db_seed
         dev_all: ""
         dev_cassandra: ""
+        cassandra: ""
     exact_count: 1 
     count_tag: 
         Name: dev_db_seed
@@ -67,7 +69,7 @@ ec2_instances:
     instance_tags: 
         Name: dev_app
         dev_all: ""
-    exact_count: 2
+    exact_count: 0
     count_tag: 
         Name: dev_app
 
@@ -78,6 +80,6 @@ ec2_instances:
     instance_tags: 
         Name: dev_proxy
         dev_all: ""
-    exact_count: 1 
+    exact_count: 0 
     count_tag: 
         Name: dev_proxy
