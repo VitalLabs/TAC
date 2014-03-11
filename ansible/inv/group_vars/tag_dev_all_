@@ -1,0 +1,4 @@
+# variables specified here override group_vars/all and apply to
+# all development hosts
+
+dummy: test
