@@ -168,6 +168,9 @@
   command: su ubuntu -c 'touch /var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj.dodeploy'
   sudo: true
 
+- name: wait until immutant comes back up, simple smoke test
+  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }}
+
 
 # # Deploy to immutant - it takes a deployment descriptor that points to actual .ima file
 # - name: Deploy the application to the local immutant

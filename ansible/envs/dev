@@ -67,7 +67,7 @@ ec2_instances:
     instance_tags: 
         Name: dev_app
         dev_all: ""
-    exact_count: 1
+    exact_count: 2
     count_tag: 
         Name: dev_app
 

@@ -109,7 +109,7 @@ immutant_profiles: "dev"
 # Must be lowercase
 immutant_cluster_bucket: immutant_s3ping_{{ switchboard_profiles }}_{{ ec2_identifier }}
 
-switchboard_version: deployment-config-changes
+switchboard_version: HEAD
 switchboard_client_url: http://staging.orchestra.md
 switchboard_vhost: staging.swb.io
 switchboard_address: localhost
@@ -123,7 +123,7 @@ switchboard_init: switchboard.server/run-immutant-dev
 switchboard_data_persist: true
 switchboard_resolve_dependecies: true
 
-orchestra_commit: deployment-config-changes
+orchestra_commit: HEAD
 orchestra_profiles: user,dev
 orchestra_vhost: staging.orchestra.md
 orchestra_address: localhost

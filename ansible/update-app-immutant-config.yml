@@ -1,0 +1,31 @@
+---
+# Perform a rolling update of the app-deploy/Swictchoboard code and configuration, one  host at a time.
+#
+# Notes:
+#
+# This is the general pattern for a rolling upgrade. 
+# 
+# The "serial: 1" setting controls how many nodes are restarted at a time. For large clusters,
+# increase this.
+#
+# 
+#
+- name: Upgrade Cassandra hosts
+  hosts: tag_Name_{{environ|default('dev')}}_app
+  remote_user: ubuntu
+  sudo: true
+  serial: 1
+
+  vars_files:
+  - vars/main.yml
+
+  pre_tasks:
+  # nothing right now..need to take out of load balancer or does iummutant handle?
+
+  # re-apply roles and any config changes
+  roles:
+  - app-immutant-config
+  - app-deploy
+
+  post_tasks:
+  # noen righ tnow, assume immutant is started back up
