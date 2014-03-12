@@ -3,7 +3,7 @@
  :nrepl-port 4005
  :init "{{ switchboard_init }}"
  :context-path "/{{ switchboard_context }}" 
- :virtual-host "{{ switchboard_address }}"
+ :virtual-host "{{ inventory_hostname }}"
  :datomic.template "{{ datomic_template }}"
  :data-persist true
   

@@ -9,7 +9,6 @@ switchboard_init: switchboard.server/run-immutant-dev
 switchboard_version: HEAD
 switchboard_client_url: http://dev.dev-orchestra.md
 switchboard_vhost: dev.dev-swb.io
-switchboard_address: localhost
 switchboard_port: 8080
 switchboard_data_persist: true
 switchboard_resolve_dependecies: true
@@ -49,3 +48,7 @@ ansible_app_git_repo: "ssh://git@github.com/vitalreactor/switchboard-infrastruct
 ansible_app_dir: "/var/lib/sw_ansible"
 
 ansible_app_git_version: HEAD
+
+
+# Image AMI creating mechanism.. not ready yet so set to false.
+packer_build: false 

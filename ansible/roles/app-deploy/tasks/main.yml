@@ -49,52 +49,6 @@
   when: datomic_install|success
 
 
-  #Deploy App Code
-
-
-
-# - name: make sure permissions are appropriate for deployer to update
-#   file: path=/var/lib/immutant/applications/{{ switchboard_app_name }}
-#         recurse=yes
-#         owner=ubuntu
-#         group=ubuntu
-#         mode=775
-#   sudo: true
-#   ignore_errors: true
-
-
-  
-# - name: ensure up to date application source /var/lib/immutant/applications/{{ switchboard_app_name }}
-#   git: repo={{ clojure_app_git_repo }}
-#        dest=/var/lib/immutant/applications/{{ switchboard_app_name }}
-#        version={{ clojure_app_git_version }}
-#        depth=1
-#        update=yes
-#   register: git_pull
-
-
-# - name: make immutant the owner of the tree
-#   file: path=/var/lib/immutant/applications/{{ switchboard_app_name }}
-#         recurse=yes
-#         owner=ubuntu
-#         group=ubuntu
-#         mode=775
-#   sudo: true
-
-# # - name: deploy the application configuration file /var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config-template.edn
-# #   copy: src=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config-template.edn   
-# #         dest=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}/config/config.edn
-# #         owner=ubuntu
-# #   sudo: true
-  
-# # Deploy to immutant
-# - name: Deploy the application to the local immutant
-#   environment:
-#     IMMUTANT_HOME: /var/lib/immutant/current
-#   command: "su ubuntu -c 'lein with-profile {{ switchboard_profiles }} immutant deploy --context-path {{ switchboard_context }}' chdir=/var/lib/immutant/applications/{{ switchboard_app_name }}{{ switchboard_app_root }}" # --virtual-host {{ switchboard_address }}
-#   sudo: true
-
-
 
 
 - name: Create source directory
@@ -171,14 +125,6 @@
 - name: wait until immutant comes back up, simple smoke test
   wait_for: host={{ inventory_hostname }} port={{ switchboard_port }}
 
-
-# # Deploy to immutant - it takes a deployment descriptor that points to actual .ima file
-# - name: Deploy the application to the local immutant
-#   environment:
-#     IMMUTANT_HOME: /var/lib/immutant/current
-#   command: "su ubuntu -c 'lein with-profile {{ switchboard_profiles }} immutant deploy  /var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target{{ switchboard_app_root }}.ima  --context-path {{ switchboard_context }} --virtual-host {{ switchboard_address }}'"
-#   ignore_errors: no
-#   sudo: true
   
 
 

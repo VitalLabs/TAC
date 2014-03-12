@@ -54,3 +54,7 @@ github_s3_bucket_name: vr-chef-dev
 
 
 maven_user: ubuntu
+
+
+# Image AMI creating mechanism.. not ready yet so set to false.
+packer_build: false 

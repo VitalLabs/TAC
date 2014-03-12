@@ -46,7 +46,7 @@ commitlog_sync_period_in_ms: 10000
 
 commitlog_segment_size_in_mb: 32
 
-{% if not packer_build %}
+{% if packer_build is not defined and not packer_build %}
 seed_provider:
     - class_name: org.apache.cassandra.locator.SimpleSeedProvider
       parameters:
