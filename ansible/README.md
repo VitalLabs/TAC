@@ -1,5 +1,9 @@
 Dependencies for AWS use:
 
+You MUST use a stable version of ansible. 1.5.0 for right now.
+
+pip install ansible==1.5.0
+
 You must have AWS CLI installed (NOT the older EC2 CLI) and configured.  We use shell commands to augment where core EC2 modules don't support actions.
 
 You must be running the patched ec2_vps module, and using devel branch as of Feb 27.  Until this module is released with 1.5, here are those instructions:
