@@ -26,7 +26,7 @@
       "type": 		 "ansible-local",
       "playbook_file": 	 "packer-cassandra.yml",
       "extra_arguments": ["-e packer_build=yes"],
-      "group_vars":    	 "../inv/group_vars",
+      "group_vars":    	 "../group_vars",
       "role_paths":     ["../roles/common",
                          "../roles/java",
                          "../roles/db-dse"]
