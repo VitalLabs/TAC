@@ -1,10 +1,12 @@
 
+
+
 #datomic_template: "datomic:dev://{{ datomic_master_ip}}:4334/<db>"
 # datomic:ddb://{aws-region}/{dynamodb-table}/<db>?aws_access_key_id={XXX}&aws_secret_key={YYY}
 datomic_template: "datomic:ddb://{{ ec2_region }}/{{ datomic_storage_table }}/<db>?aws_access_key_id={{ ec2_access_key }}&aws_secret_key={{ ec2_secret_key }}"
 
 datomic_listen_address: ${hostvars.{$item}.ansible_hostname}
-datomic_protocol: ddb
+
 datomic_dir: /var/lib/datomic
 datomic_data_dir: /var/lib/datomic/data
 datomic_log_dir: /var/log/datomic
