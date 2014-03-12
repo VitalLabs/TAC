@@ -20,6 +20,10 @@ immutant_profiles: "dev"
 
 
 
+datomic_version: 0.9.4384
+
+
+
 orchestra_commit: HEAD
 orchestra_profiles: user,dev
 orchestra_vhost: dev.dev-orchestra.md

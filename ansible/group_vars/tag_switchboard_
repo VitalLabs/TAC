@@ -3,10 +3,10 @@ lein_dir: /usr/local/bin
 
 maven_user: ubuntu
 
+datomic_version: 0.9.4384
 
 
 
-switchboard_profiles: dev
 switchboard_context: api
 switchboard_app: "1"
 switchboard_app_name: "switchboard"
