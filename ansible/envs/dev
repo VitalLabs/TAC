@@ -4,14 +4,55 @@ instances_keypair: "{{ec2_keypair}}"
 image_id: "{{ec2_image}}"
 
 security_groups:
-  - name: jumphost
+  - name: sshable
     desc: the security group for the jumphost
     rules:
       - proto: tcp
         from_port: 22
         to_port: 22
         cidr_ip: 0.0.0.0/0
-  - name: cassandra
+
+  # TODO we need to only allow these from the proxy hosts!!
+  - name: dev-proxy
+    desc: the security group for cassandra
+    rules:
+      - proto: tcp
+        from_port: "80"
+        to_port: "80"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "443"
+        to_port: "443"
+        cidr_ip: 0.0.0.0/0
+   
+  - name: dev-orchestra
+    desc: the security group for cassandra
+    rules:
+      - proto: tcp
+        from_port: "80"
+        to_port: "80"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "3000"
+        to_port: "3000"
+        cidr_ip: 0.0.0.0/0
+
+  - name: dev-switchboard
+    desc: the security group for cassandra
+    rules:
+      - proto: tcp
+        from_port: "8080"
+        to_port: "8080"
+
+  - name: dev-datomic
+    desc: the security group for cassandra
+    rules:
+      - proto: tcp
+        from_port: "4334"
+        to_port: "4336"
+        cidr_ip: 0.0.0.0/0
+
+  - name: dev-cassandra
     desc: the security group for cassandra
     rules:
       - proto: tcp
@@ -22,13 +63,26 @@ security_groups:
         from_port: "{{ cassandra_native_port }}"
         to_port: "{{ cassandra_native_port }}"
         cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "{{ cassandra_rpc_port }}"
+        to_port: "{{ cassandra_rpc_port }}"
+        cidr_ip: 0.0.0.0/0
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "7001"
+        to_port: "7001"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "7199"
+        to_port: "7199"
+        cidr_ip: 0.0.0.0/0
 
 ec2_instances:
 
   - instance_type: m1.small
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: jumphost
+    group: ['sshable']
     instance_tags: 
         Name: dev_jumphost
         dev_all: ""
@@ -40,7 +94,7 @@ ec2_instances:
   - instance_type: m1.large
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: cassandra 
+    group: ['sshable', 'dev-cassandra'] 
     instance_tags: 
         Name: dev_db
         dev_all: ""
@@ -53,12 +107,13 @@ ec2_instances:
   - instance_type: m1.large
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: cassandra
+    group: ['sshable', 'dev-cassandra', 'dev-datomic'] 
     instance_tags: 
         Name: dev_db_seed
         dev_all: ""
         dev_cassandra: ""
         cassandra: ""
+        datomic: ""
     exact_count: 1 
     count_tag: 
         Name: dev_db_seed
@@ -66,10 +121,13 @@ ec2_instances:
   - instance_type: m1.large
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: default
+    group: ['dev-orchestra', 'dev-switchboard', 'sshable'] 
     instance_tags: 
         Name: dev_app
         dev_all: ""
+        immutant: ""
+        switchboard: ""
+        orchestra: ""
     exact_count: 0
     count_tag: 
         Name: dev_app
@@ -77,7 +135,7 @@ ec2_instances:
   - instance_type: m1.large
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: default
+    group: ['dev-proxy', 'sshable'] 
     instance_tags: 
         Name: dev_proxy
         dev_all: ""
