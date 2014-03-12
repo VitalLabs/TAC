@@ -39,7 +39,7 @@ orchestra_port: 3000
 
 ec2_instance_type: m1.large
 
-#these do need to be specific to the environment since we might have different versions of these #scripts #in each environment matching code.
+
 
 ansible_app_git_repo: "ssh://git@github.com/vitalreactor/switchboard-infrastructure"
 
