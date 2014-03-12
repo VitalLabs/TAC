@@ -13,7 +13,7 @@ switchboard_address: localhost
 switchboard_port: 8080
 switchboard_data_persist: true
 switchboard_resolve_dependecies: true
-
+switchboard_profiles: dev
 
 
 immutant_profiles: "dev"
