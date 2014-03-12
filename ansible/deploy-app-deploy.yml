@@ -5,7 +5,7 @@
   remote_user: ubuntu
   tasks: []
 
-- name: Deploy Initial Configs Switchboard Orchestra Common
+- name: Deploy Switchboard common libs
   hosts: tag_Name_dev_app
   remote_user: ubuntu
   sudo: true
@@ -16,4 +16,15 @@
   roles:
   - common
   - java
+
+
+- name: Deploy Switchboard App Code
+  hosts: tag_Name_dev_app
+  remote_user: ubuntu
+  sudo: false
+
+  vars_files:
+  - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
+
+  roles:
   - app-deploy
