@@ -34,3 +34,27 @@ Example settings for this file:
  If you run into any Control Path erorrs then set this environment variable:
 
  export  ANSIBLE_SSH_CONTROL_PATH="%(directory)s/%%h-%%r"
+
+
+
+ Fast Testing using Jumphost:
+
+ you can ssh to the jumphost to run these scripts. Since they are on the same betwork they will run alot faster.
+
+ /var/lib/swb-ansible contrains the latest deployment scripts.
+
+
+
+
+ S3 Setup:
+
+ You do need ot place github keys in your AWS accoutns S3 bucket if your using a different account:
+
+ /vr-chef-dev/deploy*.pub
+
+
+ JumpHost Key setup:
+
+ You will need to export your 
+ AWS access keys AND ssh-add your key that ansible is configure to use.  Keeping this step manual for now. 
+
