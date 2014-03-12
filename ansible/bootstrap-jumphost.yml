@@ -6,7 +6,7 @@
 
   roles:
   - common
-  - app-github
+  - app-github-infra
 
   post_tasks:
 
