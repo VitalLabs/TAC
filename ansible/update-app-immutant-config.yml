@@ -17,7 +17,7 @@
   serial: 1
 
   vars_files:
-  - vars/main.yml
+  - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
 
   pre_tasks:
   # nothing right now..need to take out of load balancer or does iummutant handle?

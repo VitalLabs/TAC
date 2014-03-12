@@ -1,0 +1,45 @@
+# variables specified here override group_vars/all and apply to
+# all development hosts
+
+cassandra_cluster: "dev"
+cassandra_native_port: 9042
+
+
+switchboard_init: switchboard.server/run-immutant-dev
+switchboard_version: HEAD
+switchboard_client_url: http://dev.dev-orchestra.md
+switchboard_vhost: dev.dev-swb.io
+switchboard_address: localhost
+switchboard_port: 8080
+switchboard_data_persist: true
+switchboard_resolve_dependecies: true
+switchboard_profiles: dev
+
+
+immutant_profiles: "dev"
+
+
+
+datomic_version: 0.9.4384
+datomic_filename: "{{ datomic_type }}-{{datomic_version }}"
+datomic_type: datomic-pro
+datomic_protocol: ddb
+
+
+orchestra_commit: HEAD
+orchestra_profiles: user,dev
+orchestra_vhost: dev.dev-orchestra.md
+orchestra_address: localhost
+orchestra_port: 3000
+
+
+
+ec2_instance_type: m1.large
+
+#these do need to be specific to the environment since we might have different versions of these #scripts in each environment matching code.
+
+ansible_app_git_repo: "ssh://git@github.com/vitalreactor/switchboard-infrastructure"
+
+ansible_app_dir: "/var/lib/sw_ansible"
+
+ansible_app_git_version: HEAD

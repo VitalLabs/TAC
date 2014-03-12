@@ -10,5 +10,6 @@
 # include the separate deployment playbooks
 - include: deploy-cassandra.yml
 - include: deploy-datomic.yml
-- include: deploy-proxy.yml
+- include: deploy-immutant.yml
 - include: deploy-switchboard.yml
+- include: deploy-proxy.yml

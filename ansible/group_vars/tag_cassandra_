@@ -1,7 +1,6 @@
 ---
 # variables for all cassandra hosts
-cluster_name: staging
-cassandra_cluster: "{{ cluster_name }}"
+
 cassandra_listen_address: "{{ ansible_default_ipv4.address }}"
 
 cassandra_intermode_port: 7000
@@ -24,3 +23,9 @@ cassandra_versions:
      - "dse-libhive=3.2.5-1"
      - "dse-libpig=3.2.5-1"
      - "dse-libhadoop=3.2.5-1"
+
+
+
+# Datastax repository credentials
+dse_username: ian_vitalreactor.com
+dse_password: urKxIEZ6pF4KbFN

@@ -4,13 +4,12 @@
   hosts: localhost
   connection: local
   gather_facts: False
-  vars_files:
-  - vars/main.yml
-  
+
 
   tasks:
 
-  - name: Include the variables specific to the vpc
+
+  - name: Include the variables specific to dev environment
     include_vars: envs/dev
 
   - name: Create security groups
@@ -38,3 +37,6 @@
 
   - name: flush the EC2 inventory cache
     shell: rm -f ~/.ansible/tmp/ansible-ec2.cache ~/.ansible/tmp/ansible-ec2.index
+
+
+

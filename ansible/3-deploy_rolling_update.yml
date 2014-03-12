@@ -4,8 +4,6 @@
   hosts: dev_all
   remote_user: deploy
   sudo: true
-  vars_files:
-  - vars/main.yml
 
   tasks: []
 

@@ -5,7 +5,7 @@
 - name: add the deploy public key
   authorized_key: user=ubuntu key="{{ item }}"
   with_file:
-    - deploy-key.pub
+    - id_rsa_newdeploy-key.pub
 
 # Install deployer private key into deploying account
 - name: install our deployer key
@@ -13,7 +13,7 @@
       aws_secret_key={{ ec2_secret_key }}
       mode=get
       bucket={{ github_s3_bucket_name }}
-      object=/vr_deploy
+      object=/id_rsa_newdeploy-key
       dest=/home/ubuntu/.ssh/id_rsa
 
 - name: set secure permissions on private key
