@@ -46,12 +46,14 @@ commitlog_sync_period_in_ms: 10000
 
 commitlog_segment_size_in_mb: 32
 
+{% if not packer_build %}
 seed_provider:
     - class_name: org.apache.cassandra.locator.SimpleSeedProvider
       parameters:
           # seeds is actually a comma-delimited list of addresses.
           # Ex: "<ip1>,<ip2>,<ip3>"
           - seeds: {% for host in groups['tag_Name_dev_db_seed'] %}{{ hostvars[host]['ec2_private_ip_address'] }}{% if not loop.last %}, {% endif %}{% endfor %} 
+{% endif %}
 
 # Pressure tuning
 flush_largest_memtables_at: 0.75
