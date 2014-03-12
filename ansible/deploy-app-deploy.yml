@@ -13,8 +13,4 @@
   roles:
   - common
   - java
-  - app-github
-  - app-clojure-config
-
-
-- include: deploy-app-deploy.yml
+  - app-deploy

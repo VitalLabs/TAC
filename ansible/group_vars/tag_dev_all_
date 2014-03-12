@@ -26,6 +26,7 @@ datomic_type: datomic-pro
 datomic_protocol: ddb
 #naming shoudl be unique per switchobard or per app?
 datomic_storage_table: "{{ switchboard_profiles }}_datomic_storage"
+datomic_port: 4334
 
 #datomic_template: "datomic:dev://{{ datomic_master_ip}}:4334/<db>"
 # datomic:ddb://{aws-region}/{dynamodb-table}/<db>?aws_access_key_id={XXX}&aws_secret_key={YYY}

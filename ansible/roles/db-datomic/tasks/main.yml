@@ -84,3 +84,6 @@
 - name: ensure datomic is run
   service: name=datomic state=started enabled=yes
 
+- name: wait until datomic comes back up, simple smoke test
+  wait_for: host={{ inventory_hostname }} port={{ datomic_port}}
+
