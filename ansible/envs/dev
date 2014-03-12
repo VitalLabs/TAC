@@ -56,16 +56,16 @@ security_groups:
     desc: the security group for cassandra
     rules:
       - proto: tcp
-        from_port: "{{ cassandra_intermode_port }}"
-        to_port: "{{ cassandra_intermode_port }}" 
+        from_port: "7000"
+        to_port: "7000" 
         cidr_ip: 0.0.0.0/0
       - proto: tcp
-        from_port: "{{ cassandra_native_port }}"
-        to_port: "{{ cassandra_native_port }}"
+        from_port: "9042"
+        to_port: "9042"
         cidr_ip: 0.0.0.0/0
       - proto: tcp
-        from_port: "{{ cassandra_rpc_port }}"
-        to_port: "{{ cassandra_rpc_port }}"
+        from_port: "9160"
+        to_port: "9160"
         cidr_ip: 0.0.0.0/0
         cidr_ip: 0.0.0.0/0
       - proto: tcp
