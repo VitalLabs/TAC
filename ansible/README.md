@@ -11,6 +11,10 @@ source /hacking/env-setup
 
 Then cd into this playbook directory and run as needed.
 
+Proper command to run playbooks example:
+
+ansible-playbook -vvvv -i /Users/ryanwmedlin/projects/switchboard-infrastructure/ansible/inv/ 1-dev-infrastructure.yml
+
 
 Note: For a environment deployment you must have the following file  on your local hard drive to configure secure settings:
 

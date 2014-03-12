@@ -6,8 +6,22 @@
 
   roles:
   - common
+  - app-github
 
   post_tasks:
+
+  - name: install old boto
+    apt: name=python-boto state=present
+
+      # Get application distribution
+  - name: get ansible deploy repository 
+    git: repo={{ ansible_app_git_repo }}
+         dest={{ ansible_app_dir }}
+         version={{ ansible_app_git_version }}
+         depth=1
+         update=yes
+         accept_hostkey=true
+    sudo: false
   
   - name: set up easy_install
     apt: name=python-pip state=present
@@ -17,3 +31,14 @@
   
   - name: install Ansible
     pip: name=ansible state=present
+
+
+  - name: make sure our application repository exists
+    file: state=directory path="{{ ansible_app_dir }}" owner=ubuntu group=ubuntu
+    sudo: true
+
+
+
+
+
+

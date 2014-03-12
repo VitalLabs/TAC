@@ -5,9 +5,9 @@
   connection: local
   gather_facts: False
 
-  
 
   tasks:
+
 
   - name: Include the variables specific to dev environment
     include_vars: envs/dev

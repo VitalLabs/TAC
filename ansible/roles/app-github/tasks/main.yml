@@ -1,4 +1,7 @@
 ---
+- name: install old boto
+  apt: name=python-boto state=present
+
 - name: add the deploy public key
   authorized_key: user=ubuntu key="{{ item }}"
   with_file:

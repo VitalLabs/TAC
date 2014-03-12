@@ -91,7 +91,7 @@ ec2_instances:
     count_tag: 
         Name: dev_jumphost
 
-  - instance_type: m1.large
+  - instance_type: m1.small
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable', 'dev-cassandra'] 
@@ -100,11 +100,11 @@ ec2_instances:
         dev_all: ""
         dev_cassandra: ""
         cassandra: ""
-    exact_count: 1 
+    exact_count: 2 
     count_tag: 
         Name: dev_db
 
-  - instance_type: m1.large
+  - instance_type: m1.small
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable', 'dev-cassandra', 'dev-datomic'] 
@@ -118,7 +118,7 @@ ec2_instances:
     count_tag: 
         Name: dev_db_seed
 
-  - instance_type: m1.large
+  - instance_type: m1.small
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['dev-orchestra', 'dev-switchboard', 'sshable'] 
@@ -128,17 +128,17 @@ ec2_instances:
         immutant: ""
         switchboard: ""
         orchestra: ""
-    exact_count: 0
+    exact_count: 2
     count_tag: 
         Name: dev_app
 
-  - instance_type: m1.large
+  - instance_type: m1.small
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['dev-proxy', 'sshable'] 
     instance_tags: 
         Name: dev_proxy
         dev_all: ""
-    exact_count: 0 
+    exact_count: 1 
     count_tag: 
         Name: dev_proxy

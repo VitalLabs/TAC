@@ -51,3 +51,10 @@ java_alias: java-7-oracle
 
 
 github_s3_bucket_name: vr-chef-dev
+
+
+ansible_app_git_repo: "ssh://git@github.com/vitalreactor/switchboard-infrastructure"
+
+ansible_app_dir: "/var/lib/sw_ansible"
+
+ansible_app_git_version: HEAD

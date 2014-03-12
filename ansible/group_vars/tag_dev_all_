@@ -2,7 +2,7 @@
 # all development hosts
 
 cassandra_cluster: "dev"
-
+cassandra_native_port: 9042
 
 
 switchboard_init: switchboard.server/run-immutant-dev
@@ -25,3 +25,7 @@ orchestra_profiles: user,dev
 orchestra_vhost: dev.dev-orchestra.md
 orchestra_address: localhost
 orchestra_port: 3000
+
+
+
+ec2_instance_type: m1.large
