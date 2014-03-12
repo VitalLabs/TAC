@@ -11,14 +11,6 @@
   sudo: true
 
   roles:
-  - common
-  - java
-
-
-- name: Deploy App Code Switchboard Orchestra Common
-  hosts: tag_Name_dev_app
-  remote_user: ubuntu
-  sudo: false
-
-  roles:
+  #- common
+  #- java
   - app-clojure-config

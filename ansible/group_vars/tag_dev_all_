@@ -50,5 +50,3 @@ ansible_app_dir: "/var/lib/sw_ansible"
 ansible_app_git_version: HEAD
 
 
-# Image AMI creating mechanism.. not ready yet so set to false.
-packer_build: false 
