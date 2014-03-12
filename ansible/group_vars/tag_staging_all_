@@ -1,0 +1,24 @@
+cassandra_cluster: "staging"
+
+
+
+switchboard_init: switchboard.server/run-immutant-dev
+switchboard_version: HEAD
+switchboard_client_url: http://staging.orchestra.md
+switchboard_vhost: staging.swb.io
+switchboard_address: localhost
+switchboard_port: 8080
+switchboard_data_persist: true
+switchboard_resolve_dependecies: true
+
+
+
+immutant_profiles: "dev"
+
+
+
+orchestra_commit: HEAD
+orchestra_profiles: user,dev
+orchestra_vhost: dev.dev-orchestra.md
+orchestra_address: localhost
+orchestra_port: 3000
