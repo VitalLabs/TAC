@@ -7,7 +7,7 @@
   apt_repository: repo="deb http://{{ dse_username }}:{{ dse_password }}@debian.datastax.com/enterprise stable main" state=present
   
 - name: add dse repository key
-  apt_key: url=https://debian.datastax.com/debian/repo_key state=present
+  apt_key: url=https://debian.datastax.com/debian/repo_key state=present validate_certs=no
 
 - name: update apt-get
   apt: update_cache=yes
