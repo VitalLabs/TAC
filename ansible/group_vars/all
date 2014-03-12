@@ -53,3 +53,4 @@ java_alias: java-7-oracle
 github_s3_bucket_name: vr-chef-dev
 
 
+maven_user: ubuntu

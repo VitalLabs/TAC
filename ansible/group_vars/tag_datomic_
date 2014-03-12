@@ -7,7 +7,6 @@ datomic_listen_address: ${hostvars.{$item}.ansible_hostname}
 datomic_protocol: ddb
 datomic_version: 0.9.4384
 datomic_type: datomic-pro
-datomic_filename: "{{ datomic_type }}-{{datomic_version }}"
 datomic_dir: /var/lib/datomic
 datomic_data_dir: /var/lib/datomic/data
 datomic_log_dir: /var/log/datomic

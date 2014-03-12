@@ -1,9 +1,6 @@
 #For lein in app-immutant-deploy:
 lein_dir: /usr/local/bin
 
-maven_user: ubuntu
-
-datomic_version: 0.9.4384
 
 
 
