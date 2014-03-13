@@ -2,16 +2,20 @@
 
  <VirtualHost *:80>
     ServerName {{ orchestra_vhost }}
- 	DocumentRoot {{ clojure_app_dir }}{{ clojure_app_root }}/out/public
-	DirectoryIndex orchestra.html
+
 
 #	MCacheSize 16394
 #	MCacheMaxObjectCount 100
 # 	MCacheMinObjectSize 1
 #	MCacheMaxObjectSize 4096000
 
-    ProxyPass /api http://localhost:{{ switchboard_port }}/api
-    ProxyPassReverse /api http://localhost:{{ switchboard_port }}/api
+
+    ProxyPass / http://{{ hostvars[groups['tag_Name_dev_app'][0]]['inventory_hostname'] }}:{{ orchestra_port }}/ connectiontimeout=30 timeout=900
+    ProxyPassReverse / http://{{ hostvars[groups['tag_Name_dev_app'][0]]['inventory_hostname'] }}:{{ orchestra_port }}/
+	ProxyVia On
+
+    ProxyPass /api http://{{ hostvars[groups['tag_Name_dev_app'][0]]['inventory_hostname'] }}:{{ switchboard_port }}/api
+    ProxyPassReverse /api http://{{ hostvars[groups['tag_Name_dev_app'][0]]['inventory_hostname'] }}:{{ switchboard_port }}/api
 
     <Location />
 	     Order deny,allow
@@ -30,8 +34,8 @@
 <VirtualHost *:80>
     ServerName {{ switchboard_vhost }}
 	 
-    ProxyPass / http://localhost:{{ switchboard_port }}/ connectiontimeout=30 timeout=900
-    ProxyPassReverse / http://localhost:{{ switchboard_port }}/
+    ProxyPass / http://{{ hostvars[groups['tag_Name_dev_app'][0]]['inventory_hostname'] }}:{{ switchboard_port }}/ connectiontimeout=30 timeout=900
+    ProxyPassReverse / http://{{ hostvars[groups['tag_Name_dev_app'][0]]['inventory_hostname'] }}:{{ switchboard_port }}/
 	ProxyVia On
 	
 	Header set Access-Control-Allow-Methods "GET"
@@ -57,46 +61,7 @@
 	 
  </VirtualHost>
 
-# <VirtualHost *:80>
-#     ServerName {{ orchestra_vhost }}
-# 	DocumentRoot /var/www/{{ orchestra_vhost }}/public
-	
-# 	RewriteEngine On
-# 	RewriteRule ^/$ /orchestra-dev.html [L,P,QSA]
-	
-#     ProxyRequests Off
-#     <Proxy *>
-#         Order deny,allow
-#         Allow from all
-#     </Proxy>
- 
-#     ProxyPass / http://localhost:{{ orchestra_port }}/
-#     ProxyPassReverse / http://localhost:{{ orchestra_port }}/
-	
-#     <Location />
-#         Order allow,deny
-#         Allow from all
-#     </Location>
-# </VirtualHost>
 
-# NameVirtualHost *:80
-# <VirtualHost *:80>
-#     ServerName {{ orchestra_vhost }}
- 
-#     ProxyRequests Off
-#     <Proxy *>
-#         Order deny,allow
-#         Allow from all
-#     </Proxy>
-
-#     ProxyPass / http://{{ ec2_private_ip_address }}:{{ switchboard_port }}/
-#  	ProxyPassReverse / http://{{ ec2_private_ip_address }}:{{ switchboard_port }}/
-	
-#     <Location />
-#         Order allow,deny
-#         Allow from all
-#     </Location>
-# </VirtualHost>
 
 
 

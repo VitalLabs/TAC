@@ -34,27 +34,31 @@
   sudo: true
   notify:
     - restart apache
+
+- name: gather ec2-specific facts
+  action: ec2_facts
+  environment: aws_creds
+
+- debug: msg="{{ ec2_public_dns_name }} System  {{ groups['tag_Name_dev_app'] }} || tag_Name_dev_app {{ hostvars[groups['tag_Name_dev_app'][0]]['inventory_hostname'] }} ||has gateway {{ ansible_default_ipv4 }}"
+
     
 - name: configure apache
   template: src=switchboard.conf.j2
             dest=/etc/apache2/sites-available/switchboard
             mode=644
   sudo: true
-  tags: proxy-config
   notify:
     - reload apache
 
 - name: enable our site
   command: a2ensite switchboard
   sudo: true
-  tags: proxy-config
   notify:
     - reload apache
 
 - name: disable the default
   command: a2dissite default
   sudo: true
-  tags: proxy-config
   notify:
     - reload apache
   
