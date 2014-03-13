@@ -2,5 +2,5 @@
 - name: start dse
   service: name=dse state=started enabled=yes
 
-- name: pause until cassandra is up
-  wait_for: host={{ inventory_hostname }} port={{ cassandra_intermode_port }}
+# - name: pause until cassandra is up
+#   wait_for: host={{ inventory_hostname }} port={{ cassandra_intermode_port }}
