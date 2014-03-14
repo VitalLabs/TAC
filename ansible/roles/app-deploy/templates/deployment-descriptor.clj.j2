@@ -3,7 +3,7 @@
  :nrepl-port 4005
  :init "{{ switchboard_init }}"
  :context-path "/{{ switchboard_context }}" 
- :virtual-host "{{ inventory_hostname }}"
+ :virtual-host ["{{ inventory_hostname }}" "{{ orchestra_vhost }}" "{{ ansible_default_ipv4.address }}"]
  :datomic.template "{{ datomic_template }}"
  :data-persist true
   
