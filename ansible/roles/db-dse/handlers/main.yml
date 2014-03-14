@@ -2,4 +2,4 @@
 # handlers file for db
 - name: restart dse
   service: name=dse state=restarted
-  when: packer_build is not defined and not packer_build
+
