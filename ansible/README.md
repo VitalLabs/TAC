@@ -41,13 +41,6 @@ Example settings for this file:
 
 
 
- Fast Testing using Jumphost:
-
- you can ssh to the jumphost to run these scripts. Since they are on the same betwork they will run alot faster.
-
- /var/lib/swb-ansible contrains the latest deployment scripts.
-
-
 
 
  S3 Setup:
@@ -60,5 +53,14 @@ Example settings for this file:
  JumpHost Key setup:
 
  You will need to export your 
- AWS access keys AND ssh-add your key that ansible is configure to use.  Keeping this step manual for now. 
+ AWS access keys AND ssh-agent/ ssh-add your key that ansible is configure to use.  Keeping this step manual for now since keys should be local and secure.
+
+  Fast Testing using Jumphost:
+
+ you can ssh to the jumphost to run these scripts. Since they are on the same betwork they will run alot faster.
+
+ /var/lib/swb-ansible contrains the latest deployment scripts.
+
+
+
 
