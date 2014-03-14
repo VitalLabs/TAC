@@ -1,0 +1,18 @@
+# PROXY: Ensure we have a local proxy ready to route requests
+- name: Deploy Initial Configs Proxy Common
+  hosts: tag_Name_dev_proxy
+  remote_user: ubuntu
+  sudo: true
+
+  roles:
+  - common
+
+# PROXY: Ensure we have a local proxy ready to route requests
+- name: Deploy Initial Configs Proxy
+  hosts: tag_Name_dev_proxy
+  remote_user: ubuntu
+  sudo: true
+
+
+  roles:
+  - proxy-nginx-config
