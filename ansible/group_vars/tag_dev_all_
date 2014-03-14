@@ -37,6 +37,9 @@ orchestra_vhost: dev.dev-orchestra.md
 orchestra_address: localhost
 orchestra_port: 3000
 
+#the port of the proxy
+orchestra_switchboard_port: 80
+
 
 
 ec2_instance_type: m1.large
