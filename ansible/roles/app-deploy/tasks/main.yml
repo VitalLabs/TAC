@@ -122,7 +122,12 @@
   command: su ubuntu -c 'touch /var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj.dodeploy'
   sudo: true
 
-- name: wait until immutant comes back up, simple smoke test
+# note this restart is due to Clojure Permgen issue to be resolved wiht Clojure 1.6 
+- name: restart immutant
+  service: name=immutant state=restarted enabled=yes
+  sudo: true
+
+- name: wait until immutant comes back up, simple smoke test and to enforce rolling restart
   wait_for: host={{ inventory_hostname }} port={{ switchboard_port }}
 
   

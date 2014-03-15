@@ -8,6 +8,7 @@
 - name: Deploy Initial Configs Switchboard Orchestra Common
   hosts: tag_Name_dev_app
   remote_user: ubuntu
+  #serial: 1
   sudo: true
 
   vars_files:

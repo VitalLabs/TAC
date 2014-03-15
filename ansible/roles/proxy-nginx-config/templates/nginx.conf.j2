@@ -19,13 +19,13 @@ error_log /var/log/nginx/host.error.log debug;
 http {
 	upstream SwitchBoard {
 	 	{% for host in groups['tag_Name_dev_app'] %}
-	 	server {{ hostvars[host]['ec2_private_ip_address'] }}:{{ switchboard_port }} max_fails=1 fail_timeout=120;
+	 	server {{ hostvars[host]['ec2_private_ip_address'] }}:{{ switchboard_port }} max_fails=3 fail_timeout=120s;
     {% endfor %}
 	}
 
 	upstream Orchestra{
 	 	{% for host in groups['tag_Name_dev_app'] %}
-	 	server {{ hostvars[host]['ec2_private_ip_address'] }}:{{ orchestra_port }} max_fails=1 fail_timeout=120;
+	 	server {{ hostvars[host]['ec2_private_ip_address'] }}:{{ orchestra_port }} max_fails=3 fail_timeout=120s;
     {% endfor %}
 	}
 

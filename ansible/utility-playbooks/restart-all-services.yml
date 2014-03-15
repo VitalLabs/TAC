@@ -1,0 +1,33 @@
+---
+
+
+
+
+- name: Deploy Initial Configs Proxy Common
+  hosts: tag_Name_dev_app
+  remote_user: ubuntu
+  sudo: true
+
+  tasks:
+  - name: restart nginx
+    service: name=nginx state=restarted 
+
+  - name: wait until immutant comes back up, simple smoke test
+    wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} 
+
+
+
+- name: Deploy Initial Configs Proxy Common
+  hosts: tag_Name_dev_proxy
+  remote_user: ubuntu
+  sudo: true
+
+  tasks:
+  - name: restart nginx
+    service: name=nginx state=restarted 
+
+  - name: wait until immutant comes back up, simple smoke test
+    wait_for: host={{ inventory_hostname }} port=80
+
+
+
