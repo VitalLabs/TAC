@@ -12,4 +12,4 @@
 - include: deploy-datomic.yml
 - include: deploy-immutant.yml
 - include: deploy-switchboard.yml
-- include: deploy-proxy.yml
+- include: deploy-proxy-nginx-config.yml
