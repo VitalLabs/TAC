@@ -37,6 +37,20 @@ Install everything:
 ansible-playbook -vvvv -i ./inv/ 2-install-and-configs.yml
 
 
+## Ad Hoc Playbooks:
+
+Eaxmple: ansible-playbook -vvvv -i ./inv/ depploy-app-deploy.yml
+
+deploy-app-deploy.yml:  This installs the Switchboard app via the app-deploy role and restarts the server.
+
+deploy-app-clojure-config.yml:  This installs the Orchestra app via the clojure-app role and restarts the server.
+
+update-cassandra.yml:  Updates cassandra config and does a rolling update. No server downtime expected.
+
+update-*  bare bones placeholder for more advanced rolling updates.  Right now we are relying on the nginx failover facilities for this so we ight not need these.
+
+
+
 Note: For a environment deployment you must have the following file  on your local or jumpbox machine to configure secure settings:
 
 switchboard_config: ~/.ssh/switchboard_vars.yml
