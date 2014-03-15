@@ -13,6 +13,10 @@
   - name: install old boto
     apt: name=python-boto state=present
 
+  - name: make sure our application repository exists
+    file: state=directory path="{{ ansible_app_dir }}" owner=ubuntu group=ubuntu
+    sudo: true
+
       # Get application distribution
   - name: get ansible deploy repository 
     git: repo={{ ansible_app_git_repo }}
@@ -31,9 +35,7 @@
     pip: name=ansible state=present
 
 
-  - name: make sure our application repository exists
-    file: state=directory path="{{ ansible_app_dir }}" owner=ubuntu group=ubuntu
-    sudo: true
+
 
 
 
