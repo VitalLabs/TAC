@@ -72,3 +72,7 @@
 - name: start {{ clojure_app_name }} via leiningen
   sudo: true
   service: name={{ clojure_app_name }} state=running enabled=yes
+
+
+- name: wait until orchestra comes  up, simple smoke test
+  wait_for: host={{ inventory_hostname }} port={{ orchestra_port }} delay=60
