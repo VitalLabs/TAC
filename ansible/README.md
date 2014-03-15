@@ -87,6 +87,14 @@ Example settings for this file:
 
  These have already been added to the VR account.
 
+ ## Utilities
+
+ bin folder has useful utilities for setting up your connections
+
+ ## Utilities-playbooks
+
+ this is where we will keep adding one off commands as DevOps workflows evolve
+
 
  ## JumpHost Key setup:
 
@@ -98,6 +106,10 @@ Example settings for this file:
  you can ssh to the jumphost to run these scripts. Since they are on the same betwork they will run alot faster.
 
  /var/lib/swb-ansible contains the latest deployment scripts.
+
+ ## Advice
+
+ Use TMUX!! this way you can run things on the jumphost and quickly get back to your working session and work asynchronously
 
 
 
