@@ -66,7 +66,7 @@ Example settings for this file:
 
 
 
- If you run into any Control Path erorrs then set this environment variable:
+ If you run into any Control Path erorrs or random SSH errors then set this environment variable:
 
  export  ANSIBLE_SSH_CONTROL_PATH="%(directory)s/%%h-%%r"
 
