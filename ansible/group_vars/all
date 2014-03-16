@@ -42,7 +42,7 @@ aws_creds:
 
 
 
-java_download: http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jdk-7u45-linux-x64.tar.gz
+java_download: http://www.reucon.com/cdn/java/jdk-7u45-linux-x64.tar.gz
 java_name: jdk1.7.0_45
 java_download_folder: /usr/src
 java_archive: "{{java_download_folder}}/{{java_name}}.tar.gz"

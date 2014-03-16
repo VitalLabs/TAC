@@ -100,7 +100,7 @@ ec2_instances:
         dev_all: ""
         dev_cassandra: ""
         cassandra: ""
-    exact_count: 1 
+    exact_count: 2 
     count_tag: 
         Name: dev_db
 
@@ -128,7 +128,7 @@ ec2_instances:
         immutant: ""
         switchboard: ""
         orchestra: ""
-    exact_count: 1
+    exact_count: 2
     count_tag: 
         Name: dev_app
 
