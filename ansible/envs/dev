@@ -1,4 +1,4 @@
----
+ ---
 
 instances_keypair: "{{ec2_keypair}}"
 image_id: "{{ec2_image}}"
@@ -43,6 +43,7 @@ security_groups:
       - proto: tcp
         from_port: "8080"
         to_port: "8080"
+        cidr_ip: 0.0.0.0/0
 
   - name: dev-datomic
     desc: the security group for cassandra
