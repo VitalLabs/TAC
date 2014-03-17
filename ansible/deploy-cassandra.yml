@@ -24,6 +24,9 @@
   sudo: true
   serial: 1
 
+  vars_files:
+  - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
+
   roles:
   - {role: dse-cassandra-start, tags: ["datastax"]}
 

@@ -5,8 +5,7 @@
   remote_user: ubuntu
   sudo: true
 
-  vars_files:
-  - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
+
 
   pre_tasks:
 
@@ -19,6 +18,9 @@
   remote_user: ubuntu
   sudo: true
   serial: 1
+
+  vars_files:
+  - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
 
 
   roles:
