@@ -37,7 +37,15 @@ Install everything:
 ansible-playbook -vvvv -i ./inv/ 2-install-and-configs.yml
 
 
-## Ad Hoc Playbooks:
+##Environment Consideration
+
+To create a new environment then create a corresponding config and setup playbook and pass in -e environ=staging to the ansible-playbooks command.  Otherwise it will always default to dev.
+
+
+ansible-playbook -vvvv -i ./inv/ 2-install-and-configs.yml -e environ=staging
+
+
+##Ad Hoc Playbooks:
 
 Eaxmple: ansible-playbook -vvvv -i ./inv/ depploy-app-deploy.yml
 
