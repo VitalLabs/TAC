@@ -18,6 +18,8 @@
   notify:
     - restart dse
 
+- debug: msg="||||{{ environ|default('dev') }}||||||| "
+
 - name: configure cassandra 
   template: src=cassandra.yml.j2 dest=/etc/dse/cassandra/cassandra.yaml
   notify:
