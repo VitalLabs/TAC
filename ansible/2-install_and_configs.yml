@@ -3,6 +3,10 @@
   hosts: dev_all_
   remote_user: ubuntu 
 
+
+  vars_files:
+  - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
+  
   vars_prompt:
 
     - name: "orchestra_git_version"

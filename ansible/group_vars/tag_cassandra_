@@ -26,6 +26,3 @@ cassandra_versions:
 
 
 
-# Datastax repository credentials
-dse_username: ian_vitalreactor.com
-dse_password: urKxIEZ6pF4KbFN
