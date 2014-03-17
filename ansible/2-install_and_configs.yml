@@ -3,6 +3,18 @@
   hosts: dev_all_
   remote_user: ubuntu 
 
+  vars_prompt:
+
+    - name: "orchestra_git_version"
+      prompt: "Orchestra release version"
+      default: HEAD
+      private: no
+
+    - name: "switchboard_git_version"
+      prompt: "Switchboard release version"
+      default: HEAD
+      private: no
+
   tasks:
   - name: Gather EC2-based facts
     ec2_facts:
