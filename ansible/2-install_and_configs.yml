@@ -1,6 +1,6 @@
 ---
 - name: Gather facts from all hosts
-  hosts: dev_all_
+  hosts: {{environ|default('dev')}}_all_
   remote_user: ubuntu 
 
 

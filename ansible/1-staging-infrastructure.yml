@@ -46,9 +46,6 @@
   connection: local
   gather_facts: false
   tasks: 
- # - wait_for: host={{ hostvars[groups['tag_Name_dev_proxy'][0]]['ec2_ip_address'] }} port=22 delay=240
-  - debug: msg="{{ hostvars[groups['tag_Name_dev_proxy'][0]]}}"
-
 
   - route53: >
       command=create
