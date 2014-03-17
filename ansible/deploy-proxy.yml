@@ -1,6 +1,6 @@
 # PROXY: Ensure we have a local proxy ready to route requests
 - name: Deploy Initial Configs Proxy Common
-  hosts: tag_Name_dev_proxy
+  hosts: tag_Name_{{environ|default('dev')}}_proxy
   remote_user: ubuntu
   sudo: true
 
@@ -9,7 +9,7 @@
 
 # PROXY: Ensure we have a local proxy ready to route requests
 - name: Deploy Initial Configs Proxy
-  hosts: tag_Name_dev_proxy
+  hosts: tag_Name_{{environ|default('dev')}}_proxy
   remote_user: ubuntu
   sudo: true
 

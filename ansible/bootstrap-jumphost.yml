@@ -1,6 +1,6 @@
 ---
 - name: bootstrap the jumphost with useful tools
-  hosts: tag_Name_dev_jumphost
+  hosts: tag_Name_{{environ|default('dev')}}_jumphost
   remote_user: ubuntu
   sudo: true
 
