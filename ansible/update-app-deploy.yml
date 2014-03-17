@@ -10,17 +10,28 @@
 #
 # 
 #
-- name: Upgrade Cassandra hosts
+- name: Upgrade switchboard app hosts
   hosts: tag_Name_{{environ|default('dev')}}_app
   remote_user: ubuntu
   sudo: true
   serial: 1
 
+  vars_prompt:
+
+    - name: "switchboard_git_version"
+      prompt: "Switchboard release version"
+      default: HEAD
+      private: no
+
+  
   vars_files:
-  - vars/main.yml
+  - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
+
 
   pre_tasks:
   # nothing right now..need to take out of load balancer or does iummutant handle?
+
+
 
   # re-apply roles and any config changes
   roles:

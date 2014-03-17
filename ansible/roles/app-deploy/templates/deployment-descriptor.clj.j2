@@ -25,7 +25,7 @@
  :service.smtp/user "{{ service_smtp_user }}"
  :service.smtp/pass "{{ service_smtp_user }}"
 
- :datastax.hosts [{% for host in groups['tag_'+environ|default('dev')+'_cassandra_'] %}"{{ hostvars[host]['ansible_default_ipv4'].address }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+ :datastax.hosts [{% for host in groups['tag_'+environ|default('dev')+'_cassandra_'] %}"{{ hostvars[host]['ec2_private_ip_address'] }}"{% if not loop.last %}, {% endif %}{% endfor %}]
  
  :datastax.port {{cassandra_native_port}}
 

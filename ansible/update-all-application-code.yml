@@ -1,5 +1,5 @@
 ---
-# Perform a rolling update of the clojure-app-deploy/Orchestra code and configuration, one  host at a time.
+# Perform a rolling update of both Orchea and Switchboard code and configuration, one  host at a time.
 #
 # Notes:
 #
@@ -8,13 +8,17 @@
 # The "serial: 1" setting controls how many nodes are restarted at a time. For large clusters,
 # increase this.
 #
-# 
+# Rigbt now we are relying on the nginx failover ot handle uptime.  Should maybe remove from nginx beforehand though so there
+# is nto a slowdown.
 #
-- name: Upgrade Clojure hosts
+
+
+- name: Upgrade All application hosts
   hosts: tag_Name_{{environ|default('dev')}}_app
   remote_user: ubuntu
   sudo: true
   serial: 1
+
 
   vars_prompt:
 
@@ -23,11 +27,13 @@
       default: HEAD
       private: no
 
- 
+    - name: "switchboard_git_version"
+      prompt: "Switchboard release version"
+      default: HEAD
+      private: no
+
   vars_files:
   - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
-
-
 
   pre_tasks:
   # nothing right now..need to take out of load balancer or does iummutant handle?
@@ -35,6 +41,7 @@
   # re-apply roles and any config changes
   roles:
   - app-clojure-config
+  - app-deploy
 
   post_tasks:
   # noen righ tnow, assume immutant is started back up

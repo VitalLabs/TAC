@@ -28,6 +28,8 @@
   
   
 # Get application distribution
+- debug: msg="Clojure Code Version {{ clojure_app_git_version }}"  
+
 - name: get application repository {{ clojure_app_git_repo }}  {{ clojure_app_dir }} {{ clojure_app_git_version }}
   git: repo={{ clojure_app_git_repo }}
        dest={{ clojure_app_dir }}

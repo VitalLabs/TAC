@@ -67,11 +67,11 @@
   ignore_errors: true
 
 
-  
+- debug: msg="Code Version {{ switchboard_git_version }}"  
 - name: ensure up to date application source /var/lib/immutant/current/archives/{{ switchboard_app_name }}
   git: repo={{ clojure_app_git_repo }}
        dest=/var/lib/immutant/current/archives/{{ switchboard_app_name }}
-       version={{ clojure_app_git_version }}
+       version={{ switchboard_git_version }}
        depth=1
        update=yes
   register: git_pull
@@ -108,9 +108,12 @@
   sudo: true
   ignore_errors: true
 
-
+- name: gather ec2-specific facts
+  action: ec2_facts
+  environment: aws_creds
+  
 - debug: msg="System Groups {{ groups  }} "
-- debug: msg="System  {{ groups['tag_'+environ|default('dev')+'_cassandra_']  }} || {{ hostvars[groups['tag_'+environ|default('dev')+'_cassandra_'][0]] }} ||has gateway {{ ansible_default_ipv4 }}"
+- debug: msg="System  {{ groups['tag_'+environ|default('dev')+'_cassandra_']  }} || {{ hostvars[groups['tag_'+environ|default('dev')+'_cassandra_'][0]] }}"
  
 - name: configure and install switchboard 
   template: src=deployment-descriptor.clj.j2 dest=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj

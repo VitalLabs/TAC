@@ -1,11 +1,12 @@
 
+#These are orchestra related variables
 # the name clojure isnt really a good name since its all clojure anyway..  some are orchestra relate and some are switchboard related
 clojure_app_user: "ubuntu"
 clojure_app_name: "orchestra"
 clojure_app_dir: "/var/lib/swb-orchestra"
 clojure_app_root: "/orchestra"
 clojure_app_git_repo: "ssh://git@github.com/vitalreactor/switchboard"
-clojure_app_git_version: "{{ orchestra_commit }}"
+clojure_app_git_version: "{{ orchestra_git_version }}"
 clojure_app_profile: "{{ orchestra_profiles }}"
 clojure_app_args: ""
 clojure_app_log_dir: "/var/log/clojure"

@@ -1,5 +1,5 @@
 ---
-# Perform a rolling update of the app-deploy/Swictchoboard code and configuration, one  host at a time.
+# Perform a rolling update of the Immutant Server config and Swictchoboard code and configuration, one host at a time.
 #
 # Notes:
 #
@@ -8,9 +8,9 @@
 # The "serial: 1" setting controls how many nodes are restarted at a time. For large clusters,
 # increase this.
 #
-# 
+# Right now we are relying on nginx failover btu should move toward removing from load balancer before? TODO
 #
-- name: Upgrade Cassandra hosts
+- name: Upgrade All application hosts
   hosts: tag_Name_{{environ|default('dev')}}_app
   remote_user: ubuntu
   sudo: true

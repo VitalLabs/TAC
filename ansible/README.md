@@ -87,16 +87,21 @@ Example settings for this file:
 
  These have already been added to the VR account.
 
- ## Utilities
+## Utilities
 
  bin folder has useful utilities for setting up your connections
 
  ## Utilities-playbooks
 
- this is where we will keep adding one off commands as DevOps workflows evolve
+ this is where we will keep adding one off commands as DevOps workflows evolve:
+
+ update-all-applications-code:  You can pass in a verion to pull and deploy for both orchestra and switchboard.
 
 
- ## JumpHost Key setup:
+ Handy Command to get hosts info:  ansible -i ./inv "tag_Name_dev_app" --list-hosts
+
+
+## JumpHost Key setup:
 
  You will need to export your 
  AWS access keys AND ssh-agent/ ssh-add your key that ansible is configure to use.  Keeping this step manual for now since keys should be local and secure.
@@ -107,7 +112,7 @@ Example settings for this file:
 
  /var/lib/swb-ansible contains the latest deployment scripts.
 
- ## Advice
+## Advice
 
  Use TMUX!! this way you can run things on the jumphost and quickly get back to your working session and work asynchronously
 
