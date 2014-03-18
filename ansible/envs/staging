@@ -1,4 +1,4 @@
- ---
+---
 
 instances_keypair: "{{ec2_keypair}}"
 image_id: "{{ec2_image}}"
