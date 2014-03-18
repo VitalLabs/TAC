@@ -42,7 +42,7 @@
 
 
 - name: Wire Main Entry point nginx Proxy DNS Connections
-  hosts: tag_Name_dev_proxy
+  hosts: tag_Name_{{environ|default('dev')}}_proxy
   connection: local
   gather_facts: false
   tasks: 

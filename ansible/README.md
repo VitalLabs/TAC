@@ -120,6 +120,23 @@ Example settings for this file:
 
  /var/lib/swb-ansible contains the latest deployment scripts.
 
+ ## Test environment and Inventory Files
+
+ I also use my AWS account for initial testing to reduce risk.
+
+ you must set these properties in the group_vars/all  in order to do this.
+
+ #Setting to test East
+ec2_region: us-east-1
+ec2_zone: us-east-1a
+ec2_image: ami-9c78c0f5
+
+ec2_keypair: ryanvitalreactor-west
+
+ec2_identifier: vr-primary-acct
+
+Note that when switching regios you also must update the ./inv/ec2.ini fiole to use the current region.
+
 ## Advice
 
  Use TMUX!! this way you can run things on the jumphost and quickly get back to your working session and work asynchronously

@@ -49,6 +49,8 @@ orchestra_switchboard_port: 80
 
 ec2_instance_type: m1.large
 
+github_s3_bucket_name: vr-chef-dev
+
 
 
 ansible_app_git_repo: "ssh://git@github.com/vitalreactor/switchboard-infrastructure"
