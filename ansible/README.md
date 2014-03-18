@@ -47,7 +47,9 @@ ansible-playbook -vvvv -i ./inv/ 2-install-and-configs.yml -e environ=staging
 
 ##Ad Hoc Playbooks:
 
-Eaxmple: ansible-playbook -vvvv -i ./inv/ depploy-app-deploy.yml
+Example: ansible-playbook -vvvv -i ./inv/ depploy-app-deploy.yml
+
+
 
 deploy-app-deploy.yml:  This installs the Switchboard app via the app-deploy role and restarts the server.
 
