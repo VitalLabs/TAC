@@ -44,6 +44,10 @@ security_groups:
         from_port: "8080"
         to_port: "8080"
         cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "4005"
+        to_port: "4005"
+        cidr_ip: 0.0.0.0/0
 
   - name: staging-datomic
     desc: the security group for cassandra
