@@ -49,6 +49,14 @@ ansible-playbook -vvvv -i ./inv/ 2-install-and-configs.yml -e environ=staging
 
 Example: ansible-playbook -vvvv -i ./inv/ depploy-app-deploy.yml
 
+Command to deploy new code:
+ansible-playbook -vvvv -i ./inv update-all-application-code.yml -e environ=staging
+
+
+Immutant is the biggest pain right now, her eis the command to restart it:
+
+asnsible-playbook -vvvv -i ./inv update-immutant-configs.yml -e environ=staging
+
 
 
 deploy-app-deploy.yml:  This installs the Switchboard app via the app-deploy role and restarts the server.

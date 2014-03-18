@@ -7,7 +7,7 @@ cassandra_cluster: "staging"
 cassandra_native_port: 9042
 
 
-switchboard_init: switchboard.server/run-immutant-dev
+switchboard_init: switchboard.server/run-immutant
 #git version is a hash or branchname or HEAD or tags/$tagname
 switchboard_git_version: HEAD
 switchboard_client_url: http://staging.orchestra.md

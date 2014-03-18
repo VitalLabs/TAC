@@ -55,6 +55,12 @@
   file: state=directory path=/var/lib/immutant/current/archives owner={{ maven_user }}
   sudo: true
 
+- name: Remove previous code
+  file: path=/var/lib/immutant/current/archives/{{ switchboard_app_name }}
+        state=absent
+        recurse=yes
+  sudo: true
+
 
   
 - name: make sure permissions are appropriate for deployer to update
