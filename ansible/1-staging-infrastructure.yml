@@ -67,7 +67,7 @@
       value="{{ hostvars[groups['tag_Name_{{environ|default('dev')}}_proxy'][0]]['ec2_ip_address'] }}"
     with_items: ec2.instances
     register: orchestra_dns
-  tags: init,network
+  tags: init,network, set_dns
 
 
 
