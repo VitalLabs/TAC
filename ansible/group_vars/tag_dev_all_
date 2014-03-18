@@ -19,7 +19,6 @@ switchboard_resolve_dependecies: true
 switchboard_profiles: dev
 
 
-immutant_profiles: "dev"
 
 
 
