@@ -82,6 +82,14 @@
   sudo: true
   when: immutant_exists|failed
 
+- name: configure immutant config
+  template: >
+    src=standalone.conf.j2
+    dest="/var/lib/immutant/current/jboss/bin/standalone.conf"
+    owner=ubuntu group=admin
+    mode=664
+  sudo: true
+
 - name: configure immutant
   template: >
     src=standalone-ha.xml.j2

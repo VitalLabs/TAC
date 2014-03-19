@@ -18,6 +18,10 @@ switchboard_data_persist: true
 switchboard_resolve_dependecies: true
 switchboard_profiles: dev
 
+switchboard_Xms: 64m
+switchboard_Xmx: 512m
+switchboard_MaxPermSize: 256m
+
 
 
 
