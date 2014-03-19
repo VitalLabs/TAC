@@ -45,6 +45,8 @@ orchestra_vhost: dev.dev-orchestra.md
 orchestra_zone: dev-orchestra.md
 orchestra_address: localhost
 orchestra_port: 3000
+orchestra_default_page: orchestra-dev.html
+
 
 #the port of the proxy
 orchestra_switchboard_port: 80
