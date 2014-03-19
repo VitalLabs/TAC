@@ -14,7 +14,7 @@
   hosts: tag_Name_{{environ|default('dev')}}_app
   remote_user: ubuntu
   sudo: true
-  serial: 1
+  #serial: 1
 
   vars_prompt:
 

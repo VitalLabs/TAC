@@ -21,7 +21,7 @@ switchboard_profiles: dev
 
 
 
-
+datomic_profiles: dev
 datomic_version: 0.9.4384
 datomic_filename: "{{ datomic_type }}-{{datomic_version }}"
 datomic_type: datomic-pro

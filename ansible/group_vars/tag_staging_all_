@@ -21,13 +21,13 @@ switchboard_profiles: prod
 
 
 
-
+datomic_profiles: prod
 datomic_version: 0.9.4384
 datomic_filename: "{{ datomic_type }}-{{datomic_version }}"
 datomic_type: datomic-pro
 datomic_protocol: ddb
 #naming shoudl be unique per switchobard or per app?
-datomic_storage_table: "{{ switchboard_profiles }}_datomic_storage"
+datomic_storage_table: "{{ datomic_profiles }}_datomic_storage"
 datomic_port: 4334
 
 #datomic_template: "datomic:dev://{{ datomic_master_ip}}:4334/<db>"
