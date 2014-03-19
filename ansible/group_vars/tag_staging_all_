@@ -16,7 +16,7 @@ switchboard_zone: swb.io
 switchboard_port: 8080
 switchboard_data_persist: true
 switchboard_resolve_dependecies: true
-switchboard_profiles: prod
+switchboard_profiles: dev
 
 
 
