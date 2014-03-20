@@ -10,22 +10,22 @@ ec2_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
 
 # note what region you are in so you dont go down a rabbit hole.
 
-# ec2_region: us-west-1
-# ec2_zone: us-west-1a
-# ec2_image: ami-bb4f69fe
+ec2_region: us-west-1
+ec2_zone: us-west-1a
+ec2_image: ami-bb4f69fe
 
 # ec2_region: us-west-2
 # ec2_zone: us-west-2a
 # ec2_image: ami-7eab224e
 
 #Setting to test East
-ec2_region: us-east-1
-ec2_zone: us-east-1a
-ec2_image: ami-9c78c0f5
+# ec2_region: us-east-1
+# ec2_zone: us-east-1a
+# ec2_image: ami-9c78c0f5
 
 
 ec2_instance_type: m1.large
-ec2_keypair: swb-testcluster-keypair
+ec2_keypair: ryanvitalreactor-west.pem
 ec2_security_group: default
 ec2_app_instance_count: 2
 ec2_proxy_instance_count: 2
