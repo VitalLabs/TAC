@@ -2,6 +2,7 @@
 - name: Gather facts from all hosts
   hosts: all:!localhost
   remote_user: ubuntu 
+  sudo: true
 
 
   tasks:

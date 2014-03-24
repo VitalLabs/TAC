@@ -106,7 +106,7 @@
       mode=get
       bucket={{ github_s3_bucket_name }}
       object=/newrelic_agent3.5.0.zip
-      dest=/var/lib/immutant/current/jboss/
+      dest=/var/lib/immutant/current/jboss/newrelic_agent3.5.0.zip
 
 
 - name: Unpack newrelic
