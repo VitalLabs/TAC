@@ -21,7 +21,7 @@ switchboard_profiles: dev
 switchboard_Xms: 64m
 switchboard_Xmx: 512m
 switchboard_MaxPermSize: 256m
-
+switchboard_java_opts: "-XX:+HeapDumpOnOutOfMemoryError"
 
 
 

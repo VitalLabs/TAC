@@ -48,7 +48,7 @@ fi
 #
 if [ "x$JAVA_OPTS" = "x" ]; then
    JAVA_OPTS="-Xms{{ switchboard_Xms }} -Xmx{{ switchboard_Xmx }} -XX:MaxPermSize={{ switchboard_MaxPermSize }} -Djava.net.preferIPv4Stack=true"
-   JAVA_OPTS="$JAVA_OPTS -Djboss.modules.system.pkgs=$JBOSS_MODULES_SYSTEM_PKGS -Djava.awt.headless=true"
+   JAVA_OPTS="$JAVA_OPTS {{ switchboard_java_opts }} -Djboss.modules.system.pkgs=$JBOSS_MODULES_SYSTEM_PKGS -Djava.awt.headless=true"
 else
    echo "JAVA_OPTS already set in environment; overriding default settings with values: $JAVA_OPTS"
 fi

@@ -22,6 +22,8 @@ switchboard_Xms: 256m
 switchboard_Xmx: 2048m
 switchboard_MaxPermSize: 1024m
 
+switchboard_java_opts: "-XX:+HeapDumpOnOutOfMemoryError"
+
 
 
 datomic_profiles: prod
