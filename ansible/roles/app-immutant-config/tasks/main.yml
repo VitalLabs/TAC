@@ -115,7 +115,7 @@
 
 
 - name: Install newrelic
-  command: chdir=/var/lib/immutant/current/jboss/newrelic_agent3.5.0 java -jar newrelic.jar install
+  command: chdir=/var/lib/immutant/current/jboss/newrelic java -jar newrelic.jar install
   sudo: true
 
 
