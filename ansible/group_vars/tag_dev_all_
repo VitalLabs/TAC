@@ -3,6 +3,8 @@
 
 environ: dev
 
+ec2_identifier: vr-primary-acct-dev
+
 cassandra_cluster: "dev"
 cassandra_native_port: 9042
 
