@@ -23,6 +23,9 @@
   - name: Gather EC2-based facts
     ec2_facts:
 
+  roles:
+  - newrelic
+
 # include the separate deployment playbooks
 - include: deploy-cassandra.yml
 - include: deploy-datomic.yml
