@@ -100,6 +100,25 @@
   notify:
     - restart immutant
 
+- name: download newrelc zip
+  s3: aws_access_key={{ ec2_access_key }}
+      aws_secret_key={{ ec2_secret_key }}
+      mode=get
+      bucket={{ github_s3_bucket_name }}
+      object=/newrelic_agent3.5.0.zip
+      dest=/var/lib/immutant/current/jboss/
+
+
+- name: Unpack newrelic
+  command: chdir=/var/lib/immutant/current/jboss/ unzip newrelic_agent3.5.0.zip newrelic
+  sudo: true
+
+
+- name: Install newrelic
+  command: chdir=/var/lib/immutant/current/jboss/newrelic java -jar newrelic.jar install
+  sudo: true
+
+
 - name: immutant upstart script
   template: >    
     src=immutant-upstart.conf.j2
@@ -112,3 +131,8 @@
 - name: start immutant
   service: name=immutant state=running enabled=yes
   sudo: true
+
+
+
+
+
