@@ -110,7 +110,7 @@
 
 
 - name: Unpack newrelic
-  command: chdir=/var/lib/immutant/current/jboss/ unzip -f newrelic_agent3.5.0.zip
+  command: chdir=/var/lib/immutant/current/jboss/ unzip -u newrelic_agent3.5.0.zip
   sudo: true
 
 
