@@ -104,7 +104,7 @@
   s3: aws_access_key={{ ec2_access_key }}
       aws_secret_key={{ ec2_secret_key }}
       mode=get
-      bucket={{ github_s3_bucket_name }}
+      bucket={{ s3_bucket_third_party_libs }}
       object=/newrelic_agent3.5.0.zip
       dest=/var/lib/immutant/current/jboss/newrelic_agent3.5.0.zip
 
