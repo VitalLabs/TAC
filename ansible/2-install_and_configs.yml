@@ -32,3 +32,4 @@
 - include: deploy-immutant.yml
 - include: deploy-switchboard.yml
 - include: deploy-proxy-nginx-config.yml
+- include: deploy-newrelic.yml

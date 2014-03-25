@@ -1,7 +1,7 @@
 ---
 - name: Gather facts from all hosts
-  hosts: "{{ environ|default('dev') }}_all_"
-  remote_user: ubuntu 
+  hosts: "tag_{{ environ|default('dev') }}_all_"
+  remote_user: ubuntu
 
 
   tasks:
