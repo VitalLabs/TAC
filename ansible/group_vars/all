@@ -25,7 +25,7 @@ ec2_image: ami-bb4f69fe
 
 
 ec2_instance_type: m1.medium
-ec2_keypair: ryanvitalreactor-west
+ec2_keypair: swb-testcluster-keypair
 ec2_security_group: default
 ec2_app_instance_count: 2
 ec2_proxy_instance_count: 2

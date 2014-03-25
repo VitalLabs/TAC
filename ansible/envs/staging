@@ -96,7 +96,7 @@ ec2_instances:
     count_tag: 
         Name: staging_jumphost
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable', 'staging-cassandra'] 
@@ -109,7 +109,7 @@ ec2_instances:
     count_tag: 
         Name: staging_db
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable', 'staging-cassandra', 'staging-datomic'] 
@@ -123,7 +123,7 @@ ec2_instances:
     count_tag: 
         Name: staging_db_seed
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['staging-orchestra', 'staging-switchboard', 'sshable'] 
@@ -137,7 +137,7 @@ ec2_instances:
     count_tag: 
         Name: staging_app
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['staging-proxy', 'sshable'] 
