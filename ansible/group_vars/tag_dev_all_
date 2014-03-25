@@ -29,7 +29,7 @@ switchboard_port: 8080
 switchboard_data_persist: true
 switchboard_resolve_dependecies: true
 switchboard_profiles: dev
-switchboard_reset: true
+switchboard_reset: "true"
 
 switchboard_Xms: 64m
 switchboard_Xmx: 512m
