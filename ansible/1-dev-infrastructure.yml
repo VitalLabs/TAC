@@ -11,6 +11,7 @@
 
   - name: Include the variables specific to dev environment
     include_vars: envs/dev
+    include_vars: group_vars/tag_dev_all
 
   - name: Create security groups
     ec2_group:
