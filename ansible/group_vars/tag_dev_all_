@@ -4,6 +4,10 @@
 environ: dev
 
 ec2_identifier: vr-primary-acct-dev
+ec2_region: us-west-1
+ec2_zone: us-west-1a
+ec2_image: ami-bb4f69fe
+ec2_identifier: ryanvitalreactor-west
 
 s3_bucket_third_party_libs: vr-chef-dev
 

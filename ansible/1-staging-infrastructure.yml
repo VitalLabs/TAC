@@ -9,8 +9,9 @@
   tasks:
 
 
-  - name: Include the variables specific to dev environment
+  - name: Include the variables specific to  environment
     include_vars: envs/staging
+    include_vars: group_vars/tag_staging_all
 
   - name: Create security groups
     ec2_group:
