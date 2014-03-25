@@ -1,9 +1,4 @@
 
-- name: gather facts from all hosts
-  hosts: all:!localhost
-  remote_user: ubuntu
-  tasks: []
-
 - name: Deploy Initial Configs Switchboard Orchestra Common
   hosts: tag_Name_{{environ|default('dev')}}_app
   remote_user: ubuntu
