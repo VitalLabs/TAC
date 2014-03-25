@@ -1,8 +1,7 @@
 ---
-- name: gather facts from all hosts
-  hosts: all:!localhost
-  remote_user: ubuntu
-  tasks: []
+- name: Gather facts from all hosts
+  hosts: "{{ environ|default('dev') }}_all_"
+  remote_user: ubuntu 
 
 - name: render the test template
   hosts: localhost

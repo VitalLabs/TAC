@@ -1,8 +1,7 @@
 ---
 - name: Gather facts from all hosts
-  hosts: all:!localhost
+  hosts: "{{ environ|default('dev') }}_all_"
   remote_user: ubuntu 
-  sudo: true
 
 
   tasks:

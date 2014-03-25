@@ -1,9 +1,8 @@
 ## You must place a yml config in your .ssh location for this playbook task to run!
 
-- name: gather facts from all hosts
-  hosts: all:!localhost
-  remote_user: ubuntu
-  tasks: []
+- name: Gather facts from all hosts
+  hosts: "{{ environ|default('dev') }}_all_"
+  remote_user: ubuntu 
 
 - name: Deploy Initial Configs Switchboard Orchestra Common
   hosts: tag_Name_{{environ|default('dev')}}_app
