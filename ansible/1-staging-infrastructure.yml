@@ -5,7 +5,9 @@
   connection: local
   gather_facts: False
 
-
+  vars_files:
+  - group_vars/tag_staging_all_
+  
   tasks:
 
 

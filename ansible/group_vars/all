@@ -3,7 +3,7 @@
 
 # designates ec2 account, used to create dynamic bucket names if ec2 account is different!
 # Must be lowercase.
-ec2_identifier: vr-primary-acct
+
 
 ec2_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
 ec2_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
