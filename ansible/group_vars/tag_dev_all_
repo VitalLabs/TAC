@@ -5,6 +5,8 @@ environ: dev
 
 ec2_identifier: vr-primary-acct-dev
 
+s3_bucket_third_party_libs: vr_chef_dev
+
 cassandra_cluster: "dev"
 cassandra_native_port: 9042
 
