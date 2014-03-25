@@ -11,7 +11,7 @@
 
   - name: Include the variables specific to  environment
     include_vars: envs/staging
-    include_vars: group_vars/tag_staging_all
+    include_vars: group_vars/tag_staging_all_
 
   - name: Create security groups
     ec2_group:
