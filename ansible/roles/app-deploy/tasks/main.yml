@@ -137,6 +137,13 @@
   sudo: true
 
 - name: sleep 30 seconds to let it shutdown
+  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=720 timeout=320
+
+- name: stop immutant
+  service: name=immutant state=stopped enabled=yes
+  sudo: true
+
+- name: sleep 30 seconds to let it shutdown
   wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=320 timeout=320
 
 
@@ -145,7 +152,7 @@
   sudo: true
 
 - name: wait until immutant comes back up, simple smoke test and to enforce rolling restart
-  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=started delay=320 timeout=320
+  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=started delay=720 timeout=320
 
   
 
