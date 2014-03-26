@@ -77,4 +77,6 @@ ansible_app_dir: "/var/lib/sw_ansible"
 
 ansible_app_git_version: HEAD
 
+newrelic_install: True
+
 

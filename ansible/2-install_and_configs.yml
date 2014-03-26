@@ -33,3 +33,4 @@
 - include: deploy-switchboard.yml
 - include: deploy-proxy-nginx-config.yml
 - include: deploy-newrelic.yml
+  when: newrelic_install == True
