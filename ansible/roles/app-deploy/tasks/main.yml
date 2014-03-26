@@ -137,7 +137,7 @@
   sudo: true
 
 - name: get jboss pid
-  command: 'ps -ef | grep jboss\.home | grep -v grep | awk ''{print $2}'''
+  command: 'ps -ef | grep jboss\\\.home | grep -v grep | awk ''{print $2}'''
   ignore_errors: true
   register: jboss_pid
   sudo: true
