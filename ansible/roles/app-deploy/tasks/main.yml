@@ -148,9 +148,7 @@
   wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=720 timeout=740
   when: not "'ERROR' in jboss_pid.stderr"
 
-- name: stop immutant
-  service: name=immutant state=stopped enabled=yes
-  sudo: true
+
 
 - name: get jboss pid 2
   command: 'ps -ef | grep jboss\.home | grep -v grep | awk ''{print $2}'''
@@ -159,6 +157,11 @@
   sudo: true
 
 - debug: msg="jboss pid 2 {{ jboss_pid2  }} "
+
+- name: stop immutant
+  service: name=immutant state=stopped enabled=yes
+  when: not "'ERROR' in jboss_pid2.stderr"
+  sudo: true
 
 - name: sleep 30 seconds to let it shutdown
   wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=720 timeout=740
@@ -176,7 +179,7 @@
   sudo: true
 
 - name: wait until immutant comes back up, simple smoke test and to enforce rolling restart
-  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=started delay=320 timeout=340
+  wait_for: host={{ inventory_hostname }} port=9990 state=started timeout=340
 
   
 
