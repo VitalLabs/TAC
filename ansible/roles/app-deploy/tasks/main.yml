@@ -145,7 +145,7 @@
   sudo: true
 
 - name: wait until immutant comes back up, simple smoke test and to enforce rolling restart
-  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=started delay=30 timeout=180
+  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=started delay=180 timeout=180
 
   
 
