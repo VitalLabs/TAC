@@ -10,6 +10,6 @@
   sudo: true
 
   roles:
-  #- common
-  #- java
+  - common
+  - java
   - app-clojure-config
