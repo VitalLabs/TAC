@@ -136,19 +136,28 @@
   service: name=immutant state=stopped enabled=yes
   sudo: true
 
+- name: get jboss pid
+  command: 'ps -ef | grep jboss\.home | grep -v grep | awk ''{print $2}'''
+  ignore_errors: true
+  register: jboss_pid
+  sudo: true
+
+- debug: msg="jboss pid {{ jboss_pid  }} "
+
 - name: sleep 30 seconds to let it shutdown
-  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=720 timeout=720
+  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=720 timeout=740
 
 - name: stop immutant
   service: name=immutant state=stopped enabled=yes
   sudo: true
 
 - name: sleep 30 seconds to let it shutdown
-  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=720 timeout=720
+  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=320 timeout=340
 
 - name: If it hasnt shut down by now kill immutant
   command: 'ps -ef | grep jboss\.home | grep -v grep | awk ''{print $2}'' | xargs kill -9'
   ignore_errors: true
+  register: jboss_pid
   sudo: true
 
 
@@ -157,7 +166,7 @@
   sudo: true
 
 - name: wait until immutant comes back up, simple smoke test and to enforce rolling restart
-  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=started delay=720 timeout=720
+  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=started delay=720 timeout=740
 
   
 
