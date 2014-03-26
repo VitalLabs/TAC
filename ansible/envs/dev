@@ -80,7 +80,7 @@ security_groups:
 
 ec2_instances:
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable']
@@ -92,7 +92,7 @@ ec2_instances:
     count_tag: 
         Name: dev_jumphost
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable', 'dev-cassandra'] 
@@ -105,7 +105,7 @@ ec2_instances:
     count_tag: 
         Name: dev_db
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable', 'dev-cassandra', 'dev-datomic'] 
@@ -119,7 +119,7 @@ ec2_instances:
     count_tag: 
         Name: dev_db_seed
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['dev-orchestra', 'dev-switchboard', 'sshable'] 
@@ -133,7 +133,7 @@ ec2_instances:
     count_tag: 
         Name: dev_app
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['dev-proxy', 'sshable'] 

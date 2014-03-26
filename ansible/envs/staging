@@ -84,7 +84,7 @@ security_groups:
 
 ec2_instances:
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable']
