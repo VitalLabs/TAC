@@ -147,7 +147,8 @@
   wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=320 timeout=320
 
 - name: If it hasnt shut down by now kill immutant
-  command: "ps -ef | grep jboss\.home | grep -v grep | awk '{print $2}' | xargs kill -9"
+  command: 'ps -ef | grep jboss\.home | grep -v grep | awk ''{print $2}'' | xargs kill -9'
+  ignore_errors: true
   sudo: true
 
 
