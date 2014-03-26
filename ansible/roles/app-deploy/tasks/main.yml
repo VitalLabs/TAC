@@ -168,7 +168,7 @@
   when: not "'ERROR' in jboss_pid2.stderr"
 
 - name: If it hasnt shut down by now kill immutant
-  command: 'ps -ef | grep jboss\.home | grep -v grep | awk ''{print $2}'' | xargs kill -9'
+  command: 'ps -ef | grep jboss\\\.home | grep -v grep | awk ''{print $2}'' | xargs kill -9'
   ignore_errors: true
   register: jboss_pid
   sudo: true
