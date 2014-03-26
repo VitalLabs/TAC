@@ -132,12 +132,20 @@
   sudo: true
 
 # note this restart is due to Clojure Permgen issue to be resolved wiht Clojure 1.6 
-- name: restart immutant
-  service: name=immutant state=restarted enabled=yes
+- name: stop immutant
+  service: name=immutant state=stopped enabled=yes
+  sudo: true
+
+- name: sleep 30 seconds to let it shutdown
+  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=30 timeout=180
+
+
+- name: start immutant
+  service: name=immutant state=started enabled=yes
   sudo: true
 
 - name: wait until immutant comes back up, simple smoke test and to enforce rolling restart
-  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }}
+  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=started delay=30 timeout=180
 
   
 
