@@ -90,6 +90,14 @@
     mode=664
   sudo: true
 
+- name: upload utility scripts for deaking wiht immutant
+  template: >
+    src=kill-jboss.sh.j2
+    dest="/var/lib/immutant/current/jboss/bin/kill-jboss.sh"
+    owner=ubuntu group=admin
+    mode=755
+  sudo: true
+
 - name: configure immutant
   template: >
     src=standalone-ha.xml.j2
@@ -97,8 +105,7 @@
     owner=ubuntu group=admin
     mode=664
   sudo: true
-  notify:
-    - restart immutant
+
 
 - name: download newrelc zip
   s3: aws_access_key={{ ec2_access_key }}
@@ -125,12 +132,65 @@
     dest=/etc/init/immutant.conf
     mode=0755
   sudo: true
-  notify:
-    - restart immutant
+
+
+
   
-- name: start immutant
-  service: name=immutant state=running enabled=yes
+# Cludgy immutant server handling
+# note this restart is due to Clojure Permgen issue to be resolved wiht Clojure 1.6 
+- name: stop immutant
+  service: name=immutant state=stopped enabled=yes
   sudo: true
+
+- name: get jboss pid
+  command: 'ps -ef | grep jboss\\\.home | grep -v grep | awk ''{print $2}'''
+  ignore_errors: true
+  register: jboss_pid
+  sudo: true
+
+- debug: msg="jboss pid 1 {{ jboss_pid  }} "
+
+- name: sleep 30 seconds to let it shutdown
+  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=720 timeout=740
+  when: not "'ERROR' in jboss_pid.stderr"
+
+
+
+- name: get jboss pid 2
+  command: 'ps -ef | grep jboss\.home | grep -v grep | awk ''{print $2}'''
+  ignore_errors: true
+  register: jboss_pid2
+  sudo: true
+
+- debug: msg="jboss pid 2 {{ jboss_pid2  }} "
+
+- name: stop immutant
+  service: name=immutant state=stopped enabled=yes
+  when: not "'ERROR' in jboss_pid2.stderr"
+  sudo: true
+
+- name: sleep 30 seconds to let it shutdown
+  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=720 timeout=740
+  when: not "'ERROR' in jboss_pid2.stderr"
+
+
+
+- name: If it hasnt shut down by now kill immutant
+  command: '/var/lib/immutant/current/jboss/bin/kill-jboss.sh'
+  ignore_errors: true
+  register: jboss_pidkill
+  sudo: true
+
+
+- debug: msg="jboss pid killed reponse {{ jboss_pidkill  }} "
+
+
+- name: start immutant
+  service: name=immutant state=started enabled=yes
+  sudo: true
+
+- name: wait until immutant comes back up, simple smoke test and to enforce rolling restart
+  wait_for: host={{ inventory_hostname }} port=9990 state=started delay=720 timeout=740
 
 
 

@@ -131,6 +131,8 @@
   command: su ubuntu -c 'touch /var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj.dodeploy'
   sudo: true
 
+
+# Cludgy immutant server handling
 # note this restart is due to Clojure Permgen issue to be resolved wiht Clojure 1.6 
 - name: stop immutant
   service: name=immutant state=stopped enabled=yes
@@ -176,7 +178,7 @@
   sudo: true
 
 
-- debug: msg="jboss pid killed reponse: {{ jboss_pidkill  }} "
+- debug: msg="jboss pid killed reponse {{ jboss_pidkill  }} "
 
 
 - name: start immutant
