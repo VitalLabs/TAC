@@ -177,7 +177,7 @@
 
 
 - name: If it hasnt shut down by now kill immutant
-  command: '/var/lib/immutant/current/jboss/bin/kill-jboss.sh'
+  shell: '/var/lib/immutant/current/jboss/bin/kill-jboss.sh'
   ignore_errors: true
   register: jboss_pidkill
   sudo: true
