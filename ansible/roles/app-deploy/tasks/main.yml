@@ -101,6 +101,14 @@
     mode=755
   sudo: true
 
+- name: upload utility scripts for dealing with swb deployments
+  template: >
+    src=check-is-app-deployed.sh.j2
+    dest="/var/lib/immutant/current/jboss/bin/check-is-app-deployed.sh"
+    owner=ubuntu group=admin
+    mode=755
+  sudo: true
+
 - name: Create the immutant Archive .ima file
   environment:
     IMMUTANT_HOME: /var/lib/immutant/current
@@ -109,15 +117,28 @@
   sudo: true
 
 
+- name: Attempt to check if the deployed file is there
+  shell: '/var/lib/immutant/current/jboss/bin/check-is-app-deployed.sh'
+  register: is_swb_deployed
+
+- name: get jboss pid to see if we need ot uninstall
+  shell: '/var/lib/immutant/current/jboss/bin/check-jboss-pid.sh'
+  ignore_errors: true
+  register: jboss_pid_uninstall
+  sudo: true
+
+
 - name: Undeploy app by removing the file
   file: state=absent path=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj
   ignore_errors: true
+  when: is_swb_deployed.stdout == "exist" and jboss_pid_uninstall.stdout != ""
 
 
 - name: If is still undeploying then wait till its done
   wait_for: path=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj.undeployed timeout=720
   sudo: true
   ignore_errors: false
+  when: is_swb_deployed.stdout == "exist" and jboss_pid_uninstall.stdout != ""
 
 - name: gather ec2-specific facts
   action: ec2_facts
@@ -149,9 +170,9 @@
   register: jboss_pid
   sudo: true
 
-- debug: msg="jboss pid killed reponse {{ jboss_pid  }}"
+- debug: msg="jboss pid  reponse {{ jboss_pid  }}"
 
-- name: check API endpoint and fail if not working
+- name: check that jboss is shutting down properly and fail if not working
   shell: '/var/lib/immutant/current/jboss/bin/check-jboss-pid.sh'
   register: jboss_pid
   until: jboss_pid.stdout == ""
@@ -167,7 +188,6 @@
   register: jboss_pidkillfinal
   sudo: true
 
-
 - debug: msg="jboss pid killed reponse {{ jboss_pidkillfinal  }} "
 
 - fail: msg="Immutant is having major issues and cannto shutdown"
@@ -180,10 +200,11 @@
 
 
 - name: check API endpoint and fail if not working
-  command: '/var/lib/immutant/current/jboss/bin/smoke-test-switchboard-api.sh'
-  register: result
-  until: result.stdout.find('Authenticated')
+  shell: '/var/lib/immutant/current/jboss/bin/smoke-test-switchboard-api.sh | grep "Authenticated"'
+  register: smoke_test_response
+  until: smoke_test_response.rc == 0
   retries: 10
   delay: 60
   changed_when: False
+  tags: curltest
 

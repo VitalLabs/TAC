@@ -10,6 +10,13 @@
   serial: 1
   sudo: true
 
+  vars_prompt:
+
+    - name: "switchboard_git_version"
+      prompt: "Switchboard release version"
+      default: HEAD
+      private: no
+
   vars_files:
   - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
 
