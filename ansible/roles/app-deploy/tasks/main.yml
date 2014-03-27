@@ -144,17 +144,17 @@
   sudo: true
 
 - name: get jboss pid
-  command: 'ps -ef | grep jboss\\\.home | grep -v grep | awk ''{print $2}'''
+  shell: '/var/lib/immutant/current/jboss/bin/check-jboss-pid.sh'
   ignore_errors: true
   register: jboss_pid
   sudo: true
 
-- debug: msg="jboss pid killed reponse {{ jboss_pid  }} {{ jboss_pid.length  }}"
+- debug: msg="jboss pid killed reponse {{ jboss_pid  }}"
 
 - name: check API endpoint and fail if not working
-  command: 'ps -ef | grep jboss\\\.home | grep -v grep | awk ''{print $2}'''
-  register: result
-  until: jboss_pid.stdout.length == 0
+  shell: '/var/lib/immutant/current/jboss/bin/check-jboss-pid.sh'
+  register: jboss_pid
+  until: jboss_pid.stdout == ""
   retries: 10
   delay: 60
   changed_when: False
@@ -162,7 +162,7 @@
 
 
 - name: If it hasnt shut down by now kill immutant and hope that data is not lost
-  shell: '/var/lib/immutant/current/jboss/bin/kill-jboss.sh'
+  shell: '/var/lib/immutant/current/jboss/bin/check-jboss-pid.sh'
   ignore_errors: true
   register: jboss_pidkillfinal
   sudo: true
@@ -171,7 +171,7 @@
 - debug: msg="jboss pid killed reponse {{ jboss_pidkillfinal  }} "
 
 - fail: msg="Immutant is having major issues and cannto shutdown"
-  when: jboss_pidkillfinal.stdout.length != 0
+  when: jboss_pidkillfinal.stdout != ""
 
 
 - name: start immutant
