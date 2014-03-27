@@ -3,29 +3,14 @@
 
 # designates ec2 account, used to create dynamic bucket names if ec2 account is different!
 # Must be lowercase.
-ec2_identifier: vr-primary-acct
+
 
 ec2_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
 ec2_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
 
-# note what region you are in so you dont go down a rabbit hole.
-
-# ec2_region: us-west-1
-# ec2_zone: us-west-1a
-# ec2_image: ami-bb4f69fe
-
-# ec2_region: us-west-2
-# ec2_zone: us-west-2a
-# ec2_image: ami-7eab224e
-
-#Setting to test East
-ec2_region: us-east-1
-ec2_zone: us-east-1a
-ec2_image: ami-9c78c0f5
 
 
-ec2_instance_type: m1.large
-ec2_keypair: swb-testcluster-keypair
+
 ec2_security_group: default
 ec2_app_instance_count: 2
 ec2_proxy_instance_count: 2
@@ -58,3 +43,34 @@ maven_user: ubuntu
 
 # Image AMI creating mechanism.. not ready yet so set to false.
 packer_build: false 
+
+
+
+
+# License key
+newrelic_license_key: 14aa65c62e17b8bf93edcde29cadd5c74d4dd203 
+
+# Log level (error, warning, info, verbose, debug, verbosedebug)
+newrelic_loglevel: info
+
+# Log file location
+newrelic_logfile: /var/log/newrelic/nrsysmond.log
+
+
+# Use SSL for all communication. Default False
+newrelic_ssl: "true"
+
+# SSL CA Bundle path. Default False
+#newrelic_ssl_ca_bundle: /etc/pki/tls/certs/ca-bundle.crt
+
+# SSL CA Path. Default False
+#newrelic_ssl_ca_path: /etc/ssl/certs
+
+# Pid file locaiton
+newrelic_pidfile: /var/run/newrelic/nrsysmond.pid
+
+# Collector hostname
+newrelic_collector_host: collector.newrelic.com
+
+# Connection timeout for collector host
+newrelic_timeout: 30

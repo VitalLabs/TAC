@@ -149,6 +149,8 @@ Note that when switching regios you also must update the ./inv/ec2.ini fiole to 
 
 ## Advice
 
+ run ./inv/ec2.py --refresh-cache if you ever get no hosts messages just to make sure you are workign wiht the latest invenory set.
+
  Use TMUX!! this way you can run things on the jumphost and quickly get back to your working session and work asynchronously
 
 

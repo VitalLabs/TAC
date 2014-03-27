@@ -5,11 +5,13 @@
   connection: local
   gather_facts: False
 
+  vars_files:
+  - group_vars/tag_staging_all_
 
   tasks:
 
 
-  - name: Include the variables specific to dev environment
+  - name: Include the variables specific to  environment
     include_vars: envs/staging
 
   - name: Create security groups
@@ -52,7 +54,7 @@
       zone={{ switchboard_zone }}
       record="{{ switchboard_vhost }}"
       type=A
-      ttl=7200
+      ttl=60
       overwrite=true
       value="{{ hostvars[groups['tag_Name_staging_proxy'][0]]['ec2_ip_address'] }}"
     with_items: ec2.instances
@@ -62,7 +64,7 @@
       zone={{ orchestra_zone }}
       record="{{ orchestra_vhost }}"
       type=A
-      ttl=7200
+      ttl=60
       overwrite=true
       value="{{ hostvars[groups['tag_Name_staging_proxy'][0]]['ec2_ip_address'] }}"
     with_items: ec2.instances

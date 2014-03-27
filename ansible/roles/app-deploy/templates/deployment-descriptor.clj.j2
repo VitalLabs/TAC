@@ -6,6 +6,9 @@
  :virtual-host ["{{ inventory_hostname }}" "{{ orchestra_vhost }}" "{{ ansible_default_ipv4.address }}"]
  :datomic.template "{{ datomic_template }}"
  :data-persist true
+ :init.reset {{ switchboard_reset }}
+
+ :switchboard.api "{{ switchboard_client_url }}"
   
 
  :twilio.enable "false"

@@ -13,7 +13,7 @@ security_groups:
         cidr_ip: 0.0.0.0/0
 
   # TODO we need to only allow these from the proxy hosts!!
-  - name: dev-proxy
+  - name: staging-proxy
     desc: the security group for cassandra
     rules:
       - proto: tcp
@@ -25,7 +25,7 @@ security_groups:
         to_port: "443"
         cidr_ip: 0.0.0.0/0
    
-  - name: dev-orchestra
+  - name: staging-orchestra
     desc: the security group for cassandra
     rules:
       - proto: tcp
@@ -37,15 +37,23 @@ security_groups:
         to_port: "3000"
         cidr_ip: 0.0.0.0/0
 
-  - name: dev-switchboard
+  - name: staging-switchboard
     desc: the security group for cassandra
     rules:
       - proto: tcp
         from_port: "8080"
         to_port: "8080"
         cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "4005"
+        to_port: "4005"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "9990"
+        to_port: "9990"
+        cidr_ip: 0.0.0.0/0
 
-  - name: dev-datomic
+  - name: staging-datomic
     desc: the security group for cassandra
     rules:
       - proto: tcp
@@ -53,7 +61,7 @@ security_groups:
         to_port: "4336"
         cidr_ip: 0.0.0.0/0
 
-  - name: dev-cassandra
+  - name: staging-cassandra
     desc: the security group for cassandra
     rules:
       - proto: tcp
@@ -77,10 +85,27 @@ security_groups:
         from_port: "7199"
         to_port: "7199"
         cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "8888"
+        to_port: "8888"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "61620"
+        to_port: "61620"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "61621"
+        to_port: "61621"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "1024"
+        to_port: "65535"
+        cidr_ip: 0.0.0.0/0
+
 
 ec2_instances:
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable']
@@ -92,10 +117,10 @@ ec2_instances:
     count_tag: 
         Name: dev_jumphost
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: ['sshable', 'dev-cassandra'] 
+    group: ['sshable', 'staging-cassandra'] 
     instance_tags: 
         Name: dev_db
         dev_all: ""
@@ -105,10 +130,10 @@ ec2_instances:
     count_tag: 
         Name: dev_db
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: ['sshable', 'dev-cassandra', 'dev-datomic'] 
+    group: ['sshable', 'staging-cassandra', 'staging-datomic'] 
     instance_tags: 
         Name: dev_db_seed
         dev_all: ""
@@ -119,10 +144,10 @@ ec2_instances:
     count_tag: 
         Name: dev_db_seed
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: ['dev-orchestra', 'dev-switchboard', 'sshable'] 
+    group: ['staging-orchestra', 'staging-switchboard', 'sshable'] 
     instance_tags: 
         Name: dev_app
         dev_all: ""
@@ -133,10 +158,10 @@ ec2_instances:
     count_tag: 
         Name: dev_app
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: ['dev-proxy', 'sshable'] 
+    group: ['staging-proxy', 'sshable'] 
     instance_tags: 
         Name: dev_proxy
         dev_all: ""

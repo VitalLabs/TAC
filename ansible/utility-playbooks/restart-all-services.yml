@@ -1,5 +1,10 @@
 ---
 
+- name: Gather facts from all hosts
+  hosts: "{{ environ|default('dev') }}_all_"
+  remote_user: ubuntu 
+
+
 # Restart Immutant
 #
 - name: Upgrade All application hosts
@@ -9,7 +14,7 @@
   serial: 1
 
   vars_files:
-  - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
+  - ../group_vars/tag_{{ environ|default('dev') }}_all_
 
   pre_tasks:
   # nothing right now..need to take out of load balancer or does iummutant handle?
