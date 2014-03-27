@@ -93,8 +93,13 @@
   sudo: true
 
 
-
-
+- name: upload utility scripts for dealing with immutant
+  template: >
+    src=smoke-test-switchboard-api.sh.j2
+    dest="/var/lib/immutant/current/jboss/bin/smoke-test-switchboard-api.sh"
+    owner=ubuntu group=admin
+    mode=755
+  sudo: true
 
 - name: Create the immutant Archive .ima file
   environment:
@@ -166,7 +171,7 @@
   sudo: true
 
 - name: sleep 30 seconds to let it shutdown
-  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=720 timeout=740
+  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=180 timeout=740
   when: not "'ERROR' in jboss_pid2.stderr"
 
 
@@ -185,9 +190,15 @@
   service: name=immutant state=started enabled=yes
   sudo: true
 
+
 - name: wait until immutant comes back up, simple smoke test and to enforce rolling restart
-  wait_for: host={{ inventory_hostname }} port=9990 state=started delay=720 timeout=740
+  wait_for: host={{ inventory_hostname }} port=9990 state=started delay=120 timeout=740
 
-  
 
+
+- name: check API endpoint and fail if not working
+  command: '/var/lib/immutant/current/jboss/bin/smoke-test-switchboard-api.sh'
+  register: result
+  failed_when: not result.stdout.find('Authenticated')
+  changed_when: False
 
