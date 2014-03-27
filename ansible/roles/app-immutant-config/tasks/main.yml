@@ -99,7 +99,7 @@
 
 - name: upload utility scripts for dealing with immutant
   template: >
-    src=Check-jboss-pid.sh.j2
+    src=check-jboss-pid.sh.j2
     dest="/var/lib/immutant/current/jboss/bin/check-jboss-pid.sh"
     owner=ubuntu group=admin
     mode=755
