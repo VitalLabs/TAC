@@ -167,11 +167,16 @@
   wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=720 timeout=740
   when: not "'ERROR' in jboss_pid2.stderr"
 
+
+
 - name: If it hasnt shut down by now kill immutant
-  command: 'ps -ef | grep jboss\\\.home | grep -v grep | awk ''{print $2}'' | xargs kill -9'
+  command: '/var/lib/immutant/current/jboss/bin/kill-jboss.sh'
   ignore_errors: true
-  register: jboss_pid
+  register: jboss_pidkill
   sudo: true
+
+
+- debug: msg="jboss pid killed reponse: {{ jboss_pidkill  }} "
 
 
 - name: start immutant
