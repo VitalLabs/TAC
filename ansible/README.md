@@ -5,6 +5,7 @@ Export your AWS credentials as usual:
 
    export AWS_ACCESS_KEY_ID="****"
    export AWS_SECRET_ACCESS_KEY="******"
+   ssh-agent bash
    ssh-add ~/.ssh/keypair.pem
 
 
@@ -14,28 +15,38 @@ pip install ansible==1.5.0
 
 You must have AWS CLI installed (NOT the older EC2 CLI) and configured.  We use shell commands to augment where core EC2 modules don't support actions.
 
-If you will be using dedicated VPC instances then we will need to use a patched module. We will ping ansible when that time comes.
+If you will be using dedicated VPC instances then we will need to use a patched module. We will ping ansible when that time comes. This is WIP
 
-Then cd into this playbook directory and run as needed.
-
+Then cd into this ./ansible playbook directory and run as needed.
 
 
 ##Proper commands to run playbooks:
 
 First Provision EC2 instances
 
-ansible-playbook -vvvv -i ./inv/ 1-dev-infrastructure.yml
+'''
+ansible-playbook -vvvv -i ./inv/ 1-staging-infrastructure.yml -e environ=staging
+'''
 
-Then install all core software and apply configurations. Right nwo both are together. We can break this out into a AMI image build in the future.
+Then install all core software and apply configurations. Right now both are together. We can break this out into a AMI image build in the future.
 
 bootstrap the jumphost to run the deployments:
 
-ansible-playbook -vvvv -i ./inv/ bootstrap-jumphost,yml
+'''
+ansible-playbook -vvvv -i ./inv/ bootstrap-jumphost.yml -e environ=staging
+'''
+
+You can then log into the jumphost abnd run tmux new or tmux attach to run commands there ALOT faster.
+
+'''
+bin/login-ansible tag_Name_staging_jumphost
+'''
 
 Install everything:
 
-ansible-playbook -vvvv -i ./inv/ 2-install-and-configs.yml
-
+'''
+ansible-playbook -vvvv -i ./inv/ 2-install-and-configs.yml -e environ=staging
+'''
 
 ##Environment Consideration
 
@@ -48,6 +59,7 @@ ansible-playbook -vvvv -i ./inv/ 2-install-and-configs.yml -e environ=staging
 ##Ad Hoc Playbooks:
 
 Example: ansible-playbook -vvvv -i ./inv/ depploy-app-deploy.yml
+
 
 Command to deploy new code:
 ansible-playbook -vvvv -i ./inv update-all-application-code.yml -e environ=staging
@@ -62,6 +74,7 @@ asnsible-playbook -vvvv -i ./inv update-immutant-configs.yml -e environ=staging
 deploy-app-deploy.yml:  This installs the Switchboard app via the app-deploy role and restarts the server.
 
 deploy-app-clojure-config.yml:  This installs the Orchestra app via the clojure-app role and restarts the server.
+
 
 update-cassandra.yml:  Updates cassandra config and does a rolling update. No server downtime expected.
 
