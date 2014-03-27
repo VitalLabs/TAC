@@ -1,13 +1,21 @@
 
-- name: gather facts from all hosts
-  hosts: all:!localhost
-  remote_user: ubuntu
-  tasks: []
+# The immutant server and the switchooard app are very tight ly coupled due to the off jboss7
+# behaviour when shutting down the server. 
+
+
 
 - name: Deploy Initial Configs Switchboard Orchestra Common
   hosts: tag_Name_{{environ|default('dev')}}_app
   remote_user: ubuntu
+  serial: 1
   sudo: true
+
+  vars_prompt:
+
+    - name: "switchboard_git_version"
+      prompt: "Switchboard release version"
+      default: HEAD
+      private: no
 
   vars_files:
   - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
@@ -17,3 +25,4 @@
   - java
   - app-github
   - app-immutant-config
+  - app-deploy

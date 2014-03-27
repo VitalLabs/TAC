@@ -38,8 +38,7 @@
             dest="/home/ubuntu/.lein/profiles.clj"
             owner=ubuntu group=ubuntu
   sudo: true
-  notify:
-    - restart immutant
+
 
 
 # DEPLOY IMMUTANT
@@ -90,6 +89,23 @@
     mode=664
   sudo: true
 
+- name: upload utility scripts for dealing with immutant
+  template: >
+    src=kill-jboss.sh.j2
+    dest="/var/lib/immutant/current/jboss/bin/kill-jboss.sh"
+    owner=ubuntu group=admin
+    mode=755
+  sudo: true
+
+- name: upload utility scripts for dealing with immutant
+  template: >
+    src=check-jboss-pid.sh.j2
+    dest="/var/lib/immutant/current/jboss/bin/check-jboss-pid.sh"
+    owner=ubuntu group=admin
+    mode=755
+  sudo: true
+
+
 - name: configure immutant
   template: >
     src=standalone-ha.xml.j2
@@ -97,8 +113,29 @@
     owner=ubuntu group=admin
     mode=664
   sudo: true
-  notify:
-    - restart immutant
+
+
+- name: download newrelc zip
+  s3: aws_access_key={{ ec2_access_key }}
+      aws_secret_key={{ ec2_secret_key }}
+      mode=get
+      bucket={{ s3_bucket_third_party_libs }}
+      object=/newrelic_agent3.5.0.zip
+      dest=/var/lib/immutant/current/jboss/newrelic_agent3.5.0.zip
+  when: newrelic_install == True
+
+
+- name: Unpack newrelic
+  command: chdir=/var/lib/immutant/current/jboss/ unzip -u newrelic_agent3.5.0.zip
+  sudo: true
+  when: newrelic_install == True
+
+
+- name: Install newrelic
+  command: chdir=/var/lib/immutant/current/jboss/newrelic java -jar newrelic.jar install
+  sudo: true
+  when: newrelic_install == True
+
 
 - name: immutant upstart script
   template: >    
@@ -106,9 +143,12 @@
     dest=/etc/init/immutant.conf
     mode=0755
   sudo: true
-  notify:
-    - restart immutant
-  
-- name: start immutant
-  service: name=immutant state=running enabled=yes
-  sudo: true
+
+
+
+
+
+
+
+
+

@@ -4,13 +4,16 @@
   hosts: localhost
   connection: local
   gather_facts: False
-
+  
+  vars_files:
+  - group_vars/tag_dev_all_
 
   tasks:
 
 
   - name: Include the variables specific to dev environment
     include_vars: envs/dev
+
 
   - name: Create security groups
     ec2_group:

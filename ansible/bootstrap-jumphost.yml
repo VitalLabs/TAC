@@ -34,6 +34,10 @@
   - name: install Ansible
     pip: name=ansible state=present
 
+  - name: install latest boto
+    pip: name=boto state=latest
+  
+
 
 
 

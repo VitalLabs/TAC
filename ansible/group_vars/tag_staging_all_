@@ -3,6 +3,15 @@
 
 environ: staging
 
+
+ec2_identifier: vr-primary-acct
+ec2_region: us-east-1
+ec2_zone: us-east-1a
+ec2_image: ami-9c78c0f5
+ec2_keypair: swb-testcluster-keypair
+
+s3_bucket_third_party_libs: vr-chef
+
 cassandra_cluster: "staging"
 cassandra_native_port: 9042
 
@@ -17,13 +26,18 @@ switchboard_port: 8080
 switchboard_data_persist: true
 switchboard_resolve_dependecies: true
 switchboard_profiles: prod
+switchboard_reset: "false"
 
 switchboard_Xms: 256m
 switchboard_Xmx: 2048m
 switchboard_MaxPermSize: 1024m
 
+#usually empty if not doing advanced debugging
+switchboard_java_opts: "-XX:+HeapDumpOnOutOfMemoryError"
 
 
+datomic_cloudwatch_region: "{{ ec2_region }}"
+datomic_cloudwatch_dimension: "{{ ec2_region }}-datomic"
 datomic_profiles: prod
 datomic_version: 0.9.4384
 datomic_filename: "{{ datomic_type }}-{{datomic_version }}"
@@ -63,5 +77,7 @@ ansible_app_git_repo: "ssh://git@github.com/vitalreactor/switchboard-infrastruct
 ansible_app_dir: "/var/lib/sw_ansible"
 
 ansible_app_git_version: HEAD
+
+newrelic_install: True
 
 

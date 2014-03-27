@@ -48,6 +48,10 @@ security_groups:
         from_port: "4005"
         to_port: "4005"
         cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "9990"
+        to_port: "9990"
+        cidr_ip: 0.0.0.0/0
 
   - name: staging-datomic
     desc: the security group for cassandra
@@ -81,10 +85,27 @@ security_groups:
         from_port: "7199"
         to_port: "7199"
         cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "8888"
+        to_port: "8888"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "61620"
+        to_port: "61620"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "61621"
+        to_port: "61621"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "1024"
+        to_port: "65535"
+        cidr_ip: 0.0.0.0/0
+
 
 ec2_instances:
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable']
@@ -96,7 +117,7 @@ ec2_instances:
     count_tag: 
         Name: staging_jumphost
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable', 'staging-cassandra'] 
@@ -109,7 +130,7 @@ ec2_instances:
     count_tag: 
         Name: staging_db
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable', 'staging-cassandra', 'staging-datomic'] 
@@ -123,7 +144,7 @@ ec2_instances:
     count_tag: 
         Name: staging_db_seed
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['staging-orchestra', 'staging-switchboard', 'sshable'] 
@@ -137,7 +158,7 @@ ec2_instances:
     count_tag: 
         Name: staging_app
 
-  - instance_type: m1.large
+  - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['staging-proxy', 'sshable'] 
