@@ -36,7 +36,7 @@ switchboard_MaxPermSize: 1024m
 switchboard_java_opts: "-XX:+HeapDumpOnOutOfMemoryError"
 
 
-datomic_cloudwatch_region: {{ ec2_region }}
+datomic_cloudwatch_region: "{{ ec2_region }}"
 datomic_cloudwatch_dimension: "{{ ec2_region }}-datomic"
 datomic_profiles: prod
 datomic_version: 0.9.4384
