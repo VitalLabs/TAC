@@ -115,9 +115,9 @@
 
 
 - name: If is still undeploying then wait till its done
-  wait_for: path=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj.undeployed timeout=30
+  wait_for: path=/var/lib/immutant/current/jboss/standalone/deployments/{{ switchboard_app_name }}.clj.undeployed timeout=720
   sudo: true
-  ignore_errors: true
+  ignore_errors: false
 
 - name: gather ec2-specific facts
   action: ec2_facts
@@ -149,41 +149,29 @@
   register: jboss_pid
   sudo: true
 
-- debug: msg="jboss pid 1 {{ jboss_pid  }} "
+- debug: msg="jboss pid killed reponse {{ jboss_pid  }} {{ jboss_pid.length  }}"
 
-- name: sleep 30 seconds to let it shutdown
-  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=720 timeout=740
-  when: not "'ERROR' in jboss_pid.stderr"
-
-
-
-- name: get jboss pid 2
-  command: 'ps -ef | grep jboss\.home | grep -v grep | awk ''{print $2}'''
-  ignore_errors: true
-  register: jboss_pid2
-  sudo: true
-
-- debug: msg="jboss pid 2 {{ jboss_pid2  }} "
-
-- name: stop immutant
-  service: name=immutant state=stopped enabled=yes
-  when: not "'ERROR' in jboss_pid2.stderr"
-  sudo: true
-
-- name: sleep 30 seconds to let it shutdown
-  wait_for: host={{ inventory_hostname }} port={{ switchboard_port }} state=stopped delay=180 timeout=740
-  when: not "'ERROR' in jboss_pid2.stderr"
+- name: check API endpoint and fail if not working
+  command: 'ps -ef | grep jboss\\\.home | grep -v grep | awk ''{print $2}'''
+  register: result
+  until: jboss_pid.stdout.length == 0
+  retries: 10
+  delay: 60
+  changed_when: False
 
 
 
-- name: If it hasnt shut down by now kill immutant
+- name: If it hasnt shut down by now kill immutant and hope that data is not lost
   shell: '/var/lib/immutant/current/jboss/bin/kill-jboss.sh'
   ignore_errors: true
-  register: jboss_pidkill
+  register: jboss_pidkillfinal
   sudo: true
 
 
-- debug: msg="jboss pid killed reponse {{ jboss_pidkill  }} "
+- debug: msg="jboss pid killed reponse {{ jboss_pidkillfinal  }} "
+
+- fail: msg="Immutant is having major issues and cannto shutdown"
+  when: jboss_pidkillfinal.stdout.length != 0
 
 
 - name: start immutant
@@ -191,14 +179,11 @@
   sudo: true
 
 
-- name: wait until immutant comes back up, simple smoke test and to enforce rolling restart
-  wait_for: host={{ inventory_hostname }} port=9990 state=started delay=120 timeout=740
-
-
-
 - name: check API endpoint and fail if not working
   command: '/var/lib/immutant/current/jboss/bin/smoke-test-switchboard-api.sh'
   register: result
-  failed_when: not result.stdout.find('Authenticated')
+  until: result.stdout.find('Authenticated')
+  retries: 10
+  delay: 60
   changed_when: False
 
