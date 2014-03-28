@@ -80,6 +80,7 @@
        version={{ switchboard_git_version }}
        depth=1
        update=yes
+       accept_hostkey=yes
   register: git_pull
   sudo: false
 
@@ -179,8 +180,13 @@
   retries: 10
   delay: 60
   changed_when: False
+  ignore_errors: true
 
-
+- name: If it hasnt shut down by now kill immutant and hope that data is not lost
+  shell: '/var/lib/immutant/current/jboss/bin/kill-jboss.sh'
+  ignore_errors: true
+  register: jboss_pidkilled
+  sudo: true
 
 - name: If it hasnt shut down by now kill immutant and hope that data is not lost
   shell: '/var/lib/immutant/current/jboss/bin/check-jboss-pid.sh'

@@ -13,7 +13,7 @@ security_groups:
         cidr_ip: 0.0.0.0/0
 
   # TODO we need to only allow these from the proxy hosts!!
-  - name: staging-proxy
+  - name: dev-proxy
     desc: the security group for cassandra
     rules:
       - proto: tcp
@@ -25,7 +25,7 @@ security_groups:
         to_port: "443"
         cidr_ip: 0.0.0.0/0
    
-  - name: staging-orchestra
+  - name: dev-orchestra
     desc: the security group for cassandra
     rules:
       - proto: tcp
@@ -37,7 +37,7 @@ security_groups:
         to_port: "3000"
         cidr_ip: 0.0.0.0/0
 
-  - name: staging-switchboard
+  - name: dev-switchboard
     desc: the security group for cassandra
     rules:
       - proto: tcp
@@ -53,7 +53,7 @@ security_groups:
         to_port: "9990"
         cidr_ip: 0.0.0.0/0
 
-  - name: staging-datomic
+  - name: dev-datomic
     desc: the security group for cassandra
     rules:
       - proto: tcp
@@ -61,7 +61,7 @@ security_groups:
         to_port: "4336"
         cidr_ip: 0.0.0.0/0
 
-  - name: staging-cassandra
+  - name: dev-cassandra
     desc: the security group for cassandra
     rules:
       - proto: tcp
@@ -110,61 +110,61 @@ ec2_instances:
     keypair: "{{instances_keypair}}"
     group: ['sshable']
     instance_tags: 
-        Name: dev_jumphost
-        dev_all: ""
-        dev_jumphost: ""
+        Name: staging_jumphost
+        staging_all: ""
+        staging_jumphost: ""
     exact_count: 1
     count_tag: 
-        Name: dev_jumphost
+        Name: staging_jumphost
 
   - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: ['sshable', 'staging-cassandra'] 
+    group: ['sshable', 'dev-cassandra'] 
     instance_tags: 
-        Name: dev_db
-        dev_all: ""
-        dev_cassandra: ""
+        Name: staging_db
+        staging_all: ""
+        staging_cassandra: ""
         cassandra: ""
     exact_count: 2 
     count_tag: 
-        Name: dev_db
+        Name: staging_db
 
   - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: ['sshable', 'staging-cassandra', 'staging-datomic'] 
+    group: ['sshable', 'dev-cassandra', 'dev-datomic'] 
     instance_tags: 
-        Name: dev_db_seed
-        dev_all: ""
-        dev_cassandra: ""
+        Name: staging_db_seed
+        staging_all: ""
+        staging_cassandra: ""
         cassandra: ""
         datomic: ""
     exact_count: 1 
     count_tag: 
-        Name: dev_db_seed
+        Name: staging_db_seed
 
   - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: ['staging-orchestra', 'staging-switchboard', 'sshable'] 
+    group: ['dev-orchestra', 'dev-switchboard', 'sshable'] 
     instance_tags: 
-        Name: dev_app
-        dev_all: ""
+        Name: staging_app
+        staging_all: ""
         immutant: ""
         switchboard: ""
         orchestra: ""
     exact_count: 2
     count_tag: 
-        Name: dev_app
+        Name: staging_app
 
   - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
-    group: ['staging-proxy', 'sshable'] 
+    group: ['dev-proxy', 'sshable'] 
     instance_tags: 
-        Name: dev_proxy
-        dev_all: ""
+        Name: staging_proxy
+        staging_all: ""
     exact_count: 1 
     count_tag: 
-        Name: dev_proxy
+        Name: staging_proxy
