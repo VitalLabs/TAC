@@ -52,6 +52,44 @@ security_groups:
         from_port: "9990"
         to_port: "9990"
         cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "9999"
+        to_port: "9999"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "9443"
+        to_port: "9443"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "8443"
+        to_port: "8443"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "45700"
+        to_port: "45700"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "7600"
+        to_port: "7600"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "5445"
+        to_port: "5445"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "4447"
+        to_port: "4447"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "4712"
+        to_port: "4712"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "4713"
+        to_port: "4713"
+        cidr_ip: 0.0.0.0/0
+
+
 
   - name: staging-datomic
     desc: the security group for cassandra
