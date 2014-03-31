@@ -168,7 +168,7 @@ ec2_instances:
     count_tag: 
         Name: staging_db
 
-  - instance_type: m1.medium
+  - instance_type: m1.large
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable', 'staging-cassandra', 'staging-datomic'] 
