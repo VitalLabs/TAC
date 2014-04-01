@@ -78,7 +78,6 @@
   git: repo={{ clojure_app_git_repo }}
        dest=/var/lib/immutant/current/archives/{{ switchboard_app_name }}
        version={{ switchboard_git_version }}
-       depth=1
        update=yes
        accept_hostkey=yes
   register: git_pull
