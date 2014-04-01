@@ -17,6 +17,6 @@ respawn
 script
 export AWS_SECRET_KEY={{ ec2_secret_key }}
 export AWS_ACCESS_KEY={{ ec2_access_key }}
-{{ datomic_dir }}/current/bin/transactor -Xms400m -Xmx400m {{ datomic_dir}}/transactor.properties 2>&1 >> {{ datomic_log_dir }}/datomic.log
+{{ datomic_dir }}/current/bin/transactor -Xms512m -Xmx2048m {{ datomic_dir}}/transactor.properties 2>&1 >> {{ datomic_log_dir }}/datomic.log
 end script
  

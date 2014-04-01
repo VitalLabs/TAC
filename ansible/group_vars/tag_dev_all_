@@ -35,11 +35,13 @@ switchboard_Xmx: 512m
 switchboard_MaxPermSize: 256m
 switchboard_java_opts: "-XX:+HeapDumpOnOutOfMemoryError"
 
+switchboard_jboss_log_level: DEBUG
+
 
 datomic_cloudwatch_region: "{{ ec2_region }}"
 datomic_cloudwatch_dimension: "{{ ec2_region }}-datomic"
 datomic_profiles: dev
-datomic_version: 0.9.4384
+datomic_version: 0.9.4699
 datomic_filename: "{{ datomic_type }}-{{datomic_version }}"
 datomic_type: datomic-pro
 datomic_protocol: ddb
