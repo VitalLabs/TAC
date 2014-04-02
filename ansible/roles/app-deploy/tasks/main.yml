@@ -26,7 +26,7 @@
   when: not datomic.stat.exists
 
 - name: Download datomic
-  s3: bucket=vr-dist object=/archives/{{ datomic_filename }}.zip dest=/tmp/datomic/{{ datomic_filename }}.zip mode=get aws_access_key={{ ec2_access_key }} aws_secret_key={{ ec2_secret_key }}
+  s3: bucket={{ datomic_install_bucket }} object=/archives/{{ datomic_filename }}.zip dest=/tmp/datomic/{{ datomic_filename }}.zip mode=get aws_access_key={{ ec2_access_key }} aws_secret_key={{ ec2_secret_key }}
   sudo: true
   when: not datomic.stat.exists
 
