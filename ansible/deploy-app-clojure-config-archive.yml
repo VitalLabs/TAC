@@ -12,6 +12,7 @@
   hosts: tag_Name_{{environ|default('dev')}}_proxy
   remote_user: ubuntu
   sudo: true
+  serial: 1
 
   vars_prompt:
 
@@ -19,6 +20,7 @@
       prompt: "Orchestra release version"
       default: HEAD
       private: no
+      when: not orchestra_git_version.exists
 
 
   roles:

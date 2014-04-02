@@ -20,7 +20,7 @@ cassandra_native_port: 9042
 switchboard_init: switchboard.server/run-immutant-dev
 #git version is a hash or branchname or HEAD or tags/$tagname
 switchboard_git_version: HEAD
-switchboard_deployfrom_source: False
+switchboard_deployfrom_source: True
 switchboard_client_url: http://dev.dev-orchestra.md
 switchboard_vhost: dev.dev-swb.io
 switchboard_zone: dev-swb.io
@@ -55,7 +55,7 @@ datomic_template: "datomic:ddb://{{ ec2_region }}/{{ datomic_storage_table }}/<d
 
 #git version is a hash or branchname or HEAD or tags/$tagname
 orchestra_git_version: HEAD
-orchestra_deployfrom_source: False
+orchestra_deployfrom_source: True
 orchestra_profiles: user,dev
 orchestra_vhost: dev.dev-orchestra.md
 orchestra_zone: dev-orchestra.md

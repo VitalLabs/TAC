@@ -30,7 +30,7 @@
 - include: deploy-cassandra.yml
 - include: deploy-datomic.yml
 - include: deploy-immutant.yml
-- include: deploy-switchboard.yml
+- include: deploy-orchestra.yml
 - include: deploy-proxy-nginx-config.yml
 - include: deploy-newrelic.yml
   when: newrelic_install == True

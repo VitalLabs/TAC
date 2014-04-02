@@ -40,8 +40,14 @@
 
   # re-apply roles and any config changes
   roles:
-  - app-clojure-config
   - app-deploy
 
   post_tasks:
   # noen righ tnow, assume immutant is started back up
+
+
+- include: update-app-clojure-config-source.yml
+  when: switchboard_deployfrom_source == True
+- include: update-app-clojure-config-archive.yml
+  when: switchboard_deployfrom_source == False
+- include: update-app-deploy.yml

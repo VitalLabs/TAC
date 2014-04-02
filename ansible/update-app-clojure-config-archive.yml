@@ -1,5 +1,5 @@
 ---
-# Perform a rolling update of the app-deploy/Swictchoboard code and configuration, one  host at a time.
+# Perform a rolling update of the clojure-app-deploy/Orchestra code and configuration, one  host at a time.
 #
 # Notes:
 #
@@ -10,37 +10,25 @@
 #
 # 
 #
-- name: Upgrade switchboard app hosts
-  hosts: tag_Name_{{environ|default('dev')}}_app
+- name: Upgrade Clojure hosts
+  hosts: tag_Name_{{environ|default('dev')}}_proxy
   remote_user: ubuntu
   sudo: true
   serial: 1
 
-  vars_prompt:
 
-    - name: "switchboard_git_version"
-      prompt: "Switchboard release version"
-      default: HEAD
-      private: no
-      when: not orchestra_git_version.exists
-
-  
+ 
   vars_files:
   - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
+
 
 
   pre_tasks:
   # nothing right now..need to take out of load balancer or does iummutant handle?
 
-
-
   # re-apply roles and any config changes
   roles:
-  - app-deploy
+  - proxy-nginx-config
 
   post_tasks:
   # noen righ tnow, assume immutant is started back up
-
-
-
-
