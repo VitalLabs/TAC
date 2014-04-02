@@ -13,6 +13,13 @@
   remote_user: ubuntu
   sudo: true
 
+  vars_prompt:
+
+    - name: "orchestra_git_version"
+      prompt: "Orchestra release version"
+      default: HEAD
+      private: no
+
 
   roles:
   - proxy-nginx-config

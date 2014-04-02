@@ -36,13 +36,13 @@
       aws_secret_key={{ ec2_secret_key_vr }}
       mode=get
       bucket=vr-builds
-      object=/switchboard/orchestra-{{ orchestra_git_version}}.tar.gz
+      object=/orchestra/orchestra-{{ orchestra_git_version}}.tar.gz
       dest=/data/orchestra-{{ orchestra_git_version}}.tar.gz
   when: switchboard_deployfrom_source == False
 
 
 - name: Extract Java archive
-  command: tar -xzf /data/orchestra-{{ orchestra_git_version}}.tar.gz -C /data/www/orchestra
+  command: tar -xzf /data/orchestra-{{ orchestra_git_version}}.tar.gz -C /data/www
 
 
 - name: Copy the nginx configuration file 
