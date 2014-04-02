@@ -17,6 +17,9 @@ error_log /var/log/nginx/host.error.log debug;
 
 
 http {
+
+  include    /etc/nginx/mime.types;
+
 	upstream SwitchBoard {
 	 	{% for host in groups['tag_Name_' + environ + '_app'] %}
 	 	server {{ hostvars[host]['ec2_private_ip_address'] }}:{{ switchboard_port }} max_fails=3 fail_timeout=120s;
