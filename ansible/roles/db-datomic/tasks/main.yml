@@ -41,8 +41,7 @@
         owner=ubuntu
         group=ubuntu
         state=link
-  notify:
-    - restart datomic
+
 
 
 # CONFIGURE
@@ -65,11 +64,13 @@
   command: "bin/datomic ensure-transactor {{ datomic_dir }}/transactor.properties {{ datomic_dir }}/transactor.properties chdir={{ datomic_dir }}/current"
   notify:
     - restart datomic
-  environment: aws_creds 
+  environment: aws_creds
+  when: not datomic.stat.exists
 
 
 - name: datomic log dir permissions
   shell: chown -R ubuntu:ubuntu {{ datomic_log_dir }}
+  when: not datomic.stat.exists
 
 
 # Deploy upstart    

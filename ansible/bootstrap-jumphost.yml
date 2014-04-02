@@ -22,7 +22,6 @@
     git: repo={{ ansible_app_git_repo }}
          dest={{ ansible_app_dir }}
          version={{ ansible_app_git_version }}
-         depth=1
          update=yes
          accept_hostkey=true
     sudo: false

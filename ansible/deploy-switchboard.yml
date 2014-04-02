@@ -14,5 +14,8 @@
   - java
   - app-github
 
-- include: deploy-app-clojure-config.yml
+- include: deploy-app-clojure-config-source.yml
+  when: switchboard_deployfrom_source == True
+- include: deploy-app-clojure-config-archive.yml
+  when: switchboard_deployfrom_source == False
 - include: deploy-app-deploy.yml

@@ -19,7 +19,8 @@
   serial: 1
 
   vars_files:
-  - vars/main.yml
+  - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
+
 
   pre_tasks:
   - name: drain the cassandra host

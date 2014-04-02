@@ -26,7 +26,7 @@
   when: not datomic.stat.exists
 
 - name: Download datomic
-  s3: bucket=vr-dist object=/archives/{{ datomic_filename }}.zip dest=/tmp/datomic/{{ datomic_filename }}.zip mode=get aws_access_key={{ ec2_access_key }} aws_secret_key={{ ec2_secret_key }}
+  s3: bucket={{ datomic_install_bucket }} object=/archives/{{ datomic_filename }}.zip dest=/tmp/datomic/{{ datomic_filename }}.zip mode=get aws_access_key={{ ec2_access_key }} aws_secret_key={{ ec2_secret_key }}
   sudo: true
   when: not datomic.stat.exists
 
@@ -55,14 +55,18 @@
   file: state=directory path=/var/lib/immutant/current/archives owner={{ maven_user }}
   sudo: true
 
-- name: Remove previous code
+
+- name: Remove previous code 2
   file: path=/var/lib/immutant/current/archives/{{ switchboard_app_name }}
         state=absent
         recurse=yes
   sudo: true
+  when: switchboard_deployfrom_source == True
 
 
-  
+# ================================================= 
+# Development only to archive the files from source
+# ================================================= 
 - name: make sure permissions are appropriate for deployer to update
   file: path=/var/lib/immutant/current/archives/{{ switchboard_app_name }}
         recurse=yes
@@ -71,6 +75,8 @@
         mode=775
   sudo: true
   ignore_errors: true
+  when: switchboard_deployfrom_source == True
+  
 
 
 - debug: msg="Code Version {{ switchboard_git_version }}"  
@@ -82,6 +88,7 @@
        accept_hostkey=yes
   register: git_pull
   sudo: false
+  when: switchboard_deployfrom_source == True
 
 
 - name: make immutant the owner of the tree
@@ -91,6 +98,7 @@
         group=ubuntu
         mode=775
   sudo: true
+  
 
 
 - name: upload utility scripts for dealing with immutant
@@ -115,6 +123,28 @@
   command: "su ubuntu -c 'lein with-profile {{ switchboard_profiles }} immutant archive  /var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}'"
   ignore_errors: no
   sudo: true
+  when: switchboard_deployfrom_source == True
+
+
+# ================================================= 
+# Staing/prod pull already built archive from S3 bucket
+# ================================================= 
+#/var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target{{ switchboard_app_root }}.ima
+
+- name: Create target directory
+  file: path=/var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target
+        state=directory
+  when: switchboard_deployfrom_source == False
+
+
+- name: download immutant archive
+  s3: aws_access_key={{ ec2_access_key_vr }}
+      aws_secret_key={{ ec2_secret_key_vr }}
+      mode=get
+      bucket=vr-builds
+      object=/switchboard/{{ switchboard_app_name }}-{{ switchboard_git_version}}.ima
+      dest=/var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target{{ switchboard_app_root }}.ima
+  when: switchboard_deployfrom_source == False
 
 
 - name: Attempt to check if the deployed file is there

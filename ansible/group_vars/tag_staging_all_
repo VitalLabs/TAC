@@ -19,6 +19,7 @@ cassandra_native_port: 9042
 switchboard_init: switchboard.server/run-immutant
 #git version is a hash or branchname or HEAD or tags/$tagname
 switchboard_git_version: HEAD
+switchboard_deployfrom_source: False
 switchboard_client_url: http://staging.orchestra.md
 switchboard_vhost: staging.swb.io
 switchboard_zone: swb.io
@@ -37,7 +38,7 @@ switchboard_jboss_log_level: DEBUG
 #usually empty if not doing advanced debugging
 switchboard_java_opts: "-XX:+HeapDumpOnOutOfMemoryError"
 
-
+datomic_install_bucket: vr-dist
 datomic_cloudwatch_region: "{{ ec2_region }}"
 datomic_cloudwatch_dimension: "{{ ec2_region }}-datomic"
 datomic_profiles: prod
@@ -55,6 +56,7 @@ datomic_template: "datomic:ddb://{{ ec2_region }}/{{ datomic_storage_table }}/<d
 
 #git version is a hash or branchname or HEAD or tags/$tagname
 orchestra_git_version: HEAD
+orchestra_deployfrom_source: False
 orchestra_profiles: user,prod
 orchestra_vhost: staging.orchestra.md
 orchestra_zone: orchestra.md

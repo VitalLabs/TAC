@@ -13,10 +13,69 @@
     - "sites-available"
     - "sites-enabled"
 
+
+###############
+#Dev mode points to running lein/java server
+###############
+
 - name: Copy the nginx configuration file 
   template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
   notify: 
    - reload nginx
+  when: switchboard_deployfrom_source == True
+
+
+
+
+###############
+# Staging/Prod mode deploys static files to nginx directory and serves them up on the proxy server
+###############
+
+
+- name: Clean target directory
+  file: path=/data/orchestra/www
+        state=absent
+  when: switchboard_deployfrom_source == False
+
+- name: Create target directory
+  file: path=/data/orchestra/www
+        state=directory
+  when: switchboard_deployfrom_source == False
+
+- name: download orchestra archive
+  s3: aws_access_key={{ ec2_access_key_vr }}
+      aws_secret_key={{ ec2_secret_key_vr }}
+      mode=get
+      bucket=vr-builds
+      object=/orchestra/orchestra-{{ orchestra_git_version}}.tar.gz
+      dest=/data//orchestra/orchestra-{{ orchestra_git_version}}.tar.gz
+  when: switchboard_deployfrom_source == False
+
+
+- name: Extract Java archive
+  command: tar -xzf /data/orchestra/orchestra-{{ orchestra_git_version}}.tar.gz -C /data/orchestra/www
+  when: switchboard_deployfrom_source == False
+
+- name: update the app configuration
+  template: src=config.js.j2
+            dest="/data/orchestra/www/out/public/config.js"
+            mode=644
+  when: switchboard_deployfrom_source == False
+
+- name:  web site dir owner
+  shell: chown -R www-data:www-data /data/orchestra/www
+  when: switchboard_deployfrom_source == False
+
+- name: web site dir permissions
+  shell: chmod -R 0755 /data
+  when: switchboard_deployfrom_source == False
+
+
+- name: Copy the nginx configuration file 
+  template: src=nginx-static-archive.conf.j2 dest=/etc/nginx/nginx.conf
+  notify: 
+   - reload nginx
+  when: switchboard_deployfrom_source == False
 
 
 

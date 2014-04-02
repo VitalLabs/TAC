@@ -148,61 +148,61 @@ ec2_instances:
     keypair: "{{instances_keypair}}"
     group: ['sshable']
     instance_tags: 
-        Name: staging_jumphost
-        staging_all: ""
-        staging_jumphost: ""
+        Name: dev_jumphost
+        dev_all: ""
+        dev_jumphost: ""
     exact_count: 1
     count_tag: 
-        Name: staging_jumphost
+        Name: dev_jumphost
 
   - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable', 'dev-cassandra'] 
     instance_tags: 
-        Name: staging_db
-        staging_all: ""
-        staging_cassandra: ""
+        Name: dev_db
+        dev_all: ""
+        dev_cassandra: ""
         cassandra: ""
-    exact_count: 2 
+    exact_count: 1 
     count_tag: 
-        Name: staging_db
+        Name: dev_db
 
   - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['sshable', 'dev-cassandra', 'dev-datomic'] 
     instance_tags: 
-        Name: staging_db_seed
-        staging_all: ""
-        staging_cassandra: ""
+        Name: dev_db_seed
+        dev_all: ""
+        dev_cassandra: ""
         cassandra: ""
         datomic: ""
     exact_count: 1 
     count_tag: 
-        Name: staging_db_seed
+        Name: dev_db_seed
 
   - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['dev-orchestra', 'dev-switchboard', 'sshable'] 
     instance_tags: 
-        Name: staging_app
-        staging_all: ""
+        Name: dev_app
+        dev_all: ""
         immutant: ""
         switchboard: ""
         orchestra: ""
-    exact_count: 2
+    exact_count: 1
     count_tag: 
-        Name: staging_app
+        Name: dev_app
 
   - instance_type: m1.medium
     image: "{{image_id}}"
     keypair: "{{instances_keypair}}"
     group: ['dev-proxy', 'sshable'] 
     instance_tags: 
-        Name: staging_proxy
-        staging_all: ""
+        Name: dev_proxy
+        dev_all: ""
     exact_count: 1 
     count_tag: 
-        Name: staging_proxy
+        Name: dev_proxy
