@@ -55,11 +55,13 @@
   file: state=directory path=/var/lib/immutant/current/archives owner={{ maven_user }}
   sudo: true
 
-- name: Remove previous code
+
+- name: Remove previous code 2
   file: path=/var/lib/immutant/current/archives/{{ switchboard_app_name }}
         state=absent
         recurse=yes
   sudo: true
+  when: switchboard_deployfrom_source == True
 
 
 # ================================================= 
@@ -129,9 +131,9 @@
 # ================================================= 
 #/var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target{{ switchboard_app_root }}.ima
 
-- name: Remove previous code
+- name: Create target directory
   file: path=/var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target
-        state=present
+        state=directory
   when: switchboard_deployfrom_source == False
 
 

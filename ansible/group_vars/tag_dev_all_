@@ -37,7 +37,7 @@ switchboard_java_opts: "-XX:+HeapDumpOnOutOfMemoryError"
 
 switchboard_jboss_log_level: DEBUG
 
-datomic_install_bucket: /vr-dist-dev
+datomic_install_bucket: vr-dist-dev
 datomic_cloudwatch_region: "{{ ec2_region }}"
 datomic_cloudwatch_dimension: "{{ ec2_region }}-datomic"
 datomic_profiles: dev
