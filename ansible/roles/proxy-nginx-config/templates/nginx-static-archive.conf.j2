@@ -1,0 +1,87 @@
+#{{ ansible_managed }}
+
+user              www-data;
+
+
+worker_processes  {{ ansible_processor_count }};
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  {{ nginx_max_clients }};
+}
+
+error_log /var/log/nginx/host.error.log debug;
+
+
+
+
+http {
+	upstream SwitchBoard {
+	 	{% for host in groups['tag_Name_' + environ + '_app'] %}
+	 	server {{ hostvars[host]['ec2_private_ip_address'] }}:{{ switchboard_port }} max_fails=3 fail_timeout=120s;
+    {% endfor %}
+	}
+
+
+	server {
+		listen 80;
+		server_name {{ orchestra_vhost }};
+		access_log /var/log/nginx/host.access.log;
+
+
+		location ^~ /api/ {
+			proxy_connect_timeout   10;
+			proxy_send_timeout      15;
+			proxy_read_timeout      10;
+			proxy_next_upstream error timeout http_404;
+			proxy_set_header X-Forwarded-Host $host;
+			proxy_set_header X-Forwarded-Server $host;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; 
+      add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,OPTIONS';
+			add_header 'Access-Control-Allow-Origin' "$http_origin";
+			add_header 'Access-Control-Allow-Headers' 'Set-Cookie, Accept';
+			add_header 'Access-Control-Expose-Headers' 'Set-Cookie, Accept';
+			add_header 'Pragma' 'nocache';
+			add_header 'Cache-Control' 'o-cache';
+			add_header 'Expires' '0';
+			proxy_cache off;
+			proxy_set_header Host {{ orchestra_vhost }};
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_pass http://SwitchBoard;
+		}
+
+		location ^~ /service/ {
+			proxy_connect_timeout   10;
+			proxy_send_timeout      15;
+			proxy_read_timeout      10;
+			proxy_next_upstream error timeout http_404;
+			proxy_set_header X-Forwarded-Host $host;
+			proxy_set_header X-Forwarded-Server $host;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; 
+      add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,OPTIONS';
+			add_header 'Access-Control-Allow-Origin' "$http_origin";
+			add_header 'Access-Control-Allow-Headers' 'Set-Cookie, Accept';
+			add_header 'Access-Control-Expose-Headers' 'Set-Cookie, Accept';
+			add_header 'Pragma' 'nocache';
+			add_header 'Cache-Control' 'o-cache';
+			add_header 'Expires' '0';
+			proxy_cache off;
+			proxy_set_header Host {{ orchestra_vhost }};
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_pass http://SwitchBoard;
+		}
+		
+		# all traffic not starting with VOServer will be routed to the instances in upstream "Orchestra"
+    # We do not fail on 404 errors for the static orchestra layer since thr probabilit of those is higher.
+		location / {
+			
+			index {{ orchestra_default_page }};
+      root /data/www/orchestra;
+		}
+
+	} 
+}
+
+
+

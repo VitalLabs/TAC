@@ -8,6 +8,10 @@
 ec2_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
 ec2_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
 
+#these are the main VR bucket credentials to pick up artifacts there in s3
+ec2_access_key_vr: "{{ lookup('env', 'AWS_ACCESS_KEY_ID_VR') }}"
+ec2_secret_key_vr: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY_VR') }}"
+
 
 
 

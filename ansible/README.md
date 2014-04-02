@@ -73,7 +73,7 @@ asnsible-playbook -vvvv -i ./inv update-immutant-configs.yml -e environ=staging
 
 deploy-app-deploy.yml:  This installs the Switchboard app via the app-deploy role and restarts the server.
 
-deploy-app-clojure-config.yml:  This installs the Orchestra app via the clojure-app role and restarts the server.
+deploy-app-clojure-config-source.yml:  This installs the Orchestra app via the appropriate role and restarts the server.
 
 
 update-cassandra.yml:  Updates cassandra config and does a rolling update. No server downtime expected.
