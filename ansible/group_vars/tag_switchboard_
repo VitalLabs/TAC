@@ -1,11 +1,2 @@
-#For lein in app-immutant-deploy:
-lein_dir: /usr/local/bin
 
-
-
-
-switchboard_context: api
-switchboard_app: "1"
-switchboard_app_name: "switchboard"
-switchboard_app_root: "/switchboard"
 
