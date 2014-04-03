@@ -15,6 +15,7 @@ s3_bucket_third_party_libs: vr-chef
 cassandra_cluster: "staging"
 cassandra_native_port: 9042
 
+# This can be turned on when wanting SSL keys installed
 ssl_deployssl: True
 
 
