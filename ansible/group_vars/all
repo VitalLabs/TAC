@@ -31,6 +31,8 @@ aws_creds:
 
 
 
+
+
 java_download: http://www.reucon.com/cdn/java/jdk-7u45-linux-x64.tar.gz
 java_name: jdk1.7.0_45
 java_download_folder: /usr/src
@@ -53,6 +55,10 @@ switchboard_app_root: "/switchboard"
 
 
 maven_user: ubuntu
+
+
+nginx_send_timeout: 900
+nginx_read_timeout: 900
 
 
 # Image AMI creating mechanism.. not ready yet so set to false.
@@ -88,3 +94,6 @@ newrelic_collector_host: collector.newrelic.com
 
 # Connection timeout for collector host
 newrelic_timeout: 30
+
+
+
