@@ -15,10 +15,6 @@
 
 
   vars_prompt:
-    - name: "ssl_deployssl"
-      prompt: "Install SSL Cert and Key? True/False"
-      default: False
-      when: ssl_deployssl == True
 
     - name: ssl_passphrase
       prompt: "Enter SSL Certificate Passphrase"
