@@ -20,7 +20,7 @@
       prompt: "Orchestra release version"
       default: HEAD
       private: no
-      when: not orchestra_git_version.exists
+
 
 
   roles:
