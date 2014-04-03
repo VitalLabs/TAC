@@ -20,8 +20,18 @@
 
     - name: "orchestra_git_version"
       prompt: "Orchestra release version"
-      default: HEAD
+      default: e8447cd10b95495c9ea2a81c186b21df39d24f21
       private: no
+
+    - name: "ssl_promptinstall"
+      prompt: "Install SSL Cert and Key? Y/N"
+      default: N
+      when: ssl_deployssl == True
+
+    - name: ssl_passphrase
+      prompt: "Enter SSL Certificate Passphrase"
+      private: true
+      when: ssl_deployssl == True and ssl_promptinstall == "Y"
  
   vars_files:
   - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"

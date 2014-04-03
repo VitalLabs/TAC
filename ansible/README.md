@@ -137,7 +137,7 @@ Example settings for this file:
  You will need to export your 
  AWS access keys AND ssh-agent/ ssh-add your key that ansible is configure to use.  Keeping this step manual for now since keys should be local and secure.
 
-  Fast Testing using Jumphost:
+ Fast Testing using Jumphost:
 
  you can ssh to the jumphost to run these scripts. Since they are on the same betwork they will run alot faster.
 
@@ -159,6 +159,16 @@ ec2_keypair: ryanvitalreactor-west
 ec2_identifier: vr-primary-acct
 
 Note that when switching regios you also must update the ./inv/ec2.ini fiole to use the current region.
+
+### SSH and SSL Keys
+
+Note thiese keys are local to you and are kept in a secure location and uploaded to a new jumpbox and kept in the .ssh folder so no one else can access them!
+
+scp ~/.ssh/ryanvitalreactor-west.pem -i ~/.ssh/ryanvitalreactor-west.pem ubuntu@ec2-50-18-32-196.us-west-1.compute.amazonaws.com:~/ssh
+scp ~/.ssh/ryanvitalreactor-west.pem -i ~/.ssh/switchboard_vars.yml ubuntu@ec2-50-18-32-196.us-west-1.compute.amazonaws.com:~/.ssh
+scp -i ~/.ssh/ryanvitalreactor-west.pem ~/.ssh/orchestra.md.key  ubuntu@ec2-50-18-32-196.us-west-1.compute.amazonaws.com:~/.ssh
+scp -i ~/.ssh/ryanvitalreactor-west.pem ~/.ssh/orchestra.md.crt  ubuntu@ec2-23-22-249-240.compute-1.amazonaws.com:~/.ssh
+orchestra.md.crt
 
 ## Advice
 

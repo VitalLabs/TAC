@@ -29,8 +29,8 @@ aws_creds:
 ###Non-Infrastructure here:
 
 
-
-
+ssl_certificate: orchestra.md.crt
+ssl_key: orchestra.md.key
 
 
 java_download: http://www.reucon.com/cdn/java/jdk-7u45-linux-x64.tar.gz
