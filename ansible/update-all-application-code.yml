@@ -32,6 +32,11 @@
       default: HEAD
       private: no
 
+    - name: ssl_passphrase
+    prompt: "Enter SSL Certificate Passphrase"
+    private: false
+    when: ssl_deployssl == True
+
   vars_files:
   - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
 

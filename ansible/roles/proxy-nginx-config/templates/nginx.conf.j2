@@ -35,47 +35,7 @@ http {
 		access_log /var/log/nginx/host.access.log;
 
 
-		location ^~ /api/ {
-			proxy_connect_timeout   10;
-			proxy_send_timeout      15;
-			proxy_read_timeout      10;
-			proxy_next_upstream error timeout http_404;
-			proxy_set_header X-Forwarded-Host $host;
-			proxy_set_header X-Forwarded-Server $host;
-			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; 
-      add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,OPTIONS';
-			add_header 'Access-Control-Allow-Origin' "$http_origin";
-			add_header 'Access-Control-Allow-Headers' 'Set-Cookie, Accept';
-			add_header 'Access-Control-Expose-Headers' 'Set-Cookie, Accept';
-			add_header 'Pragma' 'nocache';
-			add_header 'Cache-Control' 'o-cache';
-			add_header 'Expires' '0';
-			proxy_cache off;
-			proxy_set_header Host {{ orchestra_vhost }};
-			proxy_set_header X-Real-IP $remote_addr;
-			proxy_pass http://SwitchBoard;
-		}
-
-		location ^~ /service/ {
-			proxy_connect_timeout   10;
-			proxy_send_timeout      15;
-			proxy_read_timeout      10;
-			proxy_next_upstream error timeout http_404;
-			proxy_set_header X-Forwarded-Host $host;
-			proxy_set_header X-Forwarded-Server $host;
-			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; 
-      add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,OPTIONS';
-			add_header 'Access-Control-Allow-Origin' "$http_origin";
-			add_header 'Access-Control-Allow-Headers' 'Set-Cookie, Accept';
-			add_header 'Access-Control-Expose-Headers' 'Set-Cookie, Accept';
-			add_header 'Pragma' 'nocache';
-			add_header 'Cache-Control' 'o-cache';
-			add_header 'Expires' '0';
-			proxy_cache off;
-			proxy_set_header Host {{ orchestra_vhost }};
-			proxy_set_header X-Real-IP $remote_addr;
-			proxy_pass http://SwitchBoard;
-		}
+ {% include "nginx-location-config.j2" %}
 		
 		# all traffic not starting with VOServer will be routed to the instances in upstream "Orchestra"
     # We do not fail on 404 errors for the static orchestra layer since thr probabilit of those is higher.
@@ -83,8 +43,8 @@ http {
 			
 			index {{ orchestra_default_page }};
 			proxy_connect_timeout   10;
-			proxy_send_timeout      15;
-			proxy_read_timeout      20;
+			proxy_send_timeout      {{ nginx_send_timeout }};
+			proxy_read_timeout      {{ nginx_read_timeout }};
       proxy_next_upstream error timeout;
 			proxy_set_header X-Forwarded-Host $host;
 			proxy_set_header X-Forwarded-Server $host;

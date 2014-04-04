@@ -14,5 +14,12 @@
   sudo: true
 
 
+  vars_prompt:
+
+    - name: ssl_passphrase
+      prompt: "Enter SSL Certificate Passphrase"
+      private: true
+      when: ssl_deployssl == True
+
   roles:
-  - proxy-nginx-config
+  - { role: proxy-nginx-config, ssl_deployssl: True }

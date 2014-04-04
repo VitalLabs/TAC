@@ -29,6 +29,8 @@ aws_creds:
 ###Non-Infrastructure here:
 
 
+ssl_certificate: orchestra.md.crt
+ssl_key: orchestra.md.key
 
 
 java_download: http://www.reucon.com/cdn/java/jdk-7u45-linux-x64.tar.gz
@@ -53,6 +55,10 @@ switchboard_app_root: "/switchboard"
 
 
 maven_user: ubuntu
+
+
+nginx_send_timeout: 900
+nginx_read_timeout: 900
 
 
 # Image AMI creating mechanism.. not ready yet so set to false.
@@ -88,3 +94,6 @@ newrelic_collector_host: collector.newrelic.com
 
 # Connection timeout for collector host
 newrelic_timeout: 30
+
+
+
