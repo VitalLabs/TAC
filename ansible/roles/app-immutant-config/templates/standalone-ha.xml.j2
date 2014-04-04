@@ -60,7 +60,7 @@
     <profile>
         <subsystem xmlns="urn:jboss:domain:logging:1.2">
             <console-handler name="CONSOLE">
-                <level name="DEBUG"/>
+                <level name="INFO"/>
                 <formatter>
                     <pattern-formatter pattern="%K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n"/>
                 </formatter>
@@ -98,7 +98,7 @@
                 <level name="WARN"/>
             </logger>
             <root-logger>
-                <level name="DEBUG"/>
+                <level name="INFO"/>
                 <handlers>
                     <handler name="CONSOLE"/>
                     <handler name="FILE"/>
@@ -331,10 +331,13 @@
             <coordinator-environment default-timeout="300"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:web:1.4" default-virtual-server="default-host" native="false">
-            <connector name="http" protocol="HTTP/1.1" scheme="http" socket-binding="http"/>
-            <connector name="https" protocol="HTTP/1.1" scheme="https" socket-binding="https" secure="true">
-              <ssl/>
-            </connector>
+            {% if ssl_deployssl %}
+                <connector name="https" protocol="HTTP/1.1" scheme="https" socket-binding="https" secure="true">
+                  <ssl/>
+                </connector>
+            {% else %}
+                <connector name="http" protocol="HTTP/1.1" scheme="http" socket-binding="http"/>
+            {% endif %}
             <connector name="ajp" protocol="AJP/1.3" scheme="http" socket-binding="ajp"/>
             <virtual-server name="default-host" enable-welcome-root="false">
                 <alias name="localhost"/>
@@ -367,8 +370,14 @@
         <socket-binding name="management-http" interface="management" port="${jboss.management.http.port:9990}"/>
         <socket-binding name="management-https" interface="management" port="${jboss.management.https.port:9443}"/>
         <socket-binding name="ajp" port="8009"/>
-        <socket-binding name="http" port="{{ switchboard_port }}"/>
-        <socket-binding name="https" port="8443"/>
+
+        
+       {% if ssl_deployssl %}
+            <socket-binding name="https" port="{{ switchboard_port }}"/>
+        {% else %}
+            <socket-binding name="http" port="{{ switchboard_port }}"/>
+        {% endif %}
+
         <socket-binding name="jgroups-mping" port="0" multicast-address="${jboss.default.multicast.address:230.0.0.4}" multicast-port="45700"/>
         <socket-binding name="jgroups-tcp" port="7600"/>
         <socket-binding name="jgroups-tcp-fd" port="57600"/>

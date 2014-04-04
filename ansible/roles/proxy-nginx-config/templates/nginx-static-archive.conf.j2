@@ -29,13 +29,23 @@ http {
 
 
 	server {
-		listen 443;
+
+    {% if ssl_deployssl %}
+        listen 443;
+    {% else %}
+        listen 80;
+    {% endif %}
+		
 		server_name {{ orchestra_vhost }};
 		access_log /var/log/nginx/host.access.log;
 
-	  ssl on;
-	  ssl_certificate /etc/ssl/certs/{{ ssl_certificate }};
-	  ssl_certificate_key /etc/ssl/private/{{ ssl_key }};
+	  {% if ssl_deployssl %}
+		  ssl on;
+		  ssl_certificate /etc/ssl/certs/{{ ssl_certificate }};
+		  ssl_certificate_key /etc/ssl/private/{{ ssl_key }};
+    {% endif %}
+
+
 
     {% include "nginx-location-config.j2" %}
 

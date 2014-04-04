@@ -35,4 +35,6 @@
   - app-deploy
 
   post_tasks:
-  # noen righ tnow, assume immutant is started back up
+  # none righ tnow, assume immutant is started back up
+
+- include: deploy-proxy-nginx-config.yml

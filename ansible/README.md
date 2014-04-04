@@ -5,6 +5,8 @@ Export your AWS credentials as usual:
 
    export AWS_ACCESS_KEY_ID="****"
    export AWS_SECRET_ACCESS_KEY="******"
+   export AWS_ACCESS_KEY_ID_VR="****"
+   export AWS_SECRET_ACCESS_KEY_VR="******"
    ssh-agent bash
    ssh-add ~/.ssh/keypair.pem
 

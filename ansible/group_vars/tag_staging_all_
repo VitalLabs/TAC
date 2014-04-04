@@ -26,7 +26,10 @@ proxy_pass_ssl: "s"
 switchboard_init: switchboard.server/run-immutant
 #git version is a hash or branchname or HEAD or tags/$tagname
 switchboard_git_version: HEAD
-switchboard_deployfrom_source: False
+
+#Deploy from an archive ima file or from source. Source alows deploying test branches and is useful for debugging
+switchboard_deployfrom_source: True
+
 switchboard_client_url: https://staging.orchestra.md
 switchboard_vhost: staging.swb.io
 switchboard_zone: swb.io
