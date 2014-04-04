@@ -170,6 +170,10 @@ scp -i ~/.ssh/ryanvitalreactor-west.pem ~/.ssh/orchestra.md.key  ubuntu@ec2-50-1
 scp -i ~/.ssh/ryanvitalreactor-west.pem ~/.ssh/orchestra.md.crt  ubuntu@ec2-23-22-249-240.compute-1.amazonaws.com:~/.ssh
 orchestra.md.crt
 
+Thsi is the android keystore generated via: keytool -genkey -alias tomcat -keyalg RSA using the documented jboss password.
+
+scp ~/.ssh/ryanvitalreactor-west.pem -i ~/.ssh/.keystore ubuntu@ec2-50-18-32-196.us-west-1.compute.amazonaws.com:~/ssh
+
 ## Advice
 
  run ./inv/ec2.py --refresh-cache if you ever get no hosts messages just to make sure you are workign wiht the latest invenory set.

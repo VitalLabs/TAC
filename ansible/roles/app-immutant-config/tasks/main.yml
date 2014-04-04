@@ -137,6 +137,10 @@
   when: newrelic_install == True
 
 
+- name: copy the keystore key for jboss ssl
+  copy: src={{ lookup('env', 'HOME') }}/.ssh/.keystore  dest={{ lookup('env', 'HOME') }}  mode=640
+  sudo: yes
+
 - name: immutant upstart script
   template: >    
     src=immutant-upstart.conf.j2
