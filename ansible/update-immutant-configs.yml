@@ -37,4 +37,3 @@
   post_tasks:
   # none righ tnow, assume immutant is started back up
 
-- include: deploy-proxy-nginx-config.yml

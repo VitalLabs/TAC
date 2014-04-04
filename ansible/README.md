@@ -164,7 +164,7 @@ Note that when switching regios you also must update the ./inv/ec2.ini fiole to 
 
 ### SSH and SSL Keys
 
-Note thiese keys are local to you and are kept in a secure location and uploaded to a new jumpbox and kept in the .ssh folder so no one else can access them!
+Note these keys are local to you and are kept in a secure location and uploaded to a new jumpbox and kept in the .ssh folder so no one else can access them!
 
 scp ~/.ssh/ryanvitalreactor-west.pem -i ~/.ssh/ryanvitalreactor-west.pem ubuntu@ec2-50-18-32-196.us-west-1.compute.amazonaws.com:~/ssh
 scp ~/.ssh/ryanvitalreactor-west.pem -i ~/.ssh/switchboard_vars.yml ubuntu@ec2-50-18-32-196.us-west-1.compute.amazonaws.com:~/.ssh
@@ -175,6 +175,20 @@ orchestra.md.crt
 Thsi is the android keystore generated via: keytool -genkey -alias tomcat -keyalg RSA using the documented jboss password.
 
 scp ~/.ssh/ryanvitalreactor-west.pem -i ~/.ssh/.keystore ubuntu@ec2-50-18-32-196.us-west-1.compute.amazonaws.com:~/ssh
+
+## SSL setup
+
+Staging will deploy SSL by default.. just run the main 2-install-and0confgis as uaual.
+
+These scripts allow you to switch between SSL and non-SSL, but you do need to be aware of the order of operations.
+
+if toggling SSL on or offyou should run update-all-application-code.yml
+
+THEN you shoudl run update-proxy-nginx-config.yml
+
+Note that there is a small amout of downtime in this since SSL is a core configuration change so it shoudl only be done in a very limited baseis.
+
+
 
 ## Advice
 
