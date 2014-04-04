@@ -16,6 +16,10 @@ s3_bucket_third_party_libs: vr-chef-dev
 cassandra_cluster: "dev"
 cassandra_native_port: 9042
 
+ssl_deployssl: False
+# httpp
+proxy_pass_ssl: ""
+
 
 switchboard_init: switchboard.server/run-immutant-dev
 #git version is a hash or branchname or HEAD or tags/$tagname

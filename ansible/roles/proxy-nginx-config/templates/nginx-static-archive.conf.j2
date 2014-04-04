@@ -27,25 +27,6 @@ http {
 	}
 
 
-	# server {
-	# 	listen 80;
-	# 	server_name {{ orchestra_vhost }};
-	# 	access_log /var/log/nginx/host.access.log;
-
-
- #    {% include "nginx-location-config.j2" %}
-
-
-		
-	# 	# all traffic not starting with VOServer will be routed to the instances in upstream "Orchestra"
- #    # We do not fail on 404 errors for the static orchestra layer since thr probabilit of those is higher.
-	# 	location / {
-			
-	# 		index {{ orchestra_default_page }};
- #      root /data/orchestra/www/out/public;
-	# 	}
-
-	# }
 
 	server {
 		listen 443;

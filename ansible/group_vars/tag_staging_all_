@@ -18,6 +18,9 @@ cassandra_native_port: 9042
 # This can be turned on when wanting SSL keys installed
 ssl_deployssl: True
 
+# http(s)
+proxy_pass_ssl: "s"
+
 
 
 switchboard_init: switchboard.server/run-immutant
@@ -27,7 +30,7 @@ switchboard_deployfrom_source: False
 switchboard_client_url: https://staging.orchestra.md
 switchboard_vhost: staging.swb.io
 switchboard_zone: swb.io
-switchboard_port: 8080
+switchboard_port: 8443
 switchboard_data_persist: true
 switchboard_resolve_dependecies: true
 switchboard_profiles: prod
