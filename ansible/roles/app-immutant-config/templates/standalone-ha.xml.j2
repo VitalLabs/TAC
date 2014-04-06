@@ -119,16 +119,13 @@
                     <locking isolation="REPEATABLE_READ"/>
                 </replicated-cache>
             </cache-container>
-            <cache-container name="web" aliases="standard-session-cache" default-cache="repl" module="org.jboss.as.clustering.web.infinispan">
-                <transport lock-timeout="60000"/>
-                <replicated-cache name="repl" mode="ASYNC" batching="true">
-                    <file-store/>
-                </replicated-cache>
-                <replicated-cache name="sso" mode="SYNC" batching="true"/>
-                <distributed-cache name="dist" mode="ASYNC" batching="true" l1-lifespan="0">
-                    <file-store/>
-                </distributed-cache>
-            </cache-container>
+ <cache-container name="web" default-cache="repl">
+  <transport stack="tcp"/>
+  <replicated-cache name="repl" mode="ASYNC" batching="true">
+    <locking isolation="REPEATABLE_READ"/>
+    <file-store/>
+  </replicated-cache>
+</cache-container>
             <cache-container name="ejb" aliases="sfsb sfsb-cache" default-cache="repl" module="org.jboss.as.clustering.ejb3.infinispan">
                 <transport lock-timeout="60000"/>
                 <replicated-cache name="repl" mode="ASYNC" batching="true">
