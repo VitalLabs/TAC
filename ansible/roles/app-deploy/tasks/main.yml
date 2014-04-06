@@ -206,8 +206,8 @@
   shell: '/var/lib/immutant/current/jboss/bin/check-jboss-pid.sh'
   register: jboss_pid
   until: jboss_pid.stdout == ""
-  retries: 10
-  delay: 60
+  retries: 30
+  delay: 10
   changed_when: False
   ignore_errors: true
 
@@ -238,8 +238,8 @@
   shell: '/var/lib/immutant/current/jboss/bin/smoke-test-switchboard-api.sh | grep "Authenticated"'
   register: smoke_test_response
   until: smoke_test_response.rc == 0
-  retries: 10
-  delay: 60
+  retries: 60
+  delay: 10
   changed_when: False
   tags: curltest
 
