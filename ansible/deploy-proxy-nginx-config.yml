@@ -22,4 +22,4 @@
       when: ssl_deployssl == True
 
   roles:
-  - { role: proxy-nginx-config, ssl_deployssl: True }
+  - { role: proxy-nginx-config}

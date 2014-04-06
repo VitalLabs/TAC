@@ -57,6 +57,8 @@
       command=create
       zone={{ switchboard_zone }}
       record="{{ switchboard_vhost }}"
+      aws_access_key={{ ec2_access_key_route53 }}
+      aws_secret_key={{ ec2_secret_key_route53 }}
       type=A
       ttl=7200
       overwrite=true
@@ -67,6 +69,8 @@
       command=create
       zone={{ orchestra_zone }}
       record="{{ orchestra_vhost }}"
+      aws_access_key={{ ec2_access_key_route53 }}
+      aws_secret_key={{ ec2_secret_key_route53 }}
       type=A
       ttl=7200
       overwrite=true

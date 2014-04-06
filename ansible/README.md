@@ -3,10 +3,19 @@
 
 Export your AWS credentials as usual:
 
+These are usually all the same in staging/prod but dev might be different sometimes when doing ansible development.
+
    export AWS_ACCESS_KEY_ID="****"
    export AWS_SECRET_ACCESS_KEY="******"
+   
+   #location of archive builds in s3
    export AWS_ACCESS_KEY_ID_VR="****"
    export AWS_SECRET_ACCESS_KEY_VR="******"
+
+   #location of route53 domain names..  needed if in a dev AWS account when making big changes!!
+   export AWS_ACCESS_KEY_ID_VR="****"
+   export AWS_SECRET_ACCESS_KEY_VR="******"
+
    ssh-agent bash
    ssh-add ~/.ssh/keypair.pem
 
