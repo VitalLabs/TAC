@@ -1,16 +1,5 @@
 ---
-# Perform a rolling update of the Cassandra configuration, one Cassandra host at a time.
-#
-# Notes:
-#
-# This is the general pattern for a rolling upgrade. We can add some sophistication here
-# if we need to inform other components about Cassandra's state, or handle things like 
-# balancing restarted nodes across racks or regions, etc. 
-#
-# The "nodetool drain" operation quiesces writes to that node in preparation for a restart.
-# 
-# The "serial: 1" setting controls how many nodes are restarted at a time. For large clusters,
-# increase this.
+# Perform a rolling update of the Cassandra from 1.2 to 2.0
 #
 - name: Upgrade Cassandra hosts
   hosts: tag_Name_{{environ|default('dev')}}_db:tag_Name_{{environ|default('dev')}}_db_seed
@@ -23,8 +12,18 @@
 
 
   pre_tasks:
+
+  - name: repair the cassandra host
+    command: nodetool repair
+
+  - name: drain the cassandra host
+    command: nodetool snapshot
+
   - name: drain the cassandra host
     command: nodetool drain
+
+  - name: stop cassandra
+    service: name=dse state=stopped
 
   # re-apply roles and any config changes
   roles:
@@ -34,11 +33,9 @@
   - name: restart cassandra
     service: name=dse state=restarted
 
-  - name: repair the cassandra host
-    command: nodetool repair
+  - name: upgradesstables
+    command: nodetool upgradesstables
 
-  - name: repair the cassandra host
-    command: nodetool rebuild
 
   - name: wait until cassandra comes back up
     wait_for: host={{ inventory_hostname }} port={{ cassandra_intermode_port }}
