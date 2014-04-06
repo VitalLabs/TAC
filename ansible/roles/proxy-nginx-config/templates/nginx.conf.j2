@@ -18,21 +18,33 @@ error_log /var/log/nginx/host.error.log debug;
 
 http {
 	upstream SwitchBoard {
+		ip_hash;
 	 	{% for host in groups['tag_Name_' + environ + '_app'] %}
 	 	server {{ hostvars[host]['ec2_private_ip_address'] }}:{{ switchboard_port }} max_fails=3 fail_timeout=120s;
     {% endfor %}
 	}
 
 	upstream Orchestra{
+		ip_hash;
 	 	{% for host in groups['tag_Name_' + environ + '_app'] %}
 	 	server {{ hostvars[host]['ec2_private_ip_address'] }}:{{ orchestra_port }} max_fails=3 fail_timeout=120s;
     {% endfor %}
 	}
 
 	server {
-		listen 80;
+		 {% if ssl_deployssl %}
+        listen 443;
+    {% else %}
+        listen 80;
+    {% endif %}
 		server_name {{ orchestra_vhost }};
 		access_log /var/log/nginx/host.access.log;
+
+		{% if ssl_deployssl %}
+		  ssl on;
+		  ssl_certificate /etc/ssl/certs/{{ ssl_certificate }};
+		  ssl_certificate_key /etc/ssl/private/{{ ssl_key }};
+    {% endif %}
 
 
  {% include "nginx-location-config.j2" %}
