@@ -38,7 +38,6 @@ disk_failure_policy: stop
 key_cache_save_period: 14400
 row_cache_size_in_mb: 0
 row_cache_save_period: 0
-row_cache_provider: SerializingCacheProvider
 saved_caches_directory: /var/lib/cassandra/saved_caches
 
 commitlog_sync: periodic
@@ -56,9 +55,6 @@ seed_provider:
 
 
 # Pressure tuning
-flush_largest_memtables_at: 0.75
-reduce_cache_sizes_at: 0.85
-reduce_cache_capacity_to: 0.6
 concurrent_reads: 32
 concurrent_writes: 32
 commitlog_total_space_in_mb: 4096

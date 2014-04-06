@@ -140,6 +140,7 @@
 - name: copy the keystore key for jboss ssl
   copy: src={{ lookup('env', 'HOME') }}/.ssh/.keystore  dest={{ lookup('env', 'HOME') }}  mode=640
   sudo: yes
+  when: ssl_deployssl == True
 
 - name: immutant upstart script
   template: >    
