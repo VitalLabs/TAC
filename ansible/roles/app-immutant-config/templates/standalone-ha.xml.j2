@@ -60,7 +60,7 @@
     <profile>
         <subsystem xmlns="urn:jboss:domain:logging:1.2">
             <console-handler name="CONSOLE">
-                <level name="INFO"/>
+                <level name="${jboss.logging.level:DEBUG}"/>
                 <formatter>
                     <pattern-formatter pattern="%K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n"/>
                 </formatter>
@@ -73,32 +73,90 @@
                 <suffix value=".yyyy-MM-dd"/>
                 <append value="true"/>
             </periodic-rotating-file-handler>
-            <logger category="immutant.cache">
+            <logger category="org.apache">
+                <level name="WARN"/>
+            </logger>
+            <logger category="org.hornetq">
+                <level name="WARN"/>
+            </logger>
+            <logger category="org.infinispan">
                 <level name="DEBUG"/>
             </logger>
-            <logger category="immutant.web">
-                <level name="DEBUG"/>
+            <logger category="org.infinispan.jmx">
+                <level name="WARN"/>
             </logger>
-            <logger category="datomic.peer">
+            <logger category="org.quartz">
+                <level name="WARN"/>
+            </logger>
+            <logger category="org.xnio">
+                <level name="WARN"/>
+            </logger>
+            <logger category="com.arjuna">
+                <level name="WARN"/>
+            </logger>
+            <logger category="sun.rmi">
                 <level name="WARN"/>
             </logger>
             <logger category="org.jboss.as.dependency.private">
                 <level name="ERROR"/>
             </logger>
-            <logger category="com.arjuna">
+            <logger category="org.jboss.as.connector.subsystems.datasources">
+                <level name="ERROR"/>
+            </logger>
+            <logger category="org.jboss.modules">
                 <level name="WARN"/>
             </logger>
-            <logger category="org.apache.tomcat.util.modeler">
+            <logger category="org.jboss.msc">
                 <level name="WARN"/>
             </logger>
-            <logger category="org.jboss.as.config">
+             <logger category="datomic.peer">
+                <level name="WARN"/>
+            </logger>
+            <logger category="org.jboss.remoting">
+                <level name="WARN"/>
+            </logger>
+            <logger category="org.jboss.as.security">
+                <level name="WARN"/>
+            </logger>
+            <logger category="org.jboss.as.naming">
+                <level name="WARN"/>
+            </logger>
+            <logger category="org.jboss.as.server">
+                <level name="WARN"/>
+            </logger>
+            <logger category="org.jboss.as.server.deployment">
+                <level name="INFO"/>
+            </logger>
+            <logger category="org.jboss.as.server.deployment.scanner">
+                <level name="WARN"/>
+            </logger>
+            <logger category="org.jboss.as.remoting">
+                <level name="WARN"/>
+            </logger>
+            <logger category="org.jboss.as.domain.http.api">
+                <level name="ERROR"/>
+            </logger>
+            <logger category="org.jboss.as.connector.logging">
+                <level name="WARN"/>
+            </logger>
+            <logger category="org.jboss.as.messaging">
+                <level name="WARN"/>
+            </logger>
+            <logger category="org.jboss.as.clustering.infinispan">
                 <level name="DEBUG"/>
             </logger>
-            <logger category="sun.rmi">
+            <logger category="org.projectodd.polyglot.cache.as">
+                <level name="WARN"/>
+            </logger>
+             <logger category="com.amazonaws">
+                <level name="WARN"/>
+            </logger>
+            
+            <logger category="org.jboss.web">
                 <level name="WARN"/>
             </logger>
             <root-logger>
-                <level name="INFO"/>
+                <level name="${jboss.logging.level:DEBUG}"/>
                 <handlers>
                     <handler name="CONSOLE"/>
                     <handler name="FILE"/>
@@ -119,13 +177,16 @@
                     <locking isolation="REPEATABLE_READ"/>
                 </replicated-cache>
             </cache-container>
- <cache-container name="web" default-cache="repl">
-  <transport stack="tcp"/>
-  <replicated-cache name="repl" mode="ASYNC" batching="true">
-    <locking isolation="REPEATABLE_READ"/>
-    <file-store/>
-  </replicated-cache>
-</cache-container>
+            <cache-container name="web" aliases="standard-session-cache" default-cache="dist" module="org.jboss.as.clustering.web.infinispan">
+                <transport lock-timeout="60000"/>
+                <replicated-cache name="repl" mode="ASYNC" batching="true">
+                    <file-store/>
+                </replicated-cache>
+                <replicated-cache name="sso" mode="SYNC" batching="true"/>
+                <distributed-cache name="dist" mode="ASYNC" batching="true" l1-lifespan="0">
+                    <file-store/>
+                </distributed-cache>
+            </cache-container>
             <cache-container name="ejb" aliases="sfsb sfsb-cache" default-cache="repl" module="org.jboss.as.clustering.ejb3.infinispan">
                 <transport lock-timeout="60000"/>
                 <replicated-cache name="repl" mode="ASYNC" batching="true">
@@ -165,29 +226,13 @@
         <subsystem xmlns="urn:jboss:domain:jgroups:1.1" default-stack="tcp">
             <stack name="tcp">
                 <transport type="TCP" socket-binding="jgroups-tcp"/>
-				<protocol type="S3_PING">
-				  <property name="access_key">{{ ec2_access_key }}</property>
-				  <property name="secret_access_key">{{ ec2_secret_key }}</property>
-				  <property name="location">{{ immutant_cluster_bucket }}</property>
-				</protocol>
+                <protocol type="S3_PING">
+                  <property name="access_key">{{ ec2_access_key }}</property>
+                  <property name="secret_access_key">{{ ec2_secret_key }}</property>
+                  <property name="location">{{ immutant_cluster_bucket }}</property>
+                </protocol>
                 <protocol type="MERGE2"/>
                 <protocol type="FD_SOCK" socket-binding="jgroups-tcp-fd"/>
-                <protocol type="FD"/>
-                <protocol type="VERIFY_SUSPECT"/>
-                <protocol type="pbcast.NAKACK2"/>
-                <protocol type="UNICAST2"/>
-                <protocol type="pbcast.STABLE"/>
-                <protocol type="pbcast.GMS"/>
-                <protocol type="UFC"/>
-                <protocol type="MFC"/>
-                <protocol type="FRAG2"/>
-                <protocol type="RSVP"/>
-            </stack>
-            <stack name="udp">
-                <transport type="UDP" socket-binding="jgroups-udp"/>
-                <protocol type="PING"/>
-                <protocol type="MERGE3"/>
-                <protocol type="FD_SOCK" socket-binding="jgroups-udp-fd"/>
                 <protocol type="FD"/>
                 <protocol type="VERIFY_SUSPECT"/>
                 <protocol type="pbcast.NAKACK2"/>
@@ -291,6 +336,13 @@
                 <jmx-management-enabled>true</jmx-management-enabled>
             </hornetq-server>
         </subsystem>
+        <subsystem xmlns="urn:jboss:domain:modcluster:1.1">
+            <mod-cluster-config advertise-socket="modcluster" connector="ajp">
+                <dynamic-load-provider>
+                    <load-metric type="busyness"/>
+                </dynamic-load-provider>
+            </mod-cluster-config>
+        </subsystem>
         <subsystem xmlns="urn:jboss:domain:naming:1.2">
             <remote-naming/>
         </subsystem>
@@ -369,10 +421,10 @@
         <socket-binding name="ajp" port="8009"/>
 
         
-       {% if ssl_deployssl %}
+     {% if ssl_deployssl %}
             <socket-binding name="https" port="{{ switchboard_port }}"/>
         {% else %}
-            <socket-binding name="http" port="{{ switchboard_port }}"/>
+            <socket-binding name="http" port="${http.port:{{ switchboard_port }}}"/>
         {% endif %}
 
         <socket-binding name="jgroups-mping" port="0" multicast-address="${jboss.default.multicast.address:230.0.0.4}" multicast-port="45700"/>
