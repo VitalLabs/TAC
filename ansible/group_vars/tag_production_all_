@@ -17,6 +17,7 @@ cassandra_native_port: 9042
 
 # This can be turned on when wanting SSL keys installed
 ssl_deployssl: True
+ssl_nostrip_ssl: False
 
 # http(s)
 proxy_pass_ssl: "s"
