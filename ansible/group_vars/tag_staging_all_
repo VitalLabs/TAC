@@ -17,11 +17,14 @@ cassandra_native_port: 9042
 
 # This can be turned on when wanting SSL keys installed
 ssl_deployssl: True
+ssl_nostrip_ssl: True
 
 # http(s)
 proxy_pass_ssl: "s"
 
-
+cassandra_rep_class: "SimpleStrategy"
+cassandra_rep_factor_name: "replication_factor"
+cassandra_rep_factor_count: 3
 
 switchboard_init: switchboard.server/run-immutant
 #git version is a hash or branchname or HEAD or tags/$tagname
@@ -36,8 +39,9 @@ switchboard_zone: swb.io
 switchboard_port: 8443
 switchboard_data_persist: true
 switchboard_resolve_dependecies: true
-switchboard_profiles: prod
 switchboard_reset: "false"
+switchboard_cluster_name: staging
+switchboard_lein_profiles: staging
 
 switchboard_Xms: 256m
 switchboard_Xmx: 2048m

@@ -1,4 +1,5 @@
-{:root "/var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target{{ switchboard_app_root }}.ima"
+
+ {:root "/var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target{{ switchboard_app_root }}.ima"
  :resolve-dependecies true
  :nrepl-port 4005
  :init "{{ switchboard_init }}"
@@ -28,9 +29,15 @@
  :service.smtp/user "{{ service_smtp_user }}"
  :service.smtp/pass "{{ service_smtp_user }}"
 
- :datastax.hosts [{% for host in groups['tag_'+environ|default('dev')+'_cassandra_'] %}"{{ hostvars[host]['ec2_private_ip_address'] }}"{% if not loop.last %}, {% endif %}{% endfor %}]
- 
- :datastax.port {{cassandra_native_port}}
 
- :lein-profiles [:{{ switchboard_profiles }}]}
- 
+
+ :service.push/app-id "{{ push_app_id }}"
+ :service.push/rest-id "{{ push_app_id }}"
+
+ :datastax.hosts [{% for host in groups['tag_'+environ|default('dev')+'_cassandra_'] %}"{{ hostvars[host]['ec2_private_ip_address'] }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+ :datastax.port {{cassandra_native_port}}
+ :datastax.rep.class "{{ cassandra_rep_class }}"
+ :datastax.rep.factor.name "{{ cassandra_rep_factor_name }}"
+ :datastax.rep.factor.count {{ cassandra_rep_factor_count }}
+
+:lein-profiles [:{{ switchboard_lein_profiles }}]}

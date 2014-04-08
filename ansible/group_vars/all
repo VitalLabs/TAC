@@ -64,6 +64,7 @@ nginx_read_timeout: 900
 packer_build: false 
 
 
+datomic_backup_s3_bucket: vr-datomic-backups
 
 
 # License key
