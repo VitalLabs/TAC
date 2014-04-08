@@ -1,0 +1,208 @@
+---
+
+instances_keypair: "{{ec2_keypair}}"
+image_id: "{{ec2_image}}"
+
+security_groups:
+  - name: sshable
+    desc: the security group for the jumphost
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+
+  # TODO we need to only allow these from the proxy hosts!!
+  - name: production-proxy
+    desc: the security group for cassandra
+    rules:
+      - proto: tcp
+        from_port: "80"
+        to_port: "80"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "443"
+        to_port: "443"
+        cidr_ip: 0.0.0.0/0
+   
+  - name: production-orchestra
+    desc: the security group for cassandra
+    rules:
+      - proto: tcp
+        from_port: "80"
+        to_port: "80"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "3000"
+        to_port: "3000"
+        cidr_ip: 0.0.0.0/0
+
+  - name: production-switchboard
+    desc: the security group for cassandra
+    rules:
+      - proto: tcp
+        from_port: "8080"
+        to_port: "8080"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "4005"
+        to_port: "4005"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "9990"
+        to_port: "9990"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "9999"
+        to_port: "9999"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "9443"
+        to_port: "9443"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "8443"
+        to_port: "8443"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "45700"
+        to_port: "45700"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "7600"
+        to_port: "7600"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "5445"
+        to_port: "5445"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "4447"
+        to_port: "4447"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "4712"
+        to_port: "4712"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "4713"
+        to_port: "4713"
+        cidr_ip: 0.0.0.0/0
+
+
+
+  - name: production-datomic
+    desc: the security group for cassandra
+    rules:
+      - proto: tcp
+        from_port: "4334"
+        to_port: "4336"
+        cidr_ip: 0.0.0.0/0
+
+  - name: production-cassandra
+    desc: the security group for cassandra
+    rules:
+      - proto: tcp
+        from_port: "7000"
+        to_port: "7000" 
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "9042"
+        to_port: "9042"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "9160"
+        to_port: "9160"
+        cidr_ip: 0.0.0.0/0
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "7001"
+        to_port: "7001"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "7199"
+        to_port: "7199"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "8888"
+        to_port: "8888"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "61620"
+        to_port: "61620"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "61621"
+        to_port: "61621"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "1024"
+        to_port: "65535"
+        cidr_ip: 0.0.0.0/0
+
+
+ec2_instances:
+
+  - instance_type: m1.medium
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
+    group: ['sshable']
+    instance_tags: 
+        Name: production_jumphost
+        production_all: ""
+        production_jumphost: ""
+    exact_count: 1
+    count_tag: 
+        Name: production_jumphost
+
+  - instance_type: m1.medium
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
+    group: ['sshable', 'production-cassandra'] 
+    instance_tags: 
+        Name: production_db
+        production_all: ""
+        production_cassandra: ""
+        cassandra: ""
+    exact_count: 2 
+    count_tag: 
+        Name: production_db
+
+  - instance_type: m1.large
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
+    group: ['sshable', 'production-cassandra', 'production-datomic'] 
+    instance_tags: 
+        Name: production_db_seed
+        production_all: ""
+        production_cassandra: ""
+        cassandra: ""
+        datomic: ""
+    exact_count: 1 
+    count_tag: 
+        Name: production_db_seed
+
+  - instance_type: m1.medium
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
+    group: ['production-orchestra', 'production-switchboard', 'sshable'] 
+    instance_tags: 
+        Name: production_app
+        production_all: ""
+        immutant: ""
+        switchboard: ""
+        orchestra: ""
+    exact_count: 1
+    count_tag: 
+        Name: production_app
+
+  - instance_type: m1.medium
+    image: "{{image_id}}"
+    keypair: "{{instances_keypair}}"
+    group: ['production-proxy', 'sshable'] 
+    instance_tags: 
+        Name: production_proxy
+        production_all: ""
+    exact_count: 1 
+    count_tag: 
+        Name: production_proxy

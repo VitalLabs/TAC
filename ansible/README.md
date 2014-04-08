@@ -175,11 +175,15 @@ Note that when switching regios you also must update the ./inv/ec2.ini fiole to 
 
 Note these keys are local to you and are kept in a secure location and uploaded to a new jumpbox and kept in the .ssh folder so no one else can access them!
 
-scp ~/.ssh/ryanvitalreactor-west.pem -i ~/.ssh/ryanvitalreactor-west.pem ubuntu@ec2-50-18-32-196.us-west-1.compute.amazonaws.com:~/ssh
-scp ~/.ssh/ryanvitalreactor-west.pem -i ~/.ssh/switchboard_vars.yml ubuntu@ec2-50-18-32-196.us-west-1.compute.amazonaws.com:~/.ssh
-scp -i ~/.ssh/ryanvitalreactor-west.pem ~/.ssh/orchestra.md.key  ubuntu@ec2-50-18-32-196.us-west-1.compute.amazonaws.com:~/.ssh
-scp -i ~/.ssh/ryanvitalreactor-west.pem ~/.ssh/orchestra.md.crt  ubuntu@ec2-23-22-249-240.compute-1.amazonaws.com:~/.ssh
-orchestra.md.crt
+
+➜  ansible git:(master) ✗ scp -i ~/.ssh/swb-production-keypair.pem ~/.ssh/switchboard_vars.yml ubuntu@ec2-54-226-179-206.compute-1.amazonaws.com:~/.ssh
+switchboard_vars.yml                                                                                                       100%  767     0.8KB/s   00:00
+➜  ansible git:(master) ✗ scp -i ~/.ssh/swb-production-keypair.pem ~/.ssh/swb-production-keypair.pem ubuntu@ec2-54-226-179-206.compute-1.amazonaws.com:~/.ssh
+swb-production-keypair.pem                                                                                                 100% 1692     1.7KB/s   00:00
+➜  ansible git:(master) ✗ scp -i ~/.ssh/swb-production-keypair.pem ~/.ssh/orchestra.md.crt ubuntu@ec2-54-226-179-206.compute-1.amazonaws.com:~/.ssh
+orchestra.md.crt                                                                                                           100% 1859     1.8KB/s   00:00
+➜  ansible git:(master) ✗ scp -i ~/.ssh/swb-production-keypair.pem ~/.ssh/orchestra.md.key ubuntu@ec2-54-226-179-206.compute-1.amazonaws.com:~/.ssh
+orchestra.md.key
 
 Thsi is the android keystore generated via: keytool -genkey -alias tomcat -keyalg RSA using the documented jboss password.
 
