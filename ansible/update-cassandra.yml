@@ -23,6 +23,9 @@
 
 
   pre_tasks:
+  - name: snapshot the cassandra host
+    command: nodetool snapshot
+
   - name: drain the cassandra host
     command: nodetool drain
 
