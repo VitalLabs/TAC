@@ -60,7 +60,7 @@
     <profile>
         <subsystem xmlns="urn:jboss:domain:logging:1.2">
             <console-handler name="CONSOLE">
-                <level name="${jboss.logging.level:DEBUG}"/>
+                <level name="${jboss.logging.level:INFO}"/>
                 <formatter>
                     <pattern-formatter pattern="%K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n"/>
                 </formatter>
@@ -80,7 +80,7 @@
                 <level name="WARN"/>
             </logger>
             <logger category="org.infinispan">
-                <level name="DEBUG"/>
+                <level name="INFO"/>
             </logger>
             <logger category="org.infinispan.jmx">
                 <level name="WARN"/>
@@ -143,7 +143,7 @@
                 <level name="WARN"/>
             </logger>
             <logger category="org.jboss.as.clustering.infinispan">
-                <level name="DEBUG"/>
+                <level name="INFO"/>
             </logger>
             <logger category="org.projectodd.polyglot.cache.as">
                 <level name="WARN"/>
@@ -156,7 +156,7 @@
                 <level name="WARN"/>
             </logger>
             <root-logger>
-                <level name="${jboss.logging.level:DEBUG}"/>
+                <level name="${jboss.logging.level:INFO}"/>
                 <handlers>
                     <handler name="CONSOLE"/>
                     <handler name="FILE"/>
