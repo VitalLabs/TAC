@@ -35,9 +35,14 @@ Then cd into this ./ansible playbook directory and run as needed.
 
 
 
+
+
+
 Deploy all code to orchestra and switchboard by logging into jump box and running:
 
 ansible-playbook -vvvv -i ./inv update-all-application-code.yml -e environ=production
+
+Edit the ~/.ssh/switchboard_vars file with credentials if needed.
 
 
 See ansible/README.md file of rather detailed info:
@@ -49,7 +54,7 @@ ubuntu@ec2-54-82-72-21.compute-1.amazonaws.com -L 4055:127.0.0.1:4005 -N
 
 Jumpbox access:
 
-Export your keys and add ssh keys
+Export your keys and add ssh keys:
 
 bin/login-ansible tag_Name_production_jumphost
 
