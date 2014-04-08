@@ -60,6 +60,14 @@ http {
       root /data/orchestra/www/out/public;
 		} 
 	}
+
+	server {
+	    listen      80;
+	    server_name {{ orchestra_vhost }};
+	    return 301 https://{{ orchestra_vhost }}$request_uri;
+	}
+
+	
 }
 
 
