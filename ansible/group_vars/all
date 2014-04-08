@@ -25,6 +25,8 @@ aws_creds:
 ###Non-Infrastructure here:
 
 
+
+
 ssl_certificate: orchestra.md.crt
 ssl_key: orchestra.md.key
 
@@ -47,6 +49,7 @@ switchboard_context: api
 switchboard_app: "1"
 switchboard_app_name: "switchboard"
 switchboard_app_root: "/switchboard"
+switchboard_smoketest: False
 
 
 
