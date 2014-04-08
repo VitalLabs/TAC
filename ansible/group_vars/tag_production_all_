@@ -68,7 +68,7 @@ datomic_template: "datomic:ddb://{{ ec2_region }}/{{ datomic_storage_table }}/<d
 orchestra_git_version: HEAD
 orchestra_deployfrom_source: False
 orchestra_profiles: user,prod
-orchestra_vhost: production.orchestra.md
+orchestra_vhost: www.orchestra.md
 orchestra_zone: orchestra.md
 orchestra_address: localhost
 orchestra_port: 3000
