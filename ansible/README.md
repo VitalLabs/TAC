@@ -64,6 +64,9 @@ or
 
 ssh -i ~/.ssh/swb-production-keypair.pem ~/.ssh/orchestra.md.key ubuntu@ec2-54-226-179-206.compute-1.amazonaws.com
 
+
+Then tmux attach to the current workspace or add your keys to your shell.
+
 ###
 Ansible changes in realtime:
 
