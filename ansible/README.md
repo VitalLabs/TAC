@@ -31,6 +31,41 @@ If you will be using dedicated VPC instances then we will need to use a patched 
 Then cd into this ./ansible playbook directory and run as needed.
 
 
+## Quickstart for Production
+
+
+
+Deploy all code to orchestra and switchboard by logging into jump box and running:
+
+ansible-playbook -vvvv -i ./inv update-all-application-code.yml -e environ=production
+
+
+See ansible/README.md file of rather detailed info:
+
+Repl:
+
+ubuntu@ec2-54-82-72-21.compute-1.amazonaws.com -L 4055:127.0.0.1:4005 -N
+
+
+Jumpbox access:
+
+Export your keys and add ssh keys
+
+bin/login-ansible tag_Name_production_jumphost
+
+or 
+
+ssh -i ~/.ssh/swb-production-keypair.pem ~/.ssh/orchestra.md.key ubuntu@ec2-54-226-179-206.compute-1.amazonaws.com
+
+Ansible bugs:
+
+If any bugs in ansible (I hope not!!!) I usually will make changes to my local master or a branch and rsync up to the jump box.
+
+Example:
+
+rsync -avze ssh -i ~/.ssh/swb-production-keypair.pem --delete /Users/ryanwmedlin/projects/switchboard-infrastructure/ansible/ ubuntu@ec2-54-226-179-206.compute-1.amazonaws.com:/var/lib/sw_ansible/ansible
+
+
 ##Proper commands to run playbooks:
 
 First Provision EC2 instances
