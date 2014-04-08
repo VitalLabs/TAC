@@ -194,6 +194,10 @@
   service: name=immutant state=stopped enabled=yes
   sudo: true
 
+- name: wait to stop immutant
+  sudo: true
+  command: "sleep 30"
+
 - name: get jboss pid
   shell: '/var/lib/immutant/current/jboss/bin/check-jboss-pid.sh'
   ignore_errors: true
@@ -242,4 +246,5 @@
   delay: 10
   changed_when: False
   tags: curltest
+  when: switchboard_smoketest == True
 
