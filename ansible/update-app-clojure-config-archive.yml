@@ -16,12 +16,7 @@
   sudo: true
   serial: 1
 
-  vars_prompt:
 
-    - name: "orchestra_git_version"
-      prompt: "Orchestra release version"
-      default: e8447cd10b95495c9ea2a81c186b21df39d24f21
-      private: no
   
 
   vars_files:
