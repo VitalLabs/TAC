@@ -1,16 +1,6 @@
 ---
-# Perform a rolling update of the Cassandra configuration, one Cassandra host at a time.
-#
-# Notes:
-#
-# This is the general pattern for a rolling upgrade. We can add some sophistication here
-# if we need to inform other components about Cassandra's state, or handle things like 
-# balancing restarted nodes across racks or regions, etc. 
-#
-# The "nodetool drain" operation quiesces writes to that node in preparation for a restart.
+# Perform a snaphot backup of all of the cassandra nodes for later saving to s3
 # 
-# The "serial: 1" setting controls how many nodes are restarted at a time. For large clusters,
-# increase this.
 #
 - name: Upgrade Cassandra hosts
   hosts: tag_Name_{{environ|default('dev')}}_db:tag_Name_{{environ|default('dev')}}_db_seed
