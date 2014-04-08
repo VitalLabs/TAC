@@ -20,22 +20,7 @@
   serial: 1
 
 
-  vars_prompt:
 
-    - name: "orchestra_git_version"
-      prompt: "Orchestra release version"
-      default: HEAD
-      private: no
-
-    - name: "switchboard_git_version"
-      prompt: "Switchboard release version"
-      default: HEAD
-      private: no
-
-    - name: ssl_passphrase
-      prompt: "Enter SSL Certificate Passphrase"
-      private: false
-      when: ssl_deployssl == True
 
   vars_files:
   - "{{ lookup('env', 'HOME') }}/.ssh/switchboard_vars.yml"
@@ -43,13 +28,10 @@
   pre_tasks:
   # nothing right now..need to take out of load balancer or does iummutant handle?
 
-  # re-apply roles and any config changes
-  roles:
-  - app-deploy
+
 
   post_tasks:
   # noen righ tnow, assume immutant is started back up
-
 
 - include: update-app-clojure-config-source.yml
   when: switchboard_deployfrom_source == True
