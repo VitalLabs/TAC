@@ -43,8 +43,8 @@
   when: switchboard_deployfrom_source == False
 
 - name: download orchestra archive
-  s3: aws_access_key={{ ec2_access_key_vr }}
-      aws_secret_key={{ ec2_secret_key_vr }}
+  s3: aws_access_key={{ ec2_access_key }}
+      aws_secret_key={{ ec2_secret_key }}
       mode=get
       bucket=vr-builds
       object=/orchestra/orchestra-{{ orchestra_git_version}}.tar.gz
