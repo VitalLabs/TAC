@@ -52,6 +52,21 @@ Repl:
 
 ubuntu@ec2-54-82-72-21.compute-1.amazonaws.com -L 4055:127.0.0.1:4005 -N
 
+### Removing and rebuilding a Node Example:
+
+--Log into EC2 console and terminate node  like  _app
+
+--Run:  ansible-playbook -vvvv -i ./inv 1-production-infrastructure.yml -e environ=production
+
+That will add another node.
+
+--Give it a few minutes to initialize!!
+
+--Then run:  ansible-playbook -vvvv -i ./inv 2-install_and_configs.yml -e environ=production
+
+
+it will rebuild the node thats missing and config all the other configs liek in nginx.  its best to always run this to ensure all configs are set!
+
 
 ###
 Jumpbox access:
