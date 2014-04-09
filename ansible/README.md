@@ -64,6 +64,8 @@ That will add another node.
 
 --Then run:  ansible-playbook -vvvv -i ./inv 2-install_and_configs.yml -e environ=production
 
+NOTE: you will need ot enter the ssl passphrase when you run this as well as version numbers.  Its in the TrueCrypt file under SSL as SSL Passphrase.
+
 
 it will rebuild the node thats missing and config all the other configs liek in nginx.  its best to always run this to ensure all configs are set!
 
