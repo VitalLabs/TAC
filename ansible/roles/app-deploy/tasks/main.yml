@@ -120,7 +120,7 @@
 - name: Create the immutant Archive .ima file
   environment:
     IMMUTANT_HOME: /var/lib/immutant/current
-  command: "su ubuntu -c 'lein with-profile {{ switchboard_profiles }} immutant archive  /var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}'"
+  command: "su ubuntu -c 'lein with-profile {{ switchboard_lein_profiles }} immutant archive  /var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}'"
   ignore_errors: no
   sudo: true
   when: switchboard_deployfrom_source == True
