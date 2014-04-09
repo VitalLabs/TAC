@@ -70,7 +70,7 @@ datomic_template: "datomic:ddb://{{ ec2_region }}/{{ datomic_storage_table }}/<d
 
 #git version is a hash or branchname or HEAD or tags/$tagname
 orchestra_git_version: HEAD
-orchestra_deployfrom_source: False
+orchestra_deployfrom_source: True
 orchestra_profiles: user,prod
 orchestra_vhost: staging.orchestra.md
 orchestra_zone: orchestra.md
