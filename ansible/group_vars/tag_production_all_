@@ -45,7 +45,7 @@ switchboard_resolve_dependecies: true
 switchboard_reset: "false"
 
 switchboard_cluster_name: prod
-switchboard_lein_profiles: safe
+switchboard_lein_profiles: prod
 
 switchboard_Xms: 256m
 switchboard_Xmx: 2048m
