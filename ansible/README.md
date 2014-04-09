@@ -52,7 +52,7 @@ Repl:
 
 ubuntu@ec2-54-82-72-21.compute-1.amazonaws.com -L 4055:127.0.0.1:4005 -N
 
-### Removing and rebuilding a Node Example:
+### Removing and rebuilding a Node Example
 
 --Log into EC2 console and terminate node  like  _app
 
@@ -68,8 +68,7 @@ That will add another node.
 it will rebuild the node thats missing and config all the other configs liek in nginx.  its best to always run this to ensure all configs are set!
 
 
-###
-Jumpbox access:
+### Jumpbox access
 
 Export your keys and add ssh keys:
 
