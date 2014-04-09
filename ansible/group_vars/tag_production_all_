@@ -28,7 +28,7 @@ cassandra_rep_factor_name: "replication_factor"
 cassandra_rep_factor_count: 3
 
 
-switchboard_init: switchboard.server/run-immutant
+
 #git version is a hash or branchname or HEAD or tags/$tagname
 switchboard_git_version: HEAD
 

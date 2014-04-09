@@ -1,13 +1,9 @@
 
  {:root "/var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target{{ switchboard_app_root }}.ima"
- :resolve-dependecies true
  :nrepl-port 4005
- :init "{{ switchboard_init }}"
  :context-path "/{{ switchboard_context }}" 
  :virtual-host ["{{ inventory_hostname }}" "{{ orchestra_vhost }}" "{{ ansible_default_ipv4.address }}"]
  :datomic.template "{{ datomic_template }}"
- :data-persist true
- :init.reset {{ switchboard_reset }}
 
  :switchboard.api "{{ switchboard_client_url }}"
   
@@ -32,7 +28,7 @@
 
 
  :service.push/app-id "{{ push_app_id }}"
- :service.push/rest-id "{{ push_app_id }}"
+ :service.push/rest-id "{{ push_rest_id }}"
 
  :datastax.hosts [{% for host in groups['tag_'+environ|default('dev')+'_cassandra_'] %}"{{ hostvars[host]['ec2_private_ip_address'] }}"{% if not loop.last %}, {% endif %}{% endfor %}]
  :datastax.port {{cassandra_native_port}}
