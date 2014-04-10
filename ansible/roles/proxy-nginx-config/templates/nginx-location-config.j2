@@ -9,6 +9,11 @@
       add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,OPTIONS';
 			add_header 'Access-Control-Allow-Headers' 'Set-Cookie, Accept';
 			add_header 'Access-Control-Expose-Headers' 'Set-Cookie, Accept';
+
+			{% if proxy_allow_origin_header %}
+		   add_header 'Access-Control-Allow-Origin' "$http_origin";
+      {% endif %}
+
 			add_header 'Pragma' 'nocache';
 			add_header 'Cache-Control' 'o-cache';
 			add_header 'Expires' '0';
@@ -29,6 +34,12 @@
       add_header 'Access-Control-Allow-Methods' 'GET,POST,DELETE,OPTIONS';
 			add_header 'Access-Control-Allow-Headers' 'Set-Cookie, Accept';
 			add_header 'Access-Control-Expose-Headers' 'Set-Cookie, Accept';
+
+      {% if proxy_allow_origin_header %}
+		   add_header 'Access-Control-Allow-Origin' "$http_origin";
+      {% endif %}
+      
+
 			add_header 'Pragma' 'nocache';
 			add_header 'Cache-Control' 'o-cache';
 			add_header 'Expires' '0';
@@ -37,3 +48,10 @@
 			proxy_set_header X-Real-IP $remote_addr;
 			proxy_pass http{{ proxy_pass_ssl }}://SwitchBoard;
 		}
+
+
+		location ^~ /app-downloads {
+			
+			  rewrite ^/app-downloads/ios/index.html https://s3.amazonaws.com/vitalreactor-ios/index.html;
+			  rewrite ^/app-downloads/android/index.html https://s3.amazonaws.com/vitalreactor-android/index.html;
+		} 

@@ -22,6 +22,7 @@ ssl_nostrip_ssl: False
 # http(s)
 proxy_pass_ssl: "s"
 
+proxy_allow_origin_header: False
 
 cassandra_rep_class: "SimpleStrategy"
 cassandra_rep_factor_name: "replication_factor"

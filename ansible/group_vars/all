@@ -49,7 +49,7 @@ switchboard_context: api
 switchboard_app: "1"
 switchboard_app_name: "switchboard"
 switchboard_app_root: "/switchboard"
-switchboard_smoketest: False
+switchboard_smoketest: True
 
 
 

@@ -22,6 +22,8 @@ ssl_nostrip_ssl: True
 # http(s)
 proxy_pass_ssl: "s"
 
+proxy_allow_origin_header: True
+
 cassandra_rep_class: "SimpleStrategy"
 cassandra_rep_factor_name: "replication_factor"
 cassandra_rep_factor_count: 3
@@ -41,7 +43,7 @@ switchboard_data_persist: true
 switchboard_resolve_dependecies: true
 switchboard_reset: "false"
 switchboard_cluster_name: staging
-switchboard_lein_profiles: staging
+switchboard_lein_profiles: prod
 
 switchboard_Xms: 256m
 switchboard_Xmx: 2048m
