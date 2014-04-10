@@ -27,7 +27,7 @@ http {
 	upstream Orchestra{
 			#ip_hash;
 	 	{% for host in groups['tag_Name_' + environ + '_app'] %}
-	 	server {{ hostvars[host]['ec2_private_ip_address'] }}:{{ orchestra_port }} max_fails=3 fail_timeout=120s;
+	 	server {{ hostvars[host]['ec2_private_ip_address'] }}:{{ orchestra_port }} {{ proxy_clustering_config }};
     {% endfor %}
 	}
 

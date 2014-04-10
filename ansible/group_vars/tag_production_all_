@@ -24,6 +24,8 @@ proxy_pass_ssl: "s"
 
 proxy_allow_origin_header: False
 
+proxy_clustering_config: ""
+
 cassandra_rep_class: "SimpleStrategy"
 cassandra_rep_factor_name: "replication_factor"
 cassandra_rep_factor_count: 3
