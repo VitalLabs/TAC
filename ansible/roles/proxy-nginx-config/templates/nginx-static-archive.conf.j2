@@ -20,6 +20,25 @@ http {
 
   include    /etc/nginx/mime.types;
 
+  gzip  on;
+  gzip_http_version 1.0;
+  gzip_types        text/plain
+                    text/html
+                    text/xml
+                    text/css
+                    application/xml
+                    application/xhtml+xml
+                    application/rss+xml
+                    application/atom_xml
+                    application/javascript
+                    application/x-javascript;
+  gzip_comp_level   6;
+  gzip_proxied      any;
+  gzip_vary         on;
+  gzip_buffers      4 8k;       
+  gzip_min_length   1000;
+
+
 	upstream SwitchBoard {
 		#ip_hash;
 	 	{% for host in groups['tag_Name_' + environ + '_app'] %}
@@ -55,7 +74,6 @@ http {
 		# all traffic not starting with VOServer will be routed to the instances in upstream "Orchestra"
     # We do not fail on 404 errors for the static orchestra layer since thr probabilit of those is higher.
 		location / {
-			
 			index {{ orchestra_default_page }};
       root /data/orchestra/www/out/public;
 		} 
