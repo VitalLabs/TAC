@@ -11,7 +11,7 @@ events {
     worker_connections  {{ nginx_max_clients }};
 }
 
-error_log /var/log/nginx/host.error.log;
+error_log /var/log/nginx/host.error.log debug;
 
 
 
@@ -42,7 +42,7 @@ http {
 	upstream SwitchBoard {
 		#ip_hash;
 	 	{% for host in groups['tag_Name_' + environ + '_app'] %}
-	 	server {{ hostvars[host]['ec2_private_ip_address'] }}:{{ switchboard_port }};
+	 	server {{ hostvars[host]['ec2_private_ip_address'] }}:{{ switchboard_port }} {{ proxy_clustering_config }};
     {% endfor %}
 	}
 

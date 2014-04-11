@@ -16,16 +16,11 @@
 
   vars_prompt:
 
-
     - name: "orchestra_git_version"
       prompt: "Orchestra release version"
       default: HEAD
-      private: no  
+      private: no
 
-    - name: ssl_passphrase
-      prompt: "Enter SSL Certificate Passphrase"
-      private: true
-      when: ssl_deployssl == True
 
   roles:
-  - { role: proxy-nginx-config, ssl_deployssl: True }
+  - { role: proxy-nginx-config, ssl_deployssl: False }
