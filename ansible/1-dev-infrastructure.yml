@@ -18,6 +18,7 @@
   - name: Create security groups
     ec2_group:
       name: "{{ item.name }}"
+      zone: "{{ ec2_zone }}"
       description: "{{ item.desc }}"
       rules: "{{ item.rules }}"
       region: "{{ ec2_region }}"
@@ -26,6 +27,7 @@
   - name: Launch instances
     ec2: 
       region: "{{ ec2_region }}"
+      zone: "{{ ec2_zone }}"
       ec2_access_key: "{{ ec2_access_key }}"
       ec2_secret_key: "{{ ec2_secret_key }}"
       group: "{{ item.group }}"
