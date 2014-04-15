@@ -54,7 +54,6 @@ switchboard_Xms: 256m
 switchboard_Xmx: 2048m
 switchboard_MaxPermSize: 1024m
 
-switchboard_jboss_log_level: DEBUG
 
 #usually empty if not doing advanced debugging
 switchboard_java_opts: "-XX:+HeapDumpOnOutOfMemoryError"
