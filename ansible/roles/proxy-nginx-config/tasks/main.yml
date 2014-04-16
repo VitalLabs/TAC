@@ -56,6 +56,11 @@
   command: tar -xzf /data/orchestra/orchestra-{{ orchestra_git_version}}.tar.gz -C /data/orchestra/www
   when: switchboard_deployfrom_source == False
 
+
+- name: create version file
+  shell: echo "{{ orchestra_git_version}} - $(date)" > /data/orchestra/www/LATEST_VERSION
+  when: switchboard_deployfrom_source == False
+
 - name: update the app configuration
   template: src=config.js.j2
             dest="/data/orchestra/www/out/public/config.js"
