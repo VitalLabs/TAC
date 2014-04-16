@@ -61,7 +61,7 @@
         state=absent
         recurse=yes
   sudo: true
-  when: switchboard_deployfrom_source == True
+
 
 
 # ================================================= 
@@ -143,8 +143,14 @@
       mode=get
       bucket=vr-builds
       object=/switchboard/{{ switchboard_app_name }}-{{ switchboard_git_version}}.ima
-      dest=/var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target{{ switchboard_app_root }}.ima
+      dest=/var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target{{ switchboard_app_root }}.ima     
   when: switchboard_deployfrom_source == False
+
+
+- name: create version file
+  shell: echo "{{ switchboard_git_version}} - $(date)" > /var/lib/immutant/current/archives/{{ switchboard_app_name }}{{ switchboard_app_root }}/target/LATEST_VERSION
+  when: switchboard_deployfrom_source == False
+
 
 
 - name: Attempt to check if the deployed file is there
