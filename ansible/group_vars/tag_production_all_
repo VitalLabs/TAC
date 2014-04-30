@@ -62,7 +62,7 @@ datomic_install_bucket: vr-dist
 datomic_cloudwatch_region: "{{ ec2_region }}"
 datomic_cloudwatch_dimension: "{{ ec2_region }}-datomic"
 datomic_profiles: production
-datomic_version: 0.9.4699
+datomic_version: 0.9.4755
 datomic_filename: "{{ datomic_type }}-{{datomic_version }}"
 datomic_type: datomic-pro
 datomic_protocol: ddb
