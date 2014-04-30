@@ -5,7 +5,7 @@
  :virtual-host ["{{ inventory_hostname }}" "{{ orchestra_vhost }}" "{{ ansible_default_ipv4.address }}"]
  :datomic.template "{{ datomic_template }}"
 
- :switchboard.api "{{ switchboard_client_url }}"
+ :switchboard.api "{{ switchboard_twillio_callback_url }}"
   
 
  :twilio.enable "false"

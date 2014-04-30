@@ -37,6 +37,7 @@ switchboard_git_version: HEAD
 #Deploy from an archive ima file or from source. Source alows deploying test branches and is useful for debugging
 switchboard_deployfrom_source: True
 
+switchboard_twillio_callback_url: https://staging.orchestra.md/api
 switchboard_client_url: https://staging.orchestra.md
 switchboard_vhost: staging.swb.io
 switchboard_zone: swb.io
@@ -45,7 +46,7 @@ switchboard_data_persist: true
 switchboard_resolve_dependecies: true
 switchboard_reset: "false"
 switchboard_cluster_name: staging
-switchboard_lein_profiles: prod
+switchboard_lein_profiles: dev
 
 switchboard_Xms: 256m
 switchboard_Xmx: 2048m
