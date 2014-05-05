@@ -35,7 +35,7 @@ cassandra_rep_factor_count: 3
 switchboard_git_version: HEAD
 
 #Deploy from an archive ima file or from source. Source alows deploying test branches and is useful for debugging
-switchboard_deployfrom_source: True
+switchboard_deployfrom_source: False
 
 switchboard_twillio_callback_url: https://staging.orchestra.md/api
 switchboard_client_url: https://staging.orchestra.md
@@ -61,7 +61,7 @@ datomic_install_bucket: vr-dist
 datomic_cloudwatch_region: "{{ ec2_region }}"
 datomic_cloudwatch_dimension: "{{ ec2_region }}-datomic"
 datomic_profiles: prod
-datomic_version: 0.9.4699
+datomic_version: 0.9.4755
 datomic_filename: "{{ datomic_type }}-{{datomic_version }}"
 datomic_type: datomic-pro
 datomic_protocol: ddb
@@ -75,7 +75,7 @@ datomic_template: "datomic:ddb://{{ ec2_region }}/{{ datomic_storage_table }}/<d
 
 #git version is a hash or branchname or HEAD or tags/$tagname
 orchestra_git_version: HEAD
-orchestra_deployfrom_source: True
+orchestra_deployfrom_source: False
 orchestra_profiles: user,prod
 orchestra_vhost: staging.orchestra.md
 orchestra_zone: orchestra.md
@@ -101,6 +101,6 @@ ansible_app_dir: "/var/lib/sw_ansible"
 
 ansible_app_git_version: HEAD
 
-newrelic_install: False
+newrelic_install: True
 
 
