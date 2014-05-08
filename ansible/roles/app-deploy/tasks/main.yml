@@ -2,51 +2,6 @@
 ---
 
 
-#   ###
-# - name: get the datomic master ip
-#   local_action: command "aws ec2 describe-instances --filters "Name=tag-key,Values=datomic_master" | grep PrivateIpAddress | awk '{print $2}' | sed s/\"//g | sed s/\,//g | grep -v "\[" | sort -u"
-#   register: datomic_master_ip
-#   environment: aws_creds
-#   tags: get-datomic-key
-
-#     ###
-# - name: debug the datomic master ip
-#   debug: msg="{{ datomic_master_ip }}"
-#   tags: get-datomic-key
-
-##Deploy Dtomic Client needed for app.
-
-- name: Check datomic installation
-  stat: path=/home/{{ maven_user }}/.m2/repository/com/datomic/datomic-pro/{{ datomic_version }}
-  register: datomic
-
-- name: Create temp directory
-  file: state=directory path=/tmp/datomic owner={{ maven_user }}
-  sudo: true
-  when: not datomic.stat.exists
-
-- name: Download datomic
-  s3: bucket={{ datomic_install_bucket }} object=/archives/{{ datomic_filename }}.zip dest=/tmp/datomic/{{ datomic_filename }}.zip mode=get aws_access_key={{ ec2_access_key }} aws_secret_key={{ ec2_secret_key }}
-  sudo: true
-  when: not datomic.stat.exists
-
-- name: Unpack datomic
-  command: chdir=/tmp/datomic unzip {{ datomic_filename }}.zip
-  sudo: true
-  when: not datomic.stat.exists
-
-- name: Local install to the maven_user repository
-  command: su "{{ maven_user }}" -c 'bin/maven-install' chdir="/tmp/datomic/{{ datomic_filename }}"
-  register: datomic_install
-  sudo: true
-  when: not datomic.stat.exists
-
-- name: Remove temp directory
-  file: path=/tmp/datomic
-        state=absent
-        recurse=yes
-  sudo: true
-  when: datomic_install|success
 
 
 
