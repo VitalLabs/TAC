@@ -38,6 +38,7 @@ switchboard_git_version: HEAD
 #Deploy from an archive ima file or from source. Source alows deploying test branches and is useful for debugging
 switchboard_deployfrom_source: False
 
+switchboard_twillio_callback_url: https://www.orchestra.md/api
 switchboard_client_url: https://www.orchestra.md
 switchboard_vhost: api.swb.io
 switchboard_zone: swb.io
