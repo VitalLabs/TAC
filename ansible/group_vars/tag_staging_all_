@@ -22,7 +22,7 @@ ssl_nostrip_ssl: True
 # http(s)
 proxy_pass_ssl: "s"
 
-proxy_allow_origin_header: True
+proxy_allow_origin_header: False
 
 proxy_clustering_config: "max_fails=3 fail_timeout=120s"
 
