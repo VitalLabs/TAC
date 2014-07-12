@@ -1,0 +1,79 @@
+---
+- hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    ami: "ami-ddaed3ed"
+    region: "us-west-2"
+    keypair: "vitalreactor"
+    cidr_block: 10.86.0.0/16
+    subnets:
+      - cidr: 10.86.0.0/24
+        az: "{{ region }}b"
+        resource_tags: { "customer":"vitalreactor" }
+    route_tables:
+      - subnets:
+          - 10.86.0.0/24
+        routes:
+          - dest: 0.0.0.0/0
+            gw: igw
+  tasks:
+    - name: create vitalreactor VPC
+      ec2_vpc:
+        state: present
+        cidr_block: "{{ cidr_block }}"
+        resource_tags: {
+          "customer":"vitalreactor",
+          "Name":"vital_TAC_VPC"
+        }
+        subnets: "{{ subnets }}"
+        internet_gateway: True
+        region: "{{ region }}"
+        route_tables: "{{ route_tables }}"
+      register: vpc
+
+    - name: debug vpc
+      debug: msg="vpc subnets is {{ vpc['vpc_id'] }}"
+
+    - name: update default security group
+      ec2_group:
+        name: "default"
+        description: "the default TAC VPC security group"
+        vpc_id: "{{ vpc['vpc_id'] }}"
+        region: "{{ region }}"
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+        rules_egress:
+          - proto: all
+            cidr_ip: 0.0.0.0/0
+
+    - name: spin up ec2
+      ec2:
+        instance_type: t1.micro
+        image: "{{ ami }}"
+        wait: yes
+        wait_timeout: 500
+        count: 1
+        region: "{{ region }}"
+        vpc_subnet_id: "{{ vpc['subnets'][0]['id'] }}"
+        key_name: "{{ keypair }}"
+        assign_public_ip: yes
+        instance_tags:
+          TAC: master
+          Name: TAC_Master
+          customer: vitalreactor
+        monitoring: yes
+      register: ec2
+
+    - name: create working dir EBS volume
+      ec2_vol:
+        instance: "{{ item.id }}"
+        region: "{{ region }}"
+        device_name: /dev/sdf
+        volume_size: 30
+      with_items: ec2.instances
+      register: ec2_vol
+
