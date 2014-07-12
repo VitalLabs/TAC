@@ -1,0 +1,46 @@
+# basics
+tac_imgid: "ami-ddaed3ed"
+tac_region: "us-west-2"
+tac_zone: "{{ tac_region }}b"
+tac_keypair: "vitalreactor"
+
+# tags
+common_tags: "{
+  'customer':'vitalreactor'
+}"
+
+# networking 
+
+cidr_block: 10.86.0.0/16
+subnets:
+  - cidr: 10.86.0.0/24
+    az: "{{ tac_zone }}"
+route_tables:
+  - subnets:
+      - 10.86.0.0/24
+    routes:
+      - dest: 0.0.0.0/0
+        gw: igw
+
+# rules
+tac_rules:
+  - proto: tcp
+    from_port: 22
+    to_port: 22
+    cidr_ip: 0.0.0.0/0
+
+tac_rules_egress:
+  - proto: all
+    cidr_ip: 0.0.0.0/0
+
+tac_instances:
+  - instance_type: m1.medium
+    image: "{{tac_imgid}}"
+    keypair: "{{tac_keypair}}"
+    instance_tags:
+        Name: dev_tac
+        dev_all: ""
+        dev_tac_master: ""
+    exact_count: 1
+    count_tag:
+        Name: dev_tac_master

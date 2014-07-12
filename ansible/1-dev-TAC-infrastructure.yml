@@ -1,6 +1,6 @@
 ---
 #Provision some instances:
-- name: launch non-vpc instances
+- name: launch TAC instances
   hosts: localhost
   connection: local
   gather_facts: False
@@ -10,77 +10,60 @@
   - group_vars/tag_TAC_all_
 
   tasks:
+    - name: create TAC VPC
+      ec2_vpc:
+        state: present
+        cidr_block: "{{ cidr_block }}"
+        resource_tags: {
+          "Name":"vital_TAC_VPC"
+        }
+        subnets: "{{ subnets }}"
+        internet_gateway: True
+        region: "{{ tac_region }}"
+        route_tables: "{{ route_tables }}"
+      register: tac_vpc
 
+    - name: debug tac vpc
+      debug: msg="{{ tac_vpc['vpc_id'] }}"
 
-  - name: Include the variables specific to dev environment
-    include_vars: envs/dev
+    - name: update default security group
+      ec2_group:
+        name: "default"
+        description: "the default TAC VPC security group"
+        vpc_id: "{{ tac_vpc['vpc_id'] }}"
+        region: "{{ tac_region }}"
+        rules: "{{ tac_rules }}"
+        rules_egress: "{{ tac_rules_egress }}"
+      register: tac_group
 
+    - name: Launch TAC instances
+      ec2: 
+        region: "{{ tac_region }}"
+        zone: "{{ tac_zone }}"
+        ec2_access_key: "{{ ec2_access_key }}"
+        ec2_secret_key: "{{ ec2_secret_key }}"
+        keypair: "{{ item.keypair }}"
+        instance_type: "{{ item.instance_type }}"
+        image: "{{ item.image }}"
+        instance_tags: "{{ item.instance_tags }}"
+        exact_count: "{{ item.exact_count }}"
+        count_tag: "{{ item.count_tag }}"
+        wait: true
+      register: tac_ec2
+      with_items: tac_instances
 
-  - name: Create security groups
-    ec2_group:
-      name: "{{ item.name }}"
-      zone: "{{ ec2_zone }}"
-      description: "{{ item.desc }}"
-      rules: "{{ item.rules }}"
-      region: "{{ ec2_region }}"
-    with_items: security_groups
+    - name: debug tac_ec2
+      debug: msg="{{ tac_ec2.results }}"
 
-  - name: Launch instances
-    ec2: 
-      region: "{{ ec2_region }}"
-      zone: "{{ ec2_zone }}"
-      ec2_access_key: "{{ ec2_access_key }}"
-      ec2_secret_key: "{{ ec2_secret_key }}"
-      group: "{{ item.group }}"
-      keypair: "{{ item.keypair }}"
-      instance_type: "{{ item.instance_type }}"
-      image: "{{ item.image }}"
-      instance_tags: "{{ item.instance_tags }}"
-      exact_count: "{{ item.exact_count }}"
-      count_tag: "{{ item.count_tag }}"
-      wait: true
-    register: ec2
-    with_items: ec2_instances
+    - name: create working dir EBS volume
+      ec2_vol:
+        instance: "{{ item.instances[0].id }}"
+        region: "{{ tac_region }}"
+        device_name: /dev/sdf
+        volume_size: 30
+      with_items: tac_ec2.results
+      register: tac_vol
 
-  - name: flush the EC2 inventory cache
-    shell: rm -f ~/.ansible/tmp/ansible-ec2.cache ~/.ansible/tmp/ansible-ec2.index
-
-
-
-- name: Wire Main Entry point nginx Proxy DNS Connections
-  hosts: tag_Name_dev_proxy
-  connection: local
-  gather_facts: false
-  tasks: 
- # - wait_for: host={{ hostvars[groups['tag_Name_dev_proxy'][0]]['ec2_ip_address'] }} port=22 delay=240
-  - debug: msg="{{ hostvars[groups['tag_Name_dev_proxy'][0]]}}"
-
-
-  - route53: >
-      command=create
-      zone={{ switchboard_zone }}
-      record="{{ switchboard_vhost }}"
-      aws_access_key={{ ec2_access_key }}
-      aws_secret_key={{ ec2_secret_key }}
-      type=A
-      ttl=7200
-      overwrite=true
-      value="{{ hostvars[groups['tag_Name_dev_proxy'][0]]['ec2_ip_address'] }}"
-    with_items: ec2.instances
-    register: swb_dns
-  - route53: >
-      command=create
-      zone={{ orchestra_zone }}
-      record="{{ orchestra_vhost }}"
-      aws_access_key={{ ec2_access_key }}
-      aws_secret_key={{ ec2_secret_key }}
-      type=A
-      ttl=7200
-      overwrite=true
-      value="{{ hostvars[groups['tag_Name_dev_proxy'][0]]['ec2_ip_address'] }}"
-    with_items: ec2.instances
-    register: orchestra_dns
-  tags: init,network
-
-
+    - name: flush the EC2 inventory cache
+      shell: rm -f ~/.ansible/tmp/ansible-ec2.cache ~/.ansible/tmp/ansible-ec2.index
 
