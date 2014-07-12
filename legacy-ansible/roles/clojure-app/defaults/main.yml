@@ -1,8 +1,0 @@
----
-app_name: clojure
-app_git_version: HEAD
-app_dir: /var/lib/clojure
-app_user: ubuntu
-app_profile: prod
-app_args: ""
-app_log_dir: /var/log/clojure/app.log
