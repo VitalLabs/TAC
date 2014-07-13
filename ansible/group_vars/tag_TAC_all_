@@ -44,3 +44,5 @@ tac_instances:
     exact_count: 1
     count_tag:
         Name: dev_tac_master
+
+tac_workdir_dev: /dev/sdf

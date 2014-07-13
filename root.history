@@ -1,0 +1,91 @@
+    1  man auditd.conf
+    2  apt-get update
+    3  apt-get upgrade
+    4  apt-cache search auditd
+    5  apt-get install auditd
+    6  cat /proc/partitions 
+    7  blkid /dev/xvdf
+    8  apt-get install xfsprogs
+    9  mkfs -t xfs /dev/xvdf
+   10  man mkfs.xfs
+   11  mkfs -t xfs -f -L TACWORKSPACE /dev/xvdf
+   12  blkid /dev/xvdf
+   13  mount
+   14  mkdir /opt/workdir
+   15  vi /etc/fstab
+   16  mount -a
+   17  mount
+   18  ls /opt/workdir/
+   19  ls
+   20  man audit
+   21  makewhatis
+   22  apt-get install makewhatis
+   23  apt-cache search makewhatis
+   24  makewhatis
+   25  mandb
+   26  man -k audit
+   27  man auditd
+   28  man auditd.conf
+   29  vi /etc/audit/auditd.conf 
+   30  apt-get install screen
+   31  screen
+   32  cd /etc/audit/
+   33  ls
+   34  tree ls
+   35  apt-get install tree
+   36  tree
+   37  vi rules.d/audit.rules 
+   38  ls
+   39  vi audit.rules 
+   40  pwd
+   41  diff audit.rules rules.d/audit.rules 
+   42  ls
+   43  vi auditd.conf 
+   44  auditctl -l
+   45  tail /var/log/audit/audit.log 
+   46  man auditctl
+   47  auditctl -l
+   48  man auditctl
+   49  man audit.rules
+   50  man auditctl
+   51  tail /var/log/audit/audit.log 
+   52  vi /etc/audit/auditd.conf 
+   53  auditctl 
+   54  auditctl -l
+   55  auditctl -w /opt/workdir/ -p rwa -k workdir
+   56  auditctl -l
+   57  man auditd.conf
+   58  cd /opt/workdir/
+   59  touch foo
+   60  auditctl -l
+   61  auditctl -a exit,always -F dir=/opt/workdir -S unlink -S rmdir
+   62  auditctl -a exit,always -F arch=b64 -S mount -S umount2 -k mount-F dir=/opt/workdir -S unlink -S rmdir
+   63  ## changes to the time
+   64  ##
+   65  -a exit,always -F arch=b32 -S adjtimex -S settimeofday -S stime -S clock_settime -k time
+   66  -a exit,always -F arch=b64 -S adjtimex -S settimeofday -S clock_settime -k time
+   67  ## Use stunnel
+   68  -w /usr/sbin/stunnel -p x -k stunnel
+   69  ## cron configuration & scheduled jobs
+   70  -w /etc/cron.allow -p wa -k cron
+   71  -w /etc/cron.deny -p wa -k cron
+   72  -w /etc/cron.d/ -p wa -k cron
+   73  auditctl -a exit,always -F arch=b64 -S mount -S umount2 -k mount-F dir=/opt/workdir -S unlink -S rmdir
+   74  auditctl -a exit,always -F arch=b64 -S unlink -S rmdir -F dir=/opt/workdir -S unlink -S rmdir
+   75  auditctl -f
+   76  auditctl -l
+   77  auditctl -a exit,always -F arch=b64 -S unlink -S rmdir -F dir=/opt/workdir -S stime.*
+   78  auditctl -a exit,always -F arch=b64 -S unlink -S rmdir -F dir=/opt/workdir -S 'stime.*'
+   79  auditctl -a exit,always -F arch=b64 -F dir=/opt/workdir -S 'stime.*'
+   80  auditctl -a exit,always -F arch=b64 -F dir=/opt/workdir -S 'stime'
+   81  auditctl -a exit,always -F arch=b64 -F dir=/opt/workdir -S stime
+   82  auditctl -a exit,always -F arch=b64 -S stime.*
+   83  auditctl -a exit,always -F arch=b64 -F dir=/opt/workdir -S settimeofday
+   84  auditctl -a exit,always -F arch=b32 -F dir=/opt/workdir -S 'stime.*'
+   85  auditctl -l
+   86  ls
+   87  mkdir foob
+   88  rmdir foob
+   89  history
+   90  history /tmp/root.history
+   91  history > /tmp/root.history
