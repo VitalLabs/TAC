@@ -1,0 +1,4 @@
+---
+datomic_protocol: "free"
+datomic_dir: /var/lib/datomic
+datomic_data_dir: /var/lib/datomic/data

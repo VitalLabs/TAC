@@ -1,0 +1,20 @@
+ 
+pre-start script
+bash << "EOF"
+mkdir -p /var/log/datomic
+chown -R datomic /var/log/datomic
+EOF
+end script
+
+# Start/stop conditions
+start on (local-filesystems and net-device-up IFACE!=lo)
+stop on runlevel [016]
+
+# Restart if it crashes
+respawn
+ 
+# Run the service
+script
+exec su - datomic -c '{{ datomic_dir }}/current/bin/transactor -Xms400m -Xmx400m {{ datomic_dir}}/transactor.properties 2>&1 >> /var/log/datomic/datomic.log'
+end script
+ 

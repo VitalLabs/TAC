@@ -1,0 +1,141 @@
+# Deploy github-based apps to immutant via source
+---
+
+# Connect to github
+- name: test for hostkey file
+  shell: cat ~/.ssh/known_hosts
+  register: known_hosts
+  ignore_errors: true
+
+- name: remove the old host key, if any
+  command: "ssh-keygen -R github.com"
+  when: known_hosts|success
+
+- name: make sure we have the current hostkey
+  shell: "ssh-keyscan github.com >> ~/.ssh/known_hosts"
+
+- name: make sure permissions are appropriate for deployer to update
+  file: path=/var/lib/immutant/applications/{{ app_name }}
+        recurse=yes
+        owner=immutant
+        group=deploy
+        mode=775
+  sudo: true
+  tags: git_update
+  ignore_errors: true
+  
+- name: ensure up to date application source
+  git: repo={{ app_git_repo }}
+       dest=/var/lib/immutant/applications/{{ app_name }}
+       version={{ app_git_version }}
+       depth=1
+       update=yes
+  register: git_pull
+  tags: git_update
+
+- name: make immutant the owner of the tree
+  file: path=/var/lib/immutant/applications/{{ app_name }}
+        recurse=yes
+        owner=immutant
+        group=deploy
+        mode=775
+  sudo: true
+  tags: git_update
+
+- name: deploy the application configuration file
+  copy: src={{ app_config }}
+        dest=/var/lib/immutant/applications/{{ app_name }}{{ app_root }}/config/config.edn
+        owner=immutant
+  sudo: true
+  tags: switchboard-deploy
+  
+# Deploy to immutant
+- name: Deploy the application to the local immutant
+  environment:
+    IMMUTANT_HOME: /var/lib/immutant/current
+  command: "su immutant -c 'lein with-profile {{ app_profiles }} immutant deploy --context-path {{ app_context }}' chdir=/var/lib/immutant/applications/{{ app_name }}{{ app_root }}" # --virtual-host {{ app_bind }}
+  sudo: true
+  tags: switchboard-deploy
+#  notify:
+#    - restart immutant # Until Clojure 1.6 is available
+
+
+
+
+
+
+#
+#
+#
+#  Pseudocode for Deploy..  feel free to parameterize anything out of course.
+#
+# 
+# Here is the doc for immutant deployment Archives: http://immutant.org/builds/LATEST/html-docs/deployment.html#deployment-archive
+# More info: https://github.com/immutant/lein-immutant
+#
+#
+
+#
+#  We want to get the source into a temp directory..  runnign other tasks to get permissions right
+#
+#
+- name: ensure up to date application source
+  git: repo={{ app_git_repo }}
+       dest=/var/lib/immutant/temp/{{ app_name }}
+       version={{ app_git_version }}
+       depth=1
+       update=yes
+  register: git_pull
+  tags: git_update
+
+
+
+#
+# copy config file to the  config location so it will be included in the ima. Verified code still works
+#
+- name: deploy the application configuration file
+  copy: src={{ app_config }}
+        dest=/var/lib/immutant/temp/{{ app_name }}/config/config.edn
+        owner=immutant
+
+
+
+# Creating the Archive should be be separate from the deployment.   
+# The Code will be somewhere and pulled from github 
+# so you archive from that location and not the immutant location instead.
+# Once the archive is created we shoudl push the archive to S3 folder for later deployment of the same archive.
+
+- name: Create the immutant Archive .ima file
+  environment:
+    IMMUTANT_HOME: /var/lib/immutant/current
+  command: "su immutant -c 'lein with-profile {{ app_profiles }} immutant archive /var/lib/immutant/temp/{{ app_name }}  --context-path {{ app_context }} --virtual-host {{ app_bind }}'"
+
+
+
+#
+# Copy archive /var/lib/immutant/temp/targets/switchboard.ima to  /var/lib/immutant/current/archives
+#
+
+
+
+
+# Deployment
+# Also Here is a GIST that sortof explains how you can use and descrioptor file and a series of empty files to signal immutant to redeploy/deploy/undeploy safely
+# https://gist.github.com/craigbro/4636853   but i think "immutant deploy" will work ok too when deploying new code only. 
+#
+# Deploy to immutant - it takes a deployment descriptor that points to actual .ima file
+- name: Deploy the application to the local immutant
+  environment:
+    IMMUTANT_HOME: /var/lib/immutant/current
+  command: "su immutant -c 'lein with-profile {{ app_profiles }} immutant deploy   /var/lib/immutant/current/archives/switchboard.ima.clj  --context-path {{ app_context }} --virtual-host {{ app_bind }}'"
+  sudo: true
+
+
+
+###Redeploy:  we will also need a redploy of code only seprate workflow to include in rolling restart..not part of deployment
+
+- name: UnDeploy the application to the local immutant
+  environment:
+    IMMUTANT_HOME: /var/lib/immutant/current
+  command: "su immutant -c 'lein immutant undeploy   /var/lib/immutant/current/archives/switchboard.ima.clj'"
+  sudo: true
