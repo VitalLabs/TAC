@@ -1,0 +1,26 @@
+# {{ ansible_managed }}
+# This file contains the auditctl rules that are loaded
+# whenever the audit daemon is started via the initscripts.
+# The rules are simply the parameters that would be passed
+# to auditctl.
+
+# First rule - delete all
+-D
+
+# Increase the buffers to survive stress events.
+# Make this bigger for busy systems
+-b 520
+
+# Feel free to add below this line. See auditctl man page
+-w /opt/workdir/ -p rwa -k workdir
+-a exit,always -F arch=b64 -S unlink -S rmdir -F dir=/opt/workdir -S unlink -S rmdir -k workdir
+-a exit,always -F arch=b32 -F dir=/opt/workdir -S 'stime.*'
+-w /opt/ingress/ -p rwa -k ingress
+-a exit,always -F arch=b64 -S unlink -S rmdir -F dir=/opt/ingress -S unlink -S rmdir -k ingress
+-a exit,always -F arch=b32 -F dir=/opt/ingress -S 'stime.*'
+-w /opt/egress/ -p rwa -k egress
+-a exit,always -F arch=b64 -S unlink -S rmdir -F dir=/opt/egress -S unlink -S rmdir -k egress
+-a exit,always -F arch=b32 -F dir=/opt/egress -S 'stime.*'
+
+# must be last as it locks audit rules
+-e 2

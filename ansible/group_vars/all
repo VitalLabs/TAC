@@ -1,6 +1,8 @@
 ---
 ###General EC2 Below
 
+ansible_ssh_port: 22
+
 # designates ec2 account, used to create dynamic bucket names if ec2 account is different!
 # Must be lowercase.
 

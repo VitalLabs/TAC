@@ -1,5 +1,6 @@
 vars/credentials.yml
 node_modules
 bin/aws_*
+todo.txt
 .DS_Store
 .ec2/

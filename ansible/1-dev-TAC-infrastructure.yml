@@ -57,6 +57,12 @@
           - device_name: "{{ tac_workdir_dev }}"
             volume_size: 30
             delete_on_termination: true
+          - device_name: "{{ tac_ingress_dev }}"
+            volume_size: 30
+            delete_on_termination: true
+          - device_name: "{{ tac_egress_dev }}"
+            volume_size: 30
+            delete_on_termination: true
       register: tac_ec2
       with_items: tac_instances
 
@@ -67,52 +73,10 @@
       shell: rm -f ~/.ansible/tmp/ansible-ec2.cache ~/.ansible/tmp/ansible-ec2.index
 
     - name: bootstrap hosts
-      add_host: hostname={{ item.public_ip }} groupname=tag_dev_tac_master_
+      add_host: hostname={{ item.public_ip }} groupname=tag_dev_tac_master
       with_items: tac_ec2.results[0].instances
 
     - name: pause for one minute for spin-up
-      pause: minutes=1 prompt="waiting for AWS spin up"
+      pause: minutes=2 prompt="waiting for AWS spin up"
 
-
-# Baseline Provisioning
-- name: provision TAC instances
-  hosts: tag_dev_tac_master_
-  remote_user: ubuntu
-  sudo: yes
-
-  vars_files:
-  - group_vars/tag_dev_all_
-  - group_vars/tag_TAC_all_
-
-  tasks:
-    - name: update system
-      apt: upgrade=full update_cache=yes
-
-    - name: install needed software
-      apt: name={{ item }} state=installed update_cache=yes
-      with_items:
-        - auditd
-        - xfsprogs
-        - tree
-        - r-base
-        - python
-
-    - name: discover blockid of workdir device
-      command: /sbin/blkid {{ tac_workdir_dev }}
-      register: tac_blkid
-
-    - name: debug tac_blkid
-      debug: msg={{ tac_blkid }}
-      
-    - name: create volume filesystem
-      debug: msg="TODO"
-      # when
-
-    - name: create fstab
-      debug: msg="TODO"
-
-    - name: create templated audit rules
-      debug: msg="TODO"
-      
-    - name: reboot
-      debug: msg="TODO"
+- include: bootstrap-tac.yml
