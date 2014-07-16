@@ -1,2 +1,0 @@
-dependencies:
-  - { role: github, tags: github_config }
