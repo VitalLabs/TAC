@@ -1,0 +1,17 @@
+* overwrite uploads
+* subshells 
+* s3 bucket security key
+* ingress be EBS regardless 
+  * regular updates via cron?
+  * manuall dump to EBS process
+* encryption at the instance level or AWS? TODO
+  * First take AWS
+* http audit
+* screen scrape? 
+* disable sftp/scp
+* protect shell logs
+* audit history logs
+* check screen log size groth rate
+* basic monitoring framework
+* psacct
+

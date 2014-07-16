@@ -1,7 +1,0 @@
-
-
-
-## rsync example command to make testing script sin AWS easier without cluttering source control as well
-
-rsync -avze ssh -i ~/.ssh/swb-testcluster-keypair.pem --delete /Users/ryanwmedlin/projects/switchboard-infrastructure/ansible/ ubuntu@ec2-23-22-249-240.compute-1.amazonaws.com:/var/lib/sw_ansible/ansible
-

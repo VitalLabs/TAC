@@ -1,0 +1,101 @@
+---
+###General EC2 Below
+
+ansible_ssh_port: 22
+
+# designates ec2 account, used to create dynamic bucket names if ec2 account is different!
+# Must be lowercase.
+
+
+ec2_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+ec2_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+
+
+
+
+ec2_security_group: default
+ec2_app_instance_count: 2
+ec2_proxy_instance_count: 2
+ec2_db_instance_count: 2
+aws_creds:
+  AWS_DEFAULT_REGION: "{{ ec2_region }}"
+  AWS_ACCESS_KEY: "{{ ec2_access_key }}"
+  AWS_SECRET_KEY: "{{ ec2_secret_key }}"
+  AWS_ACCESS_KEY_ID: "{{ ec2_access_key }}"
+  AWS_SECRET_ACCESS_KEY: "{{ ec2_secret_key }}"
+
+###Non-Infrastructure here:
+
+
+
+
+ssl_certificate: orchestra.md.crt
+ssl_key: orchestra.md.key
+
+
+java_download: http://www.reucon.com/cdn/java/jdk-7u45-linux-x64.tar.gz
+java_name: jdk1.7.0_45
+java_download_folder: /usr/src
+java_archive: "{{java_download_folder}}/{{java_name}}.tar.gz"
+java_folder: /usr/lib/jvm
+java_alias: java-7-oracle
+
+
+
+
+#For lein in app-immutant-deploy:
+lein_dir: /usr/local/bin
+
+
+switchboard_context: api
+switchboard_app: "1"
+switchboard_app_name: "switchboard"
+switchboard_app_root: "/switchboard"
+switchboard_smoketest: True
+
+
+
+maven_user: ubuntu
+
+
+nginx_send_timeout: 900
+nginx_read_timeout: 900
+
+
+# Image AMI creating mechanism.. not ready yet so set to false.
+packer_build: false 
+
+
+datomic_backup_s3_bucket: vr-datomic-backups
+
+
+# License key
+newrelic_license_key: 14aa65c62e17b8bf93edcde29cadd5c74d4dd203 
+
+# Log level (error, warning, info, verbose, debug, verbosedebug)
+newrelic_loglevel: info
+
+# Log file location
+newrelic_logfile: /var/log/newrelic/nrsysmond.log
+
+
+# Use SSL for all communication. Default False
+newrelic_ssl: "true"
+
+# SSL CA Bundle path. Default False
+#newrelic_ssl_ca_bundle: /etc/pki/tls/certs/ca-bundle.crt
+
+# SSL CA Path. Default False
+#newrelic_ssl_ca_path: /etc/ssl/certs
+
+# Pid file locaiton
+newrelic_pidfile: /var/run/newrelic/nrsysmond.pid
+
+# Collector hostname
+newrelic_collector_host: collector.newrelic.com
+
+# Connection timeout for collector host
+newrelic_timeout: 30
+
+
+

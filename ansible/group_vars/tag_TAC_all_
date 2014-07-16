@@ -1,0 +1,61 @@
+# basics
+tac_imgid: "ami-ddaed3ed"
+tac_region: "us-west-2"
+tac_zone: "{{ tac_region }}b"
+tac_keypair: "vitalreactor"
+
+# tags
+common_tags: "{
+  'customer':'vitalreactor'
+}"
+
+# networking 
+
+cidr_block: 10.86.0.0/16
+subnets:
+  - cidr: 10.86.0.0/24
+    az: "{{ tac_zone }}"
+route_tables:
+  - subnets:
+      - 10.86.0.0/24
+    routes:
+      - dest: 0.0.0.0/0
+        gw: igw
+
+# rules
+tac_rules:
+  - proto: tcp
+    from_port: 22
+    to_port: 22
+    cidr_ip: 0.0.0.0/0
+
+tac_rules_egress:
+  - proto: all
+    cidr_ip: 0.0.0.0/0
+
+tac_instances:
+  - instance_type: m1.medium
+    image: "{{tac_imgid}}"
+    keypair: "{{tac_keypair}}"
+    instance_tags:
+        Name: dev_tac
+        dev_all: ""
+        dev_tac: "master"
+    exact_count: 1
+    count_tag:
+        Name: dev_tac_master
+
+tac_workdir_dev: /dev/xvdf
+tac_workdir_dir: /opt/workdir
+
+tac_ingress_dev: /dev/xvdg
+tac_ingress_dir: /opt/ingress
+
+tac_egress_dev: /dev/xvdh
+tac_egress_dir: /opt/egress
+
+tac_work_users:
+  - name: joesmith
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQZflm5CoF5WyFVYo1lODg6lw/Ccn7u+ATTRb/bx2BKQpf+VBZwomgk3jtv93qlupeKNj0wLMK9jJnknLb//CUC79IqCPxxLPnFeA3PbsLaGKVVmaz0vR3WfLHir7OBJkmG4BLVBscl5Zf1ki356C4UkCbOzHA3QskK5+D+f1TthG/7kHEJwHvrE//oExquP0nM90e8jJbQrchgTxTBWhPpjbH/mGAarmGVLBzN2D0TV5SN818wsJTgfaOXT2oem43DoCz6+YVFqBifdI2YtUgCx4GRuzP7DCcfXJMjdW8OJCe2BtDtp9Owb7o8irlnHjddcUuY+59RflzAIoUNosl"
+  - name: sallygreen  
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCv2o2z4XBOZlcYD36dRaBu1nZLLlP6gWJzmSgIlAHR7J+98StUaLtsqivFh319/ybpd1LQRbm0E64FKZ+4tdAqKLoraePOdnHsNThKrr+/W4OG7lT1sm+H6L+lNqGWBqfd2m0mH/A05UWbne7hwTCEn6qkaPkiJ0juo2jTov3MK4Qj89oFgbVJxiOVxGU9O4y+02vg0C1uDWU6gSuLh+Fn9apFfcbK9ny323tzyQrdwbUMdh6A67YOrEoHlaW+DBdTZD2PBd/scBCIRQpiVo7fsEaVKFAkP/nfozoSkq+dOJLgVPl8nNlrXp3WjpD+zVUyoe4klo5oUu7FPXwBr7rL"
