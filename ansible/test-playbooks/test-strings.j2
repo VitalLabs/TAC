@@ -1,4 +1,0 @@
-seeds: {% for host in groups['tag_dev_all_'] %}{{ hostvars[host]['ansible_default_ipv4'].address }}{% if not loop.last %}, {% endif %}{% endfor %}
-
-
-:datastax.hosts [{% for host in groups['tag_Name_'+environ|default('dev')+'_db'] %}"{{ hostvars[host]['ansible_default_ipv4'].address }}"{% if not loop.last %}, {% endif %}{% endfor %}]

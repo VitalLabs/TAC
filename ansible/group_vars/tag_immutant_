@@ -1,6 +1,0 @@
-immutant_version: 1.1.1
-
-
-# This bucket changes per environment. Since bucket names must be unqui in ALL s3 customers we need to add this namign mechanism
-# Must be lowercase
-immutant_cluster_bucket: immutant_s3ping_{{ switchboard_cluster_name }}_{{ ec2_identifier }}
