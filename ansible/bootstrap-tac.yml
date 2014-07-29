@@ -29,10 +29,41 @@
         - users
         - groups
 
+    - name: create tac_ingressgroup
+      group: name=tac_ingressgroup state=present
+      tags:
+        - ingressdir
+        - users
+        - groups
+
+    - name: create tac_egressgroup
+      group: name=tac_egressgroup state=present
+      tags:
+        - egressdir
+        - users
+        - groups
+
     - name: create working users ssh keys
       local_action: shell /usr/bin/ssh-keygen -n "{{ item.name }}" -f "{{ item.name }}.key" -N '' creates="{{ item.name }}.key"
       with_items: tac_work_users
       sudo: no
+      when: generate_keys == True
+      tags:
+        - users
+
+    - name: create ingress users ssh keys
+      local_action: shell /usr/bin/ssh-keygen -n "{{ item.name }}" -f "{{ item.name }}.key" -N '' creates="{{ item.name }}.key"
+      with_items: tac_ingress_users
+      sudo: no
+      when: generate_keys == True
+      tags:
+        - users
+
+    - name: create egress users ssh keys
+      local_action: shell /usr/bin/ssh-keygen -n "{{ item.name }}" -f "{{ item.name }}.key" -N '' creates="{{ item.name }}.key"
+      with_items: tac_egress_users
+      sudo: no
+      when: generate_keys == True
       tags:
         - users
 
@@ -42,9 +73,33 @@
       tags:
         - users
 
+    - name: create ingress users
+      user: name="{{ item.name }}" state=present groups='tac_ingressgroup'
+      with_items: tac_ingress_users
+      tags:
+        - users
+
+    - name: create egress users
+      user: name="{{ item.name }}" state=present groups='tac_egressgroup'
+      with_items: tac_egress_users
+      tags:
+        - users
+
     - name: ssh key for working users
       authorized_key: user="{{ item.name }}" key="{{ item.key }}"
       with_items: tac_work_users
+      tags:
+        - users
+      
+    - name: ssh key for ingress users
+      authorized_key: user="{{ item.name }}" key="{{ item.key }}"
+      with_items: tac_ingress_users
+      tags:
+        - users
+      
+    - name: ssh key for egress users
+      authorized_key: user="{{ item.name }}" key="{{ item.key }}"
+      with_items: tac_egress_users
       tags:
         - users
       
@@ -103,17 +158,17 @@
         - workdir
 
     - name: create fstab
-      mount: name={{ tac_workdir_dir }} src='LABEL=TACWORKSPACE' fstype=xfs state=mounted
+      mount: name={{ tac_workdir_dir }} src='LABEL=TACWORKSPACE' fstype=xfs state=mounted opts=acl
       tags:
         - workdir
 
     - name: create fstab
-      mount: name={{ tac_ingress_dir }} src='LABEL=TACINGRESS' fstype=xfs state=mounted
+      mount: name={{ tac_ingress_dir }} src='LABEL=TACINGRESS' fstype=xfs state=mounted opts=acl
       tags:
         - workdir
 
     - name: create fstab
-      mount: name={{ tac_egress_dir }} src='LABEL=TACEGRESS' fstype=xfs state=mounted
+      mount: name={{ tac_egress_dir }} src='LABEL=TACEGRESS' fstype=xfs state=mounted opts=acl
       tags:
         - workdir
 
@@ -123,12 +178,42 @@
         - workdir
 
     - name: ingress mountpoint perms
-      file: name={{ tac_ingress_dir }} owner=root group=tac_workgroup mode=1750 state=directory
+      file: name={{ tac_ingress_dir }} owner=root group=tac_ingress mode=1750 state=directory
       tags:
         - workdir
 
     - name: egress mountpoint perms
-      file: name={{ tac_egress_dir }} owner=root group=tac_workgroup mode=1730 state=directory
+      file: name={{ tac_egress_dir }} owner=root group=tac_egress mode=1730 state=directory
+      tags:
+        - workdir
+
+    - name: workdir acl
+      acl: name={{ tac_workdir_dir }} entity=tac_workgroup etype=group permissions="rwx" state=present
+      tags:
+        - workdir
+
+    - name: workdir default acl
+      acl: name={{ tac_workdir_dir }} entity=tac_workgroup etype=group permissions="rw" default=yes state=present
+      tags:
+        - workdir
+
+    - name: ingress acl
+      acl: name={{ tac_ingress_dir }} entity=tac_workgroup etype=group permissions="rx" state=present
+      tags:
+        - workdir
+
+    - name: ingress acl default
+      acl: name={{ tac_ingress_dir }} entity=tac_workgroup etype=group permissions="r" default=yes state=present
+      tags:
+        - workdir
+
+    - name: egress acl
+      acl: name={{ tac_egress_dir }} entity=tac_workgroup etype=group permissions="wx" state=present
+      tags:
+        - workdir
+
+    - name: egress acl
+      acl: name={{ tac_egress_dir }} entity=tac_workgroup etype=group permissions="w" default=yes state=present
       tags:
         - workdir
 
