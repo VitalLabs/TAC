@@ -1,5 +1,5 @@
 * overwrite uploads
-* subshells 
+* subshells -- secure
 * s3 bucket security key
 * ingress be EBS regardless 
   * regular updates via cron?
@@ -14,4 +14,3 @@
 * check screen log size groth rate
 * basic monitoring framework
 * psacct
-
