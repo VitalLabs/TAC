@@ -1,0 +1,32 @@
+## Workflow
+
+### provider
+
+1) get all ssh keys/usernames, and insert into vars file
+
+    group_vars/tag_TAC_all_
+
+2) verify networking settings and rules
+
+    group_vars/tag_TAC_all_
+
+3) run ansible script to spin up/deploy TAC
+
+    1-dev-TAC-infrastructure.yml
+
+4) connect via ingres user[s] and upload datafiles
+
+   /srv/ingress
+
+### Customer
+
+1) connect via working user[s] and do analitics
+
+2) move files to /srv/egress
+
+3) tell provider that files are there
+
+
+### provider
+
+1) copy files out of /srv/egress back to wherever you need them

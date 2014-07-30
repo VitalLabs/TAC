@@ -76,7 +76,7 @@
       add_host: hostname={{ item.public_ip }} groupname=tag_dev_tac_master
       with_items: tac_ec2.results[0].instances
 
-    - name: pause for one minute for spin-up
+    - name: pause for two minutes for spin-up
       pause: minutes=2 prompt="waiting for AWS spin up"
 
 - include: bootstrap-tac.yml
