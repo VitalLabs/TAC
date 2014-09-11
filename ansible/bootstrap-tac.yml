@@ -24,8 +24,16 @@
         - r-base
         - python
         - acl
+        - cpanminus
       notify:
         - restart machine
+      tags:
+        - packages
+
+    - name: cpanm install ttywatch
+      cpanm: name="http://search.cpan.org/CPAN/authors/id/B/BB/BBB/ttylog-0.85.tar.gz"
+      tags:
+        - packages
 
     - name: create tac_workgroup
       group: name=tac_workgroup state=present
@@ -243,6 +251,13 @@
       notify:
         - restart machine
 
+    - name: ingress ingress acl
+      acl: name={{ tac_ingress_dir }} entity=tac_ingressgroup etype=group permissions="rwx" state=present
+      tags:
+        - ingressdir
+      notify:
+        - restart machine
+
     - name: ingress acl
       acl: name={{ tac_ingress_dir }} entity=tac_workgroup etype=group permissions="rx" state=present
       tags:
@@ -280,7 +295,7 @@
       
   handlers:
     - name: restart machine
-      shell: touch /var/lock/.init-ansible-shutdown && echo shutdown -r now "Ansible updates triggered"
+      shell: touch /var/lock/.init-ansible-shutdown && shutdown -r now "Ansible updates triggered"
       async: 0
       poll: 0
       ignore_errors: True

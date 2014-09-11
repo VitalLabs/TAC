@@ -1,6 +1,6 @@
 # basics
 #CHANGEME 
-tac_imgid: "ami-ad166d9d"
+tac_imgid: "ami-e7b8c0d7"
 tac_region: "us-west-2"
 tac_zone: "{{ tac_region }}b"
 tac_keypair: "vitalreactor"
@@ -55,7 +55,7 @@ tac_rules_egress:
     cidr_ip: 0.0.0.0/0
 
 tac_instances:
-  - instance_type: m1.medium
+  - instance_type: m3.medium
     image: "{{tac_imgid}}"
     keypair: "{{tac_keypair}}"
     instance_tags:
