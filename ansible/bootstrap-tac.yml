@@ -216,21 +216,21 @@
         - restart machine
 
     - name: workdir mountpoint perms
-      file: name={{ tac_workdir_dir }} owner=root group=tac_workgroup state=directory
+      file: name={{ tac_workdir_dir }} owner=root group=tac_workgroup state=directory mode=0770
       tags:
         - workdir
       notify:
         - restart machine
 
     - name: ingress mountpoint perms
-      file: name={{ tac_ingress_dir }} owner=root group=tac_ingressgroup state=directory
+      file: name={{ tac_ingress_dir }} owner=root group=tac_ingressgroup state=directory mode=0770
       tags:
         - workdir
       notify:
         - restart machine
 
     - name: egress mountpoint perms
-      file: name={{ tac_egress_dir }} owner=root group=tac_egressgroup state=directory
+      file: name={{ tac_egress_dir }} owner=root group=tac_egressgroup state=directory mode=0770
       tags:
         - workdir
       notify:
